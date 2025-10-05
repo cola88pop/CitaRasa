@@ -1,1 +1,861 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+    <meta name="description" content="Cita Rasa Indonesia - Authentic Indonesian Food. Makan Kenyang, Hati Senang, Pikiran Tenang!">
+    <title>Cita Rasa Indo - Authentic Indonesian Food</title>
+    <link rel="preconnect" href="https://i.ibb.co">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        
+        :root{
+            --primary:#D32F2F;
+            --primary-dark:#C62828;
+            --secondary:#FFA726;
+            --secondary-light:#FFB74D;
+            --accent:#FF7043;
+            --bg-gradient:linear-gradient(135deg,#FFF8E1 0%,#FFECB3 50%,#FFE0B2 100%);
+            --text-dark:#1B4965;
+            --white:#fff;
+            --shadow-sm:0 2px 8px rgba(0,0,0,.08);
+            --shadow-md:0 4px 16px rgba(0,0,0,.12);
+            --shadow-lg:0 8px 24px rgba(0,0,0,.15);
+            --shadow-xl:0 12px 32px rgba(0,0,0,.18);
+        }
+        
+        body{
+            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+            background:linear-gradient(135deg,#FFF8E1 0%,#FFECB3 50%,#FFE0B2 100%);
+            background-attachment:fixed;
+            color:#333;
+            line-height:1.6;
+            min-height:100vh;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+        }
+        
+        .container{
+            max-width:1200px;
+            margin:0 auto;
+            padding:16px;
+        }
+        
+        /* Header Styling */
+        header{
+            background:var(--white);
+            border-radius:20px;
+            margin-bottom:24px;
+            box-shadow:var(--shadow-lg);
+            overflow:hidden;
+            position:relative;
+        }
+        
+        header::before{
+            content:'';
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            height:6px;
+            background:linear-gradient(90deg,var(--primary) 0%,var(--secondary) 50%,var(--accent) 100%);
+        }
+        
+        .header-content{
+            padding:32px 20px 28px;
+            text-align:center;
+        }
+        
+        .logo-container{
+            margin-bottom:20px;
+            position:relative;
+            display:inline-block;
+        }
+        
+        .logo-wrapper{
+            position:relative;
+            display:inline-block;
+        }
+        
+        .logo-wrapper::before{
+            content:'';
+            position:absolute;
+            inset:-8px;
+            background:linear-gradient(135deg,var(--secondary),var(--accent));
+            border-radius:50%;
+            opacity:.2;
+            animation:pulse-ring 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-ring{
+            0%,100%{transform:scale(1);opacity:.2}
+            50%{transform:scale(1.1);opacity:.1}
+        }
+        
+        .logo-container img{
+            width:140px;
+            height:140px;
+            border-radius:50%;
+            border:4px solid var(--white);
+            box-shadow:0 0 0 3px var(--secondary),var(--shadow-md);
+            object-fit:cover;
+            position:relative;
+            z-index:1;
+        }
+        
+        h1{
+            font-size:2em;
+            font-weight:800;
+            background:linear-gradient(135deg,var(--primary) 0%,var(--accent) 100%);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            background-clip:text;
+            margin-bottom:8px;
+            letter-spacing:-0.5px;
+            line-height:1.2;
+        }
+        
+        .subtitle{
+            font-size:1.1em;
+            color:var(--text-dark);
+            font-weight:600;
+            margin-bottom:20px;
+            opacity:.9;
+        }
+        
+        /* Infinite Carousel */
+        .gallery-carousel{
+            margin:20px 0;
+            position:relative;
+            overflow:hidden;
+            border-radius:16px;
+            padding:12px 0;
+        }
+        
+        .gallery-track{
+            display:flex;
+            gap:16px;
+            animation:scroll-infinite 30s linear infinite;
+            width:max-content;
+        }
+        
+        .gallery-track:hover{
+            animation-play-state:paused;
+        }
+        
+        @keyframes scroll-infinite{
+            0%{transform:translateX(0)}
+            100%{transform:translateX(-50%)}
+        }
+        
+        .gallery-item{
+            flex:0 0 auto;
+            width:120px;
+            height:120px;
+            position:relative;
+            border-radius:12px;
+            overflow:hidden;
+            box-shadow:var(--shadow-md);
+            border:3px solid var(--white);
+            transition:all .3s cubic-bezier(.4,0,.2,1);
+        }
+        
+        .gallery-item img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            display:block;
+        }
+        
+        .gallery-item::after{
+            content:'';
+            position:absolute;
+            inset:0;
+            background:linear-gradient(to top,rgba(0,0,0,.3) 0%,transparent 50%);
+            opacity:0;
+            transition:opacity .3s;
+        }
+        
+        .gallery-item:hover{
+            transform:scale(1.05);
+            z-index:2;
+            box-shadow:var(--shadow-lg);
+        }
+        
+        .gallery-item:hover::after{
+            opacity:1;
+        }
+        
+        .cta-badge{
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            background:linear-gradient(135deg,var(--secondary) 0%,var(--accent) 100%);
+            color:var(--white);
+            padding:14px 24px;
+            border-radius:50px;
+            font-weight:700;
+            font-size:.95em;
+            box-shadow:var(--shadow-md);
+            animation:float 3s ease-in-out infinite;
+            line-height:1.3;
+            margin-top:8px;
+        }
+        
+        @keyframes float{
+            0%,100%{transform:translateY(0)}
+            50%{transform:translateY(-5px)}
+        }
+        
+        /* Menu Section */
+        .menu-section{
+            background:var(--white);
+            border-radius:20px;
+            padding:24px 16px;
+            margin-bottom:24px;
+            box-shadow:var(--shadow-lg);
+            position:relative;
+            overflow:hidden;
+        }
+        
+        .menu-section::before{
+            content:'';
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            height:4px;
+            background:linear-gradient(90deg,var(--secondary),var(--accent));
+        }
+        
+        .menu-section h2{
+            font-size:1.75em;
+            font-weight:800;
+            color:var(--primary);
+            margin-bottom:20px;
+            text-align:center;
+            position:relative;
+            padding-bottom:12px;
+            letter-spacing:-0.5px;
+        }
+        
+        .menu-section h2::after{
+            content:'';
+            position:absolute;
+            bottom:0;
+            left:50%;
+            transform:translateX(-50%);
+            width:80px;
+            height:3px;
+            background:linear-gradient(90deg,var(--secondary),var(--accent));
+            border-radius:2px;
+        }
+        
+        /* Menu Grid */
+        .menu-grid{
+            display:grid;
+            grid-template-columns:1fr;
+            gap:16px;
+            margin-top:24px;
+        }
+        
+        .menu-item{
+            background:linear-gradient(135deg,#FFFBF5 0%,#FFF8F0 100%);
+            border-radius:16px;
+            padding:20px;
+            border:2px solid #FFE0B2;
+            transition:all .3s cubic-bezier(.4,0,.2,1);
+            position:relative;
+            overflow:hidden;
+        }
+        
+        .menu-item::before{
+            content:'';
+            position:absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background:linear-gradient(135deg,rgba(255,167,38,.05) 0%,rgba(255,112,67,.05) 100%);
+            opacity:0;
+            transition:opacity .3s;
+        }
+        
+        .menu-item:active::before{
+            opacity:1;
+        }
+        
+        .menu-item:active{
+            transform:scale(.98);
+            border-color:var(--secondary);
+        }
+        
+        .menu-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-start;
+            gap:12px;
+            margin-bottom:16px;
+            flex-wrap:wrap;
+        }
+        
+        .menu-item h3{
+            font-size:1.25em;
+            color:var(--primary);
+            font-weight:700;
+            display:flex;
+            align-items:center;
+            gap:8px;
+            flex:1;
+            min-width:150px;
+        }
+        
+        .menu-emoji{
+            font-size:1.2em;
+        }
+        
+        .price-tag{
+            background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);
+            color:var(--white);
+            padding:8px 18px;
+            border-radius:50px;
+            font-size:1.1em;
+            font-weight:800;
+            box-shadow:var(--shadow-sm);
+            white-space:nowrap;
+            letter-spacing:0.5px;
+        }
+        
+        .menu-item ul{
+            list-style:none;
+        }
+        
+        .menu-item ul li{
+            padding:8px 0 8px 28px;
+            position:relative;
+            color:#2C3E50;
+            font-weight:500;
+            font-size:.95em;
+            line-height:1.5;
+        }
+        
+        .menu-item ul li:before{
+            content:"✓";
+            position:absolute;
+            left:0;
+            color:var(--secondary);
+            font-weight:700;
+            font-size:1.1em;
+            width:20px;
+            height:20px;
+            background:rgba(255,167,38,.1);
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            line-height:1;
+        }
+        
+        /* A La Carte Grid */
+        .alacarte-grid{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:12px;
+            margin-top:24px;
+        }
+        
+        .alacarte-item{
+            background:linear-gradient(135deg,#FFFBF5 0%,#FFF3E0 100%);
+            border-radius:12px;
+            padding:16px 12px;
+            text-align:center;
+            border:2px solid #FFE0B2;
+            transition:all .3s cubic-bezier(.4,0,.2,1);
+            min-height:100px;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            gap:8px;
+            position:relative;
+            overflow:hidden;
+        }
+        
+        .alacarte-item::before{
+            content:'';
+            position:absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background:linear-gradient(135deg,rgba(255,167,38,.1) 0%,rgba(255,112,67,.1) 100%);
+            opacity:0;
+            transition:opacity .3s;
+        }
+        
+        .alacarte-item:active{
+            transform:scale(.95);
+            border-color:var(--secondary);
+        }
+        
+        .alacarte-item:active::before{
+            opacity:1;
+        }
+        
+        .item-name{
+            font-size:.95em;
+            font-weight:600;
+            color:#2C3E50;
+            line-height:1.3;
+            z-index:1;
+        }
+        
+        .item-price{
+            font-size:1.2em;
+            font-weight:800;
+            color:var(--primary);
+            z-index:1;
+        }
+        
+        /* Footer */
+        footer{
+            background:var(--white);
+            border-radius:20px;
+            padding:32px 20px;
+            text-align:center;
+            box-shadow:var(--shadow-lg);
+            margin-bottom:24px;
+            position:relative;
+            overflow:hidden;
+        }
+        
+        footer::before{
+            content:'';
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            height:4px;
+            background:linear-gradient(90deg,var(--secondary),var(--accent));
+        }
+        
+        footer h3{
+            font-size:1.6em;
+            font-weight:800;
+            color:var(--primary);
+            margin-bottom:12px;
+        }
+        
+        footer p{
+            color:var(--text-dark);
+            font-weight:500;
+            font-size:1.05em;
+            line-height:1.6;
+            margin-bottom:24px;
+        }
+        
+        .contact-buttons{
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+            align-items:center;
+        }
+        
+        .contact-btn{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            gap:10px;
+            background:linear-gradient(135deg,var(--secondary) 0%,var(--accent) 100%);
+            color:var(--white);
+            padding:14px 28px;
+            border-radius:50px;
+            text-decoration:none;
+            font-size:1.05em;
+            font-weight:700;
+            transition:all .3s cubic-bezier(.4,0,.2,1);
+            box-shadow:var(--shadow-md);
+            width:100%;
+            max-width:320px;
+            min-height:48px;
+        }
+        
+        .contact-btn:active{
+            transform:scale(.95);
+            box-shadow:var(--shadow-sm);
+        }
+        
+        /* Tablet */
+        @media (min-width:600px){
+            .container{padding:24px}
+            .header-content{padding:40px 24px 32px}
+            .logo-container img{width:160px;height:160px}
+            h1{font-size:2.5em}
+            .subtitle{font-size:1.2em}
+            .gallery-item{width:150px;height:150px}
+            .cta-badge{font-size:1.05em;padding:16px 32px}
+            .menu-section{padding:32px 24px}
+            .menu-section h2{font-size:2em}
+            .menu-grid{grid-template-columns:repeat(2,1fr);gap:20px}
+            .alacarte-grid{grid-template-columns:repeat(3,1fr);gap:16px}
+            .contact-buttons{flex-direction:row;justify-content:center}
+            .contact-btn{width:auto}
+        }
+        
+        /* Desktop */
+        @media (min-width:900px){
+            .container{padding:32px}
+            .header-content{padding:48px 32px 40px}
+            .logo-container img{width:180px;height:180px}
+            h1{font-size:3em}
+            .subtitle{font-size:1.3em}
+            .gallery-item{width:180px;height:180px}
+            .cta-badge{font-size:1.1em}
+            .menu-section{padding:40px 32px}
+            .menu-section h2{font-size:2.25em}
+            .menu-grid{grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+            .menu-item{padding:24px}
+            .menu-item:hover{
+                transform:translateY(-4px);
+                box-shadow:var(--shadow-xl);
+                border-color:var(--secondary);
+            }
+            .menu-item:hover::before{opacity:1}
+            .alacarte-grid{grid-template-columns:repeat(4,1fr);gap:16px}
+            .alacarte-item:hover{
+                transform:scale(1.05);
+                border-color:var(--secondary);
+                box-shadow:var(--shadow-md);
+            }
+            .alacarte-item:hover::before{opacity:1}
+            .contact-btn:hover{
+                transform:translateY(-2px);
+                box-shadow:var(--shadow-lg);
+            }
+            .contact-btn:active{
+                transform:translateY(0);
+            }
+        }
+        
+        /* Small Mobile */
+        @media (max-width:360px){
+            .container{padding:12px}
+            .header-content{padding:24px 16px}
+            .logo-container img{width:120px;height:120px}
+            h1{font-size:1.75em}
+            .subtitle{font-size:1em}
+            .gallery-item{width:100px;height:100px}
+            .cta-badge{font-size:.9em;padding:12px 20px}
+            .menu-section{padding:20px 12px}
+            .menu-section h2{font-size:1.5em}
+            .menu-item h3{font-size:1.15em}
+            .alacarte-grid{grid-template-columns:1fr;gap:10px}
+            .contact-btn{font-size:1em;padding:12px 24px}
+        }
+        
+        /* Smooth Scrolling */
+        html{scroll-behavior:smooth}
+        
+        /* Accessibility */
+        a,button{
+            min-height:44px;
+            min-width:44px;
+        }
+        
+        @media (prefers-reduced-motion:reduce){
+            .gallery-track{
+                animation:none!important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo-container">
+                    <div class="logo-wrapper">
+                        <img src="https://i.ibb.co/207VNnyn/dyufg.webp" alt="Cita Rasa Indonesia Logo" loading="eager" width="180" height="180">
+                    </div>
+                </div>
+                <h1>CITA RASA INDONESIA</h1>
+                <p class="subtitle">Authentic Indonesian Food</p>
+                
+                <!-- Infinite Auto-Scroll Carousel -->
+                <div class="gallery-carousel">
+                    <div class="gallery-track" id="galleryTrack">
+                        <div class="gallery-item">
+                            <img src="https://i.ibb.co/DD0PnmYT/7.png" alt="Menu Makanan 1" loading="lazy">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://i.ibb.co/9mw135TC/8.png" alt="Menu Makanan 2" loading="lazy">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://i.ibb.co/7JsKyyZm/2.png" alt="Menu Makanan 3" loading="lazy">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://i.ibb.co/mCn6SZrS/3.png" alt="Menu Makanan 4" loading="lazy">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://i.ibb.co/XfMg4Nby/4.png" alt="Menu Makanan 5" loading="lazy">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://i.ibb.co/ZjZnPb2/5.png" alt="Menu Makanan 6" loading="lazy">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://i.ibb.co/FqXW82DQ/6.png" alt="Menu Makanan 7" loading="lazy">
+                        </div>
+                        <!-- Duplicate for infinite loop effect -->
+                        <div class="gallery-item">
+                            <img src="https://i.ibb.co/DD0PnmYT/7.png" alt="Menu Makanan 1" loading="lazy">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://i.ibb.co/9mw135TC/8.png" alt="Menu Makanan 2" loading="lazy">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://i.ibb.co/7JsKyyZm/2.png" alt="Menu Makanan 3" loading="lazy">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://i.ibb.co/mCn6SZrS/3.png" alt="Menu Makanan 4" loading="lazy">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://i.ibb.co/XfMg4Nby/4.png" alt="Menu Makanan 5" loading="lazy">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://i.ibb.co/ZjZnPb2/5.png" alt="Menu Makanan 6" loading="lazy">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://i.ibb.co/FqXW82DQ/6.png" alt="Menu Makanan 7" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cta-badge">
+                    <span>👌</span>
+                    <span>MAKAN KENYANG, HATI SENANG, PIKIRAN TENANG</span>
+                    <span>👌</span>
+                </div>
+            </div>
+        </header>
 
+        <div class="menu-section">
+            <h2>MENU PAKET SPESIAL</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <div class="menu-header">
+                        <h3>
+                            <span class="menu-emoji">🍗🍳🥔</span>
+                            <span>PAYALUR</span>
+                        </h3>
+                        <span class="price-tag">¥35</span>
+                    </div>
+                    <ul>
+                        <li>Nasi Putih dan Ayam Goreng</li>
+                        <li>Telur Balado</li>
+                        <li>Kentang Balado</li>
+                        <li>Bakwan Sayur dan Sambal</li>
+                    </ul>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-header">
+                        <h3>
+                            <span class="menu-emoji">🍗🥔</span>
+                            <span>PAYALIT</span>
+                        </h3>
+                        <span class="price-tag">¥30</span>
+                    </div>
+                    <ul>
+                        <li>Nasi Putih dan Ayam Goreng</li>
+                        <li>Kentang Balado</li>
+                        <li>Bakwan Sayur dan Sambal</li>
+                    </ul>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-header">
+                        <h3>
+                            <span class="menu-emoji">🍗</span>
+                            <span>PAYAMAT</span>
+                        </h3>
+                        <span class="price-tag">¥25</span>
+                    </div>
+                    <ul>
+                        <li>Nasi Putih dan Ayam Goreng</li>
+                        <li>Bakwan Sayur dan Sambal</li>
+                    </ul>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-header">
+                        <h3>
+                            <span class="menu-emoji">🍳🥔</span>
+                            <span>PALUTANG</span>
+                        </h3>
+                        <span class="price-tag">¥25</span>
+                    </div>
+                    <ul>
+                        <li>Nasi Putih dan Telur Balado</li>
+                        <li>Kentang Balado</li>
+                        <li>Bakwan Sayur 2pcs</li>
+                    </ul>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-header">
+                        <h3>
+                            <span class="menu-emoji">🍳</span>
+                            <span>PALUR</span>
+                        </h3>
+                        <span class="price-tag">¥20</span>
+                    </div>
+                    <ul>
+                        <li>Nasi Putih dan Telur Balado</li>
+                        <li>Bakwan Sayur 2pcs</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-section">
+            <h2>MENU PRAMES</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <div class="menu-header">
+                        <h3>
+                            <span class="menu-emoji">🍱</span>
+                            <span>PRAMES A</span>
+                        </h3>
+                        <span class="price-tag">¥25</span>
+                    </div>
+                    <ul>
+                        <li>Nasi Putih</li>
+                        <li>Ayam Goreng</li>
+                        <li>Tahu</li>
+                        <li>Timun</li>
+                        <li>Sambal</li>
+                        <li>Kremesan</li>
+                    </ul>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-header">
+                        <h3>
+                            <span class="menu-emoji">🍱</span>
+                            <span>PRAMES B</span>
+                        </h3>
+                        <span class="price-tag">¥33</span>
+                    </div>
+                    <ul>
+                        <li>Nasi Putih</li>
+                        <li>Ayam Goreng</li>
+                        <li>Telur Balado</li>
+                        <li>Tahu</li>
+                        <li>Timun</li>
+                        <li>Sambal</li>
+                        <li>Kremesan</li>
+                    </ul>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-header">
+                        <h3>
+                            <span class="menu-emoji">🍱</span>
+                            <span>PRAMES C</span>
+                        </h3>
+                        <span class="price-tag">¥30</span>
+                    </div>
+                    <ul>
+                        <li>Nasi Putih</li>
+                        <li>Ayam Goreng</li>
+                        <li>Kentang Balado</li>
+                        <li>Tahu</li>
+                        <li>Timun</li>
+                        <li>Sambal</li>
+                        <li>Kremesan</li>
+                    </ul>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-header">
+                        <h3>
+                            <span class="menu-emoji">🥔</span>
+                            <span>PRAMES KARBO</span>
+                        </h3>
+                        <span class="price-tag">¥20</span>
+                    </div>
+                    <ul>
+                        <li>Nasi Putih</li>
+                        <li>Kentang Balado</li>
+                        <li>Bakwan 2pcs</li>
+                        <li>Sambal</li>
+                        <li>Kremesan</li>
+                    </ul>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-header">
+                        <h3>
+                            <span class="menu-emoji">🥬</span>
+                            <span>PRAMES VEGGIE</span>
+                        </h3>
+                        <span class="price-tag">¥15</span>
+                    </div>
+                    <ul>
+                        <li>Nasi Putih</li>
+                        <li>Tahu</li>
+                        <li>Timun</li>
+                        <li>Sambal</li>
+                        <li>Kremesan</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-section">
+            <h2>MENU ALA CARTE</h2>
+            <div class="alacarte-grid">
+                <div class="alacarte-item">
+                    <div class="item-name">🍗 Ayam Goreng</div>
+                    <div class="item-price">¥15</div>
+                </div>
+                <div class="alacarte-item">
+                    <div class="item-name">🍳 Telur Dadar</div>
+                    <div class="item-price">¥8</div>
+                </div>
+                <div class="alacarte-item">
+                    <div class="item-name">🥔 Kentang Balado</div>
+                    <div class="item-price">¥10</div>
+                </div>
+                <div class="alacarte-item">
+                    <div class="item-name">🥚 Telur Balado</div>
+                    <div class="item-price">¥10</div>
+                </div>
+                <div class="alacarte-item">
+                    <div class="item-name">🍳 Telur Ceplok</div>
+                    <div class="item-price">¥7</div>
+                </div>
+                <div class="alacarte-item">
+                    <div class="item-name">🥬 Bakwan 3pcs</div>
+                    <div class="item-price">¥5</div>
+                </div>
+                <div class="alacarte-item">
+                    <div class="item-name">✨ Extra Kremes</div>
+                    <div class="item-price">¥5</div>
+                </div>
+                <div class="alacarte-item">
+                    <div class="item-name">🌶️ Extra Sambel</div>
+                    <div class="item-price">¥3</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <h3>📞 Hubungi Kami!</h3>
+            <p>Pesan sekarang dan nikmati kelezatan masakan Indonesia! 🇮🇩</p>
+            <div class="contact-buttons">
+                <a href="https://t.me/CitaRasaIndo" class="contact-btn" target="_blank" rel="noopener">
+                    <span>✉️</span>
+                    <span>Order via Telegram</span>
+                </a>
+                <a href="https://t.me/CriFood" class="contact-btn" target="_blank" rel="noopener">
+                    <span>📢</span>
+                    <span>Join Channel</span>
+                </a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
