@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+    <meta name="description" content="Cita Rasa Indonesia - Authentic Indonesian Food">
+    <meta name="theme-color" content="#C62828">
+    <title>Cita Rasa Indo - Authentic Indonesian Food</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        
+        body{
+            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+            background:#1A1A1A;
+            color:#1A1A1A;
+            line-height:1.6;
+            -webkit-font-smoothing:antialiased;
+            overflow-x:hidden;
+        }
+        
+        .container{
+            max-width:1280px;
+            margin:0 auto;
+            padding:16px;
+        }
+        
+        /* Header */
+        header{
+            background:#fff;
+            border-radius:20px;
+            margin:20px 0;
+            box-shadow:0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .header-content{
+            padding:40px 24px;
+            text-align:center;
+            background:linear-gradient(180deg,#FFF8E7 0%,#fff 100%);
+            border-radius:20px;
+        }
+        
+        .logo-container{
+            margin-bottom:24px;
+        }
+        
+        .logo-container img{
+            width:140px;
+            height:140px;
+            border-radius:50%;
+            border:4px solid #fff;
+            box-shadow:0 4px 16px rgba(198,40,40,0.2);
+            object-fit:cover;
+        }
+        
+        h1{
+            font-size:2rem;
+            font-weight:900;
+            color:#C62828;
+            margin-bottom:12px;
+            letter-spacing:-1px;
+        }
+        
+        .subtitle{
+            font-size:0.95rem;
+            font-weight:600;
+            color:#757575;
+            text-transform:uppercase;
+            letter-spacing:2px;
+            margin-bottom:28px;
+        }
+        
+        /* CAROUSEL - OPTIMIZED FOR PERFORMANCE */
+        .gallery-carousel{
+            margin:28px -24px;
+            padding:20px 0;
+            overflow:hidden;
+            position:relative;
+        }
+        
+        .gallery-track{
+            display:flex;
+            gap:16px;
+            animation:scroll 30s linear infinite;
+            will-change:transform;
+        }
+        
+        @keyframes scroll{
+            0%{transform:translateX(0)}
+            100%{transform:translateX(-50%)}
+        }
+        
+        .gallery-item{
+            flex:0 0 auto;
+            width:140px;
+            height:140px;
+            border-radius:12px;
+            overflow:hidden;
+            box-shadow:0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .gallery-item img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            display:block;
+        }
+        
+        /* CTA Badge */
+        .cta-badge{
+            display:inline-flex;
+            align-items:center;
+            gap:10px;
+            background:linear-gradient(135deg,#C62828 0%,#F57C00 100%);
+            color:#fff;
+            padding:14px 28px;
+            border-radius:100px;
+            font-weight:700;
+            font-size:1rem;
+            box-shadow:0 4px 16px rgba(198,40,40,0.3);
+        }
+        
+        /* Menu Section */
+        .menu-section{
+            background:#fff;
+            border-radius:20px;
+            padding:36px 24px;
+            margin-bottom:20px;
+            box-shadow:0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .menu-section h2{
+            font-size:1.75rem;
+            font-weight:900;
+            color:#C62828;
+            text-align:center;
+            margin-bottom:32px;
+            position:relative;
+            padding-bottom:16px;
+        }
+        
+        .menu-section h2::after{
+            content:'';
+            position:absolute;
+            bottom:0;
+            left:50%;
+            transform:translateX(-50%);
+            width:60px;
+            height:3px;
+            background:linear-gradient(90deg,#F57C00 0%,#C62828 100%);
+            border-radius:2px;
+        }
+        
+        /* Menu Grid */
+        .menu-grid{
+            display:grid;
+            gap:16px;
+        }
+        
+        .menu-item{
+            background:linear-gradient(135deg,#FFF8E7 0%,#fff 100%);
+            border-radius:16px;
+            padding:24px;
+            border:2px solid #FFF3D4;
+        }
+        
+        .menu-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:12px;
+            margin-bottom:16px;
+            flex-wrap:wrap;
+        }
+        
+        .menu-item h3{
+            font-size:1.2rem;
+            color:#C62828;
+            font-weight:800;
+            display:flex;
+            align-items:center;
+            gap:8px;
+            flex:1;
+            min-width:0;
+        }
+        
+        .menu-emoji{
+            font-size:1.3rem;
+            flex-shrink:0;
+        }
+        
+        .price-tag{
+            background:linear-gradient(135deg,#C62828 0%,#8E0000 100%);
+            color:#fff;
+            padding:6px 16px;
+            border-radius:100px;
+            font-size:1.2rem;
+            font-weight:800;
+            white-space:nowrap;
+            flex-shrink:0;
+        }
+        
+        .menu-item ul{
+            list-style:none;
+        }
+        
+        .menu-item ul li{
+            padding:8px 0 8px 32px;
+            position:relative;
+            color:#757575;
+            font-weight:500;
+            font-size:0.95rem;
+        }
+        
+        .menu-item ul li::before{
+            content:"✓";
+            position:absolute;
+            left:0;
+            top:50%;
+            transform:translateY(-50%);
+            color:#fff;
+            font-weight:700;
+            width:22px;
+            height:22px;
+            background:linear-gradient(135deg,#F57C00 0%,#C62828 100%);
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:0.85rem;
+        }
+        
+        /* A La Carte Grid */
+        .alacarte-grid{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:12px;
+        }
+        
+        .alacarte-item{
+            background:linear-gradient(135deg,#FFF3D4 0%,#fff 100%);
+            border-radius:12px;
+            padding:20px 12px;
+            text-align:center;
+            min-height:100px;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            gap:8px;
+            border:2px solid #FFF8E7;
+        }
+        
+        .item-name{
+            font-size:0.95rem;
+            font-weight:600;
+            color:#1A1A1A;
+            line-height:1.3;
+        }
+        
+        .item-price{
+            font-size:1.3rem;
+            font-weight:800;
+            color:#C62828;
+        }
+        
+        /* Footer */
+        footer{
+            background:#fff;
+            border-radius:20px;
+            padding:40px 24px;
+            text-align:center;
+            box-shadow:0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom:20px;
+        }
+        
+        footer h3{
+            font-size:1.75rem;
+            font-weight:900;
+            color:#C62828;
+            margin-bottom:12px;
+        }
+        
+        footer p{
+            color:#757575;
+            font-weight:500;
+            font-size:1rem;
+            line-height:1.7;
+            margin-bottom:24px;
+        }
+        
+        .contact-buttons{
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+        }
+        
+        .contact-btn{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:10px;
+            background:linear-gradient(135deg,#C62828 0%,#F57C00 100%);
+            color:#fff;
+            padding:14px 28px;
+            border-radius:100px;
+            text-decoration:none;
+            font-size:1rem;
+            font-weight:700;
+            box-shadow:0 4px 16px rgba(198,40,40,0.25);
+            -webkit-tap-highlight-color:transparent;
+        }
+        
+        .contact-btn:active{
+            transform:scale(0.98);
+        }
+        
+        /* Tablet */
+        @media (min-width:600px){
+            .container{padding:24px}
+            .header-content{padding:48px 32px}
+            .logo-container img{width:160px;height:160px}
+            h1{font-size:2.5rem}
+            .subtitle{font-size:1.1rem}
+            .gallery-carousel{margin:32px -32px}
+            .gallery-item{width:160px;height:160px}
+            .menu-section{padding:44px 32px}
+            .menu-section h2{font-size:2rem}
+            .menu-grid{grid-template-columns:repeat(2,1fr);gap:20px}
+            .alacarte-grid{grid-template-columns:repeat(3,1fr);gap:16px}
+            .contact-buttons{flex-direction:row;justify-content:center;flex-wrap:wrap}
+            footer{padding:48px 32px}
+        }
+        
+        /* Desktop */
+        @media (min-width:900px){
+            .container{padding:32px}
+            .header-content{padding:56px 40px}
+            .logo-container img{width:180px;height:180px}
+            h1{font-size:3.5rem}
+            .subtitle{font-size:1.25rem}
+            .gallery-carousel{margin:36px -40px}
+            .gallery-item{width:180px;height:180px}
+            .menu-section{padding:52px 40px}
+            .menu-section h2{font-size:2.5rem}
+            .menu-grid{grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px}
+            .menu-item{padding:28px}
+            .alacarte-grid{grid-template-columns:repeat(4,1fr);gap:20px}
+            footer{padding:56px 40px}
+        }
+        
+        /* Touch improvements */
+        @media (hover:none){
+            .gallery-track{animation-duration:40s}
+        }
+        
+        /* Performance */
+        img{
+            content-visibility:auto;
+        }
+        
+        /* Accessibility */
+        *:focus-visible{
+            outline:3px solid #F57C00;
+            outline-offset:2px;
+        }
+        
+        @media (prefers-reduced-motion:reduce){
+            .gallery-track{
+                animation:none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="https://i.ibb.co/207VNnyn/dyufg.webp" alt="Cita Rasa Indonesia Logo" width="180" height="180">
+                </div>
+                <h1>CITA RASA INDONESIA</h1>
+                <p class="subtitle">Authentic Indonesian Food</p>
+                
+                <div class="gallery-carousel">
+                    <div class="gallery-track">
+                        <div class="gallery-item"><img src="https://i.ibb.co/DD0PnmYT/7.png" alt="Indonesian Dish" loading="lazy" width="180" height="180"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/9mw135TC/8.png" alt="Indonesian Dish" loading="lazy" width="180" height="180"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/7JsKyyZm/2.png" alt="Indonesian Dish" loading="lazy" width="180" height="180"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/mCn6SZrS/3.png" alt="Indonesian Dish" loading="lazy" width="180" height="180"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/XfMg4Nby/4.png" alt="Indonesian Dish" loading="lazy" width="180" height="180"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/ZjZnPb2/5.png" alt="Indonesian Dish" loading="lazy" width="180" height="180"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/FqXW82DQ/6.png" alt="Indonesian Dish" loading="lazy" width="180" height="180"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/DD0PnmYT/7.png" alt="Indonesian Dish" loading="lazy" width="180" height="180"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/9mw135TC/8.png" alt="Indonesian Dish" loading="lazy" width="180" height="180"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/7JsKyyZm/2.png" alt="Indonesian Dish" loading="lazy" width="180" height="180"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/mCn6SZrS/3.png" alt="Indonesian Dish" loading="lazy" width="180" height="180"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/XfMg4Nby/4.png" alt="Indonesian Dish" loading="lazy" width="180" height="180"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/ZjZnPb2/5.png" alt="Indonesian Dish" loading="lazy" width="180" height="180"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/FqXW82DQ/6.png" alt="Indonesian Dish" loading="lazy" width="180" height="180"></div>
+                    </div>
+                </div>
+                
+                <div class="cta-badge">
+                    <span>👌</span>
+                    <span>Makan Kenyang, Hati Senang, Pikiran Tenang!</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="menu-section">
+            <h2>Menu Paket Spesial</h2>
+            <div class="menu-grid">
+                <article class="menu-item">
+                    <div class="menu-header">
+                        <h3><span class="menu-emoji">🍗🍳🥔</span><span>PAYALUR</span></h3>
+                        <span class="price-tag">¥35</span>
+                    </div>
+                    <ul>
+                        <li>Nasi Putih dan Ayam Goreng</li>
+                        <li>Telur Balado</li>
+                        <li>Kentang Balado</li>
+                        <li>Bakwan Sayur dan Sambal</li>
+                    </ul>
+                </article>
+                
+                <article class="menu-item">
+                    <div class="menu-header">
+                        <h3><span class="menu-emoji">🍗🥔</span><span>PAYALIT</span></h3>
+                        <span class="price-tag">¥30</span>
+                    </div>
+                    <ul>
+                        <li>Nasi Putih dan Ayam Goreng</li>
+                        <li>Kentang Balado</li>
+                        <li>Bakwan Sayur dan Sambal</li>
+                    </ul>
+                </article>
+                
+                <article class="menu-item">
+                    <div class="menu-header">
+                        <h3><span class="menu-emoji">🍗</span><span>PAYAMAT</span></h3>
+                        <span class="price-tag">¥25</span>
+                    </div>
+                    <ul>
+                        <li>Nasi Putih dan Ayam Goreng</li>
+                        <li>Bakwan Sayur dan Sambal</li>
+                    </ul>
+                </article>
+                
+                <article class="menu-item">
+                    <div class="menu-header">
+                        <h3><span class="menu-emoji">🍳🥔</span><span>PALUTANG</span></h3>
+                        <span class="price-tag">¥25</span>
+                    </div>
+                    <ul>
+                        <li>Nasi Putih dan Telur Balado</li>
+                        <li>Kentang Balado</li>
+                        <li>Bakwan Sayur 2pcs</li>
+                    </ul>
+                </article>
+                
+                <article class="menu-item">
+                    <div class="menu-header">
+                        <h3><span class="menu-emoji">🍳</span><span>PALUR</span></h3>
+                        <span class="price-tag">¥20</span>
+                    </div>
+                    <ul>
+                        <li>Nasi Putih dan Telur Balado</li>
+                        <li>Bakwan Sayur 2pcs</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <section class="menu-section">
+            <h2>Menu Prames</h2>
+            <div class="menu-grid">
+                <article class="menu-item">
+                    <div class="menu-header">
+                        <h3><span class="menu-emoji">🍱</span><span>PRAMES A</span></h3>
+                        <span class="price-tag">¥25</span>
+                    </div>
+                    <ul>
+                        <li>Nasi Putih</li>
+                        <li>Ayam Goreng</li>
+                        <li>Tahu</li>
+                        <li>Timun</li>
+                        <li>Sambal</li>
+                        <li>Kremesan</li>
+                    </ul>
+                </article>
+                
+                <article class="menu-item">
+                    <div class="menu-header">
+                        <h3><span class="menu-emoji">🍱</span><span>PRAMES B</span></h3>
+                        <span class="price-tag">¥33</span>
+                    </div>
+                    <ul>
+                        <li>Nasi Putih</li>
+                        <li>Ayam Goreng</li>
+                        <li>Telur Balado</li>
+                        <li>Tahu</li>
+                        <li>Timun</li>
+                        <li>Sambal</li>
+                        <li>Kremesan</li>
+                    </ul>
+                </article>
+                
+                <article class="menu-item">
+                    <div class="menu-header">
+                        <h3><span class="menu-emoji">🍱</span><span>PRAMES C</span></h3>
+                        <span class="price-tag">¥30</span>
+                    </div>
+                    <ul>
+                        <li>Nasi Putih</li>
+                        <li>Ayam Goreng</li>
+                        <li>Kentang Balado</li>
+                        <li>Tahu</li>
+                        <li>Timun</li>
+                        <li>Sambal</li>
+                        <li>Kremesan</li>
+                    </ul>
+                </article>
+                
+                <article class="menu-item">
+                    <div class="menu-header">
+                        <h3><span class="menu-emoji">🥔</span><span>PRAMES KARBO</span></h3>
+                        <span class="price-tag">¥20</span>
+                    </div>
+                    <ul>
+                        <li>Nasi Putih</li>
+                        <li>Kentang Balado</li>
+                        <li>Bakwan 2pcs</li>
+                        <li>Sambal</li>
+                        <li>Kremesan</li>
+                    </ul>
+                </article>
+                
+                <article class="menu-item">
+                    <div class="menu-header">
+                        <h3><span class="menu-emoji">🥬</span><span>PRAMES VEGGIE</span></h3>
+                        <span class="price-tag">¥15</span>
+                    </div>
+                    <ul>
+                        <li>Nasi Putih</li>
+                        <li>Tahu</li>
+                        <li>Timun</li>
+                        <li>Sambal</li>
+                        <li>Kremesan</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <section class="menu-section">
+            <h2>Menu Ala Carte</h2>
+            <div class="alacarte-grid">
+                <article class="alacarte-item">
+                    <div class="item-name">🍗 Ayam Goreng</div>
+                    <div class="item-price">¥15</div>
+                </article>
+                <article class="alacarte-item">
+                    <div class="item-name">🍳 Telur Dadar</div>
+                    <div class="item-price">¥8</div>
+                </article>
+                <article class="alacarte-item">
+                    <div class="item-name">🥔 Kentang Balado</div>
+                    <div class="item-price">¥10</div>
+                </article>
+                <article class="alacarte-item">
+                    <div class="item-name">🥚 Telur Balado</div>
+                    <div class="item-price">¥10</div>
+                </article>
+                <article class="alacarte-item">
+                    <div class="item-name">🍳 Telur Ceplok</div>
+                    <div class="item-price">¥7</div>
+                </article>
+                <article class="alacarte-item">
+                    <div class="item-name">🥬 Bakwan 3pcs</div>
+                    <div class="item-price">¥5</div>
+                </article>
+                <article class="alacarte-item">
+                    <div class="item-name">✨ Extra Kremes</div>
+                    <div class="item-price">¥5</div>
+                </article>
+                <article class="alacarte-item">
+                    <div class="item-name">🌶️ Extra Sambel</div>
+                    <div class="item-price">¥3</div>
+                </article>
+            </div>
+        </section>
+
+        <section class="menu-section">
+            <h2>Menu Seasonal</h2>
+            <div class="menu-grid">
+                <article class="menu-item">
+                    <div class="menu-header">
+                        <h3><span class="menu-emoji">🍜</span><span>Lontong Sayur Telur</span></h3>
+                        <span class="price-tag">¥30</span>
+                    </div>
+                    <ul>
+                        <li>Lontong</li>
+                        <li>Kuah (Labu + Wortel + Buncis + Tahu)</li>
+                        <li>Telur Balado</li>
+                        <li>Kentang Balado</li>
+                    </ul>
+                </article>
+                
+                <article class="menu-item">
+                    <div class="menu-header">
+                        <h3><span class="menu-emoji">🍜🍗</span><span>Lontong Sayur Ayam Goreng</span></h3>
+                        <span class="price-tag">¥35</span>
+                    </div>
+                    <ul>
+                        <li>Lontong</li>
+                        <li>Kuah (Labu + Wortel + Buncis + Tahu)</li>
+                        <li>Ayam Goreng</li>
+                        <li>Kentang Balado</li>
+                    </ul>
+                </article>
+                
+                <article class="menu-item">
+                    <div class="menu-header">
+                        <h3><span class="menu-emoji">🍜✨</span><span>Lontong Sayur Komplit</span></h3>
+                        <span class="price-tag">¥40</span>
+                    </div>
+                    <ul>
+                        <li>Lontong Sayur</li>
+                        <li>Kuah (Labu + Wortel + Buncis + Tahu)</li>
+                        <li>Ayam Goreng</li>
+                        <li>Telur Balado</li>
+                        <li>Kentang Balado</li>
+                    </ul>
+                </article>
+                
+                <article class="menu-item">
+                    <div class="menu-header">
+                        <h3><span class="menu-emoji">🍲</span><span>Soto Ayam</span></h3>
+                        <span class="price-tag">¥33</span>
+                    </div>
+                    <ul>
+                        <li>Nasi</li>
+                        <li>Ayam Suwir</li>
+                        <li>Half-boiled Egg</li>
+                    </ul>
+                </article>
+                
+                <article class="menu-item">
+                    <div class="menu-header">
+                        <h3><span class="menu-emoji">🍚🔥</span><span>Ricebowl Sambal Matah</span></h3>
+                        <span class="price-tag">¥30</span>
+                    </div>
+                    <ul>
+                        <li>Nasi Putih</li>
+                        <li>Chicken Popcorn</li>
+                        <li>Telur Ceplok</li>
+                        <li>Sambal Matah</li>
+                    </ul>
+                </article>
+                
+                <article class="menu-item">
+                    <div class="menu-header">
+                        <h3><span class="menu-emoji">🍌🍫</span><span>Sancodut</span></h3>
+                        <span class="price-tag">¥15</span>
+                    </div>
+                    <ul>
+                        <li>Isi 3pcs 🍌🍌🍌</li>
+                        <li>Susu Coklat or Susu Putih</li>
+                        <li>Keju</li>
+                        <li>Ceres</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <footer>
+            <h3>📞 Hubungi Kami!</h3>
+            <p>Pesan sekarang dan nikmati kelezatan masakan Indonesia!</p>
+            <p>🍱 Menerima pesanan catering! Untuk acara kantor, ulang tahun, semua bisa! Pilih sendiri menu favoritmu, dari lauk sampai sambal, semuanya bisa disesuaikan!</p>
+            <nav class="contact-buttons">
+                <a href="https://t.me/CitaRasaIndo" class="contact-btn" target="_blank" rel="noopener">
+                    <span>✉️</span>
+                    <span>Order Via Telegram</span>
+                </a>
+                <a href="https://t.me/CriFood" class="contact-btn" target="_blank" rel="noopener">
+                    <span>📢</span>
+                    <span>Join Channel</span>
+                </a>
+            </nav>
+        </footer>
+    </div>
+</body>
+</html>
