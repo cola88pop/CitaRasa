@@ -514,7 +514,7 @@
             font-size:.9em;
         }
         
-        /* Cart Modal */
+        /* Cart Modal - FIXED SCROLL */
         .cart-modal{
             position:fixed;
             inset:0;
@@ -539,11 +539,12 @@
             background:var(--white);
             width:100%;
             max-width:600px;
-            max-height:80vh;
+            max-height:85vh;
             border-radius:20px 20px 0 0;
-            padding:24px 20px;
             animation:slideUp .3s;
-            overflow-y:auto;
+            display:flex;
+            flex-direction:column;
+            overflow:hidden;
         }
         
         @keyframes slideUp{
@@ -555,9 +556,9 @@
             display:flex;
             justify-content:space-between;
             align-items:center;
-            margin-bottom:20px;
-            padding-bottom:16px;
+            padding:24px 20px 16px;
             border-bottom:2px solid #FFE0B2;
+            flex-shrink:0;
         }
         
         .cart-header h2{
@@ -581,7 +582,10 @@
         }
         
         .cart-items{
-            margin-bottom:20px;
+            flex:1;
+            overflow-y:auto;
+            padding:20px;
+            -webkit-overflow-scrolling:touch;
         }
         
         .cart-item{
@@ -656,12 +660,18 @@
             text-align:center;
         }
         
+        .cart-footer{
+            padding:16px 20px 20px;
+            border-top:2px solid #FFE0B2;
+            flex-shrink:0;
+        }
+        
         .cart-total{
             background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);
             color:var(--white);
             padding:16px;
             border-radius:12px;
-            margin-bottom:16px;
+            margin-bottom:12px;
         }
         
         .cart-total-row{
@@ -706,7 +716,7 @@
             margin-bottom:16px;
         }
         
-        /* Delivery Form Modal - NEW */
+        /* Delivery Form Modal */
         .delivery-modal{
             position:fixed;
             inset:0;
@@ -726,10 +736,12 @@
         .delivery-content{
             background:var(--white);
             width:100%;
-            max-width:450px;
+            max-width:480px;
+            max-height:90vh;
             border-radius:20px;
             padding:28px 24px;
             animation:slideUp .3s;
+            overflow-y:auto;
         }
         
         .delivery-header{
@@ -768,6 +780,42 @@
             display:flex;
             align-items:center;
             gap:8px;
+        }
+        
+        /* Quick Location Buttons - NEW */
+        .quick-locations{
+            display:flex;
+            gap:8px;
+            flex-wrap:wrap;
+            margin-bottom:8px;
+        }
+        
+        .quick-loc-btn{
+            flex:1;
+            min-width:100px;
+            padding:10px 16px;
+            border:2px solid #FFE0B2;
+            border-radius:10px;
+            background:linear-gradient(135deg,#FFFBF5 0%,#FFF8F0 100%);
+            color:var(--primary);
+            font-size:0.9em;
+            font-weight:700;
+            cursor:pointer;
+            transition:all .3s;
+            text-align:center;
+        }
+        
+        .quick-loc-btn:active{
+            transform:scale(.95);
+            background:var(--secondary);
+            color:var(--white);
+            border-color:var(--secondary);
+        }
+        
+        .quick-loc-btn.selected{
+            background:var(--secondary);
+            color:var(--white);
+            border-color:var(--secondary);
         }
         
         .form-group input{
@@ -836,7 +884,7 @@
             border-radius:12px;
             box-shadow:var(--shadow-xl);
             font-weight:700;
-            z-index:3000;
+            z-index:4000;
             display:flex;
             align-items:center;
             gap:10px;
@@ -863,6 +911,7 @@
             .alacarte-grid{grid-template-columns:repeat(3,1fr);gap:12px}
             .contact-buttons{flex-direction:row;justify-content:center;flex-wrap:wrap}
             .contact-btn{width:auto;min-width:240px}
+            .quick-loc-btn{min-width:120px}
         }
         
         @media (min-width:900px){
@@ -1183,20 +1232,22 @@
                     <p>Belum ada pesanan</p>
                 </div>
             </div>
-            <div class="cart-total" id="cartTotalSection" style="display:none">
-                <div class="cart-total-row">
-                    <span>TOTAL:</span>
-                    <span id="cartTotalPrice">¥0</span>
+            <div class="cart-footer" id="cartFooter" style="display:none">
+                <div class="cart-total">
+                    <div class="cart-total-row">
+                        <span>TOTAL:</span>
+                        <span id="cartTotalPrice">¥0</span>
+                    </div>
                 </div>
+                <button class="send-order-btn" onclick="showDeliveryForm()">
+                    <span>📱</span>
+                    <span>KIRIM PESANAN VIA TELEGRAM</span>
+                </button>
             </div>
-            <button class="send-order-btn" id="sendOrderBtn" onclick="showDeliveryForm()" style="display:none">
-                <span>📱</span>
-                <span>KIRIM PESANAN VIA TELEGRAM</span>
-            </button>
         </div>
     </div>
 
-    <!-- Delivery Form Modal - NEW -->
+    <!-- Delivery Form Modal -->
     <div class="delivery-modal" id="deliveryModal">
         <div class="delivery-content">
             <div class="delivery-header">
@@ -1209,7 +1260,12 @@
                         <span>📍</span>
                         <span>Lokasi Pengantaran</span>
                     </label>
-                    <input type="text" id="deliveryLocation" placeholder="Contoh: Gedung 9, Lantai 3" required>
+                    <div class="quick-locations">
+                        <button class="quick-loc-btn" onclick="selectLocation('GEDUNG 9')">GEDUNG 9</button>
+                        <button class="quick-loc-btn" onclick="selectLocation('GEDUNG 7')">GEDUNG 7</button>
+                        <button class="quick-loc-btn" onclick="selectLocation('SKY MARKET')">SKY MARKET</button>
+                    </div>
+                    <input type="text" id="deliveryLocation" placeholder="Atau ketik lokasi manual..." required>
                 </div>
                 <div class="form-group">
                     <label for="deliveryTime">
@@ -1233,6 +1289,7 @@
 
     <script>
         let cart = [];
+        let selectedQuickLocation = '';
         
         function loadCart() {
             const saved = localStorage.getItem('citaRasaCart');
@@ -1284,9 +1341,8 @@
             const cartBadge = document.getElementById('cartBadge');
             const cartTotal = document.getElementById('cartTotal');
             const cartItems = document.getElementById('cartItems');
-            const cartTotalSection = document.getElementById('cartTotalSection');
+            const cartFooter = document.getElementById('cartFooter');
             const cartTotalPrice = document.getElementById('cartTotalPrice');
-            const sendOrderBtn = document.getElementById('sendOrderBtn');
             
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
             const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -1314,14 +1370,12 @@
                     </div>
                 `}).join('');
                 
-                cartTotalSection.style.display = 'block';
+                cartFooter.style.display = 'block';
                 cartTotalPrice.textContent = `¥${totalPrice}`;
-                sendOrderBtn.style.display = 'flex';
             } else {
                 floatingCart.classList.remove('active');
                 cartItems.innerHTML = '<div class="empty-cart"><div class="empty-cart-icon">🍽️</div><p>Belum ada pesanan</p></div>';
-                cartTotalSection.style.display = 'none';
-                sendOrderBtn.style.display = 'none';
+                cartFooter.style.display = 'none';
             }
         }
         
@@ -1345,6 +1399,22 @@
         
         function closeDeliveryForm() {
             document.getElementById('deliveryModal').classList.remove('active');
+            // Reset selection
+            document.querySelectorAll('.quick-loc-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            selectedQuickLocation = '';
+        }
+        
+        function selectLocation(location) {
+            selectedQuickLocation = location;
+            document.getElementById('deliveryLocation').value = location;
+            
+            // Visual feedback
+            document.querySelectorAll('.quick-loc-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
         }
         
         function sendToTelegram() {
@@ -1380,10 +1450,10 @@
             message += '━━━━━━━━━━━━━━━━━%0A%0A';
             message += '📝 Mohon konfirmasi, terima kasih!';
             
-            // Open Telegram with pre-filled message
+            // Open Telegram
             window.open(`https://t.me/CitaRasaIndo?text=${message}`, '_blank');
             
-            // Clear form and cart
+            // Clear everything
             setTimeout(() => {
                 document.getElementById('deliveryLocation').value = '';
                 document.getElementById('deliveryTime').value = '';
