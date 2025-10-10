@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
     <meta name="description" content="Cita Rasa Indonesia - Authentic Indonesian Food. Makan Kenyang, Hati Senang, Pikiran Tenang!">
     <title>Cita Rasa Indo - Order Now</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="preconnect" href="https://i.ibb.co">
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
@@ -44,7 +43,7 @@
             padding:12px;
         }
         
-        /* Header Styling - More Compact for Mobile */
+        /* Header Styling */
         header{
             background:var(--white);
             border-radius:16px;
@@ -126,7 +125,7 @@
             opacity:.9;
         }
         
-        /* Infinite Carousel - Optimized */
+        /* Gallery Carousel */
         .gallery-carousel{
             margin:12px 0;
             position:relative;
@@ -170,23 +169,8 @@
             display:block;
         }
         
-        .gallery-item::after{
-            content:'';
-            position:absolute;
-            inset:0;
-            background:linear-gradient(to top,rgba(0,0,0,.3) 0%,transparent 50%);
-            opacity:0;
-            transition:opacity .3s;
-        }
-        
         .gallery-item:active{
             transform:scale(1.05);
-            z-index:2;
-            box-shadow:var(--shadow-lg);
-        }
-        
-        .gallery-item:active::after{
-            opacity:1;
         }
         
         .cta-badge{
@@ -210,7 +194,7 @@
             50%{transform:translateY(-5px)}
         }
         
-        /* Menu Section - Mobile Optimized */
+        /* Menu Section */
         .menu-section{
             background:var(--white);
             border-radius:16px;
@@ -254,7 +238,7 @@
             border-radius:2px;
         }
         
-        /* Menu Grid - Single Column Mobile */
+        /* Menu Grid */
         .menu-grid{
             display:grid;
             grid-template-columns:1fr;
@@ -270,22 +254,6 @@
             transition:all .3s cubic-bezier(.4,0,.2,1);
             position:relative;
             overflow:hidden;
-        }
-        
-        .menu-item::before{
-            content:'';
-            position:absolute;
-            top:0;
-            left:0;
-            width:100%;
-            height:100%;
-            background:linear-gradient(135deg,rgba(255,167,38,.05) 0%,rgba(255,112,67,.05) 100%);
-            opacity:0;
-            transition:opacity .3s;
-        }
-        
-        .menu-item:active::before{
-            opacity:1;
         }
         
         .menu-item:active{
@@ -360,7 +328,7 @@
             line-height:1;
         }
         
-        /* Order Button - NEW */
+        /* Order Button */
         .order-btn{
             width:100%;
             background:linear-gradient(135deg,var(--success) 0%,#45a049 100%);
@@ -387,58 +355,11 @@
             box-shadow:var(--shadow-xs);
         }
         
-        .order-btn.added{
+        .order-btn.in-cart{
             background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);
         }
         
-        /* Quantity Controls - NEW */
-        .quantity-controls{
-            display:flex;
-            align-items:center;
-            justify-content:space-between;
-            gap:10px;
-            margin-top:10px;
-            padding:8px;
-            background:rgba(255,167,38,.1);
-            border-radius:10px;
-            display:none;
-        }
-        
-        .quantity-controls.active{
-            display:flex;
-        }
-        
-        .qty-btn{
-            width:36px;
-            height:36px;
-            border-radius:50%;
-            border:2px solid var(--primary);
-            background:var(--white);
-            color:var(--primary);
-            font-size:1.2em;
-            font-weight:700;
-            cursor:pointer;
-            transition:all .2s;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-        }
-        
-        .qty-btn:active{
-            transform:scale(.9);
-            background:var(--primary);
-            color:var(--white);
-        }
-        
-        .qty-display{
-            font-size:1.2em;
-            font-weight:700;
-            color:var(--primary);
-            min-width:40px;
-            text-align:center;
-        }
-        
-        /* A La Carte Grid - 2 Column Mobile */
+        /* A La Carte Grid */
         .alacarte-grid{
             display:grid;
             grid-template-columns:repeat(2,1fr);
@@ -464,25 +385,9 @@
             cursor:pointer;
         }
         
-        .alacarte-item::before{
-            content:'';
-            position:absolute;
-            top:0;
-            left:0;
-            width:100%;
-            height:100%;
-            background:linear-gradient(135deg,rgba(255,167,38,.1) 0%,rgba(255,112,67,.1) 100%);
-            opacity:0;
-            transition:opacity .3s;
-        }
-        
         .alacarte-item:active{
             transform:scale(.95);
             border-color:var(--secondary);
-        }
-        
-        .alacarte-item:active::before{
-            opacity:1;
         }
         
         .item-name{
@@ -500,13 +405,7 @@
             z-index:1;
         }
         
-        .alacarte-item .order-btn{
-            padding:8px 12px;
-            font-size:.85em;
-            min-height:38px;
-        }
-        
-        /* Footer - Compact */
+        /* Footer */
         footer{
             background:var(--white);
             border-radius:16px;
@@ -574,7 +473,7 @@
             box-shadow:var(--shadow-sm);
         }
         
-        /* Floating Cart Button - NEW */
+        /* Floating Cart */
         .floating-cart{
             position:fixed;
             bottom:20px;
@@ -595,6 +494,7 @@
             gap:12px;
             min-width:280px;
             justify-content:center;
+            border:none;
         }
         
         .floating-cart.active{
@@ -618,7 +518,7 @@
             font-size:.9em;
         }
         
-        /* Cart Modal - NEW */
+        /* Cart Modal */
         .cart-modal{
             position:fixed;
             inset:0;
@@ -707,6 +607,7 @@
             font-weight:700;
             color:var(--primary);
             font-size:1em;
+            flex:1;
         }
         
         .cart-item-price{
@@ -715,11 +616,48 @@
             font-size:1.1em;
         }
         
+        .cart-item-desc{
+            font-size:0.85em;
+            color:#666;
+            margin-bottom:8px;
+            line-height:1.4;
+        }
+        
         .cart-item-qty{
             display:flex;
             align-items:center;
             gap:10px;
             margin-top:8px;
+        }
+        
+        .qty-btn{
+            width:36px;
+            height:36px;
+            border-radius:50%;
+            border:2px solid var(--primary);
+            background:var(--white);
+            color:var(--primary);
+            font-size:1.2em;
+            font-weight:700;
+            cursor:pointer;
+            transition:all .2s;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+        
+        .qty-btn:active{
+            transform:scale(.9);
+            background:var(--primary);
+            color:var(--white);
+        }
+        
+        .qty-display{
+            font-size:1.2em;
+            font-weight:700;
+            color:var(--primary);
+            min-width:40px;
+            text-align:center;
         }
         
         .cart-total{
@@ -740,7 +678,7 @@
         
         .send-order-btn{
             width:100%;
-            background:linear-gradient(135deg,var(--success) 0%,#45a049 100%);
+            background:linear-gradient(135deg,#0088cc 0%,#006699 100%);
             color:var(--white);
             border:none;
             padding:16px;
@@ -772,7 +710,32 @@
             margin-bottom:16px;
         }
         
-        /* Tablet */
+        /* Success Notification */
+        .notification{
+            position:fixed;
+            top:20px;
+            left:50%;
+            transform:translateX(-50%) translateY(-100px);
+            background:var(--success);
+            color:var(--white);
+            padding:16px 24px;
+            border-radius:12px;
+            box-shadow:var(--shadow-xl);
+            font-weight:700;
+            z-index:3000;
+            display:flex;
+            align-items:center;
+            gap:10px;
+            opacity:0;
+            transition:all .3s cubic-bezier(.4,0,.2,1);
+        }
+        
+        .notification.show{
+            transform:translateX(-50%) translateY(0);
+            opacity:1;
+        }
+        
+        /* Tablet & Desktop */
         @media (min-width:600px){
             .container{padding:20px}
             .header-content{padding:28px 20px 24px}
@@ -780,7 +743,6 @@
             h1{font-size:2em}
             .subtitle{font-size:1.1em}
             .gallery-item{width:120px;height:120px}
-            .cta-badge{font-size:1em;padding:12px 24px}
             .menu-section{padding:24px 20px}
             .menu-section h2{font-size:1.8em}
             .menu-grid{grid-template-columns:repeat(2,1fr);gap:16px}
@@ -789,66 +751,23 @@
             .contact-btn{width:auto;min-width:240px}
         }
         
-        /* Desktop */
         @media (min-width:900px){
             body{padding-bottom:24px}
             .container{padding:28px}
             .header-content{padding:36px 28px 32px}
             .logo-container img{width:150px;height:150px}
             h1{font-size:2.5em}
-            .subtitle{font-size:1.2em}
             .gallery-item{width:150px;height:150px}
-            .cta-badge{font-size:1.05em}
             .menu-section{padding:32px 28px}
             .menu-section h2{font-size:2em}
             .menu-grid{grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
-            .menu-item{padding:20px}
-            .menu-item:hover{
-                transform:translateY(-4px);
-                box-shadow:var(--shadow-xl);
-                border-color:var(--secondary);
-            }
-            .menu-item:hover::before{opacity:1}
             .alacarte-grid{grid-template-columns:repeat(4,1fr);gap:14px}
-            .alacarte-item:hover{
-                transform:scale(1.05);
-                border-color:var(--secondary);
-                box-shadow:var(--shadow-md);
-            }
-            .alacarte-item:hover::before{opacity:1}
-            .contact-btn:hover{
-                transform:translateY(-2px);
-                box-shadow:var(--shadow-lg);
-            }
-            .contact-btn:active{
-                transform:translateY(0);
-            }
-            .order-btn:hover{
-                transform:translateY(-2px);
-                box-shadow:var(--shadow-md);
-            }
-            .floating-cart{
-                bottom:32px;
-            }
-            .floating-cart:hover{
-                transform:translateX(-50%) translateY(-4px);
-                box-shadow:0 16px 40px rgba(0,0,0,.25);
-            }
         }
         
-        /* Smooth Scrolling */
         html{scroll-behavior:smooth}
         
-        /* Accessibility */
-        button,a{
-            -webkit-tap-highlight-color:transparent;
-        }
-        
         @media (prefers-reduced-motion:reduce){
-            *{
-                animation:none!important;
-                transition:none!important;
-            }
+            *{animation:none!important;transition:none!important}
         }
     </style>
 </head>
@@ -864,52 +783,22 @@
                 <h1>CITA RASA INDONESIA</h1>
                 <p class="subtitle">Authentic Indonesian Food</p>
                 
-                <!-- Infinite Auto-Scroll Carousel -->
                 <div class="gallery-carousel">
                     <div class="gallery-track">
-                        <div class="gallery-item">
-                            <img src="https://i.ibb.co/DD0PnmYT/7.png" alt="Menu Makanan 1" loading="lazy">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://i.ibb.co/9mw135TC/8.png" alt="Menu Makanan 2" loading="lazy">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://i.ibb.co/7JsKyyZm/2.png" alt="Menu Makanan 3" loading="lazy">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://i.ibb.co/mCn6SZrS/3.png" alt="Menu Makanan 4" loading="lazy">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://i.ibb.co/XfMg4Nby/4.png" alt="Menu Makanan 5" loading="lazy">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://i.ibb.co/ZjZnPb2/5.png" alt="Menu Makanan 6" loading="lazy">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://i.ibb.co/FqXW82DQ/6.png" alt="Menu Makanan 7" loading="lazy">
-                        </div>
-                        <!-- Duplicate for infinite loop -->
-                        <div class="gallery-item">
-                            <img src="https://i.ibb.co/DD0PnmYT/7.png" alt="Menu Makanan 1" loading="lazy">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://i.ibb.co/9mw135TC/8.png" alt="Menu Makanan 2" loading="lazy">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://i.ibb.co/7JsKyyZm/2.png" alt="Menu Makanan 3" loading="lazy">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://i.ibb.co/mCn6SZrS/3.png" alt="Menu Makanan 4" loading="lazy">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://i.ibb.co/XfMg4Nby/4.png" alt="Menu Makanan 5" loading="lazy">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://i.ibb.co/ZjZnPb2/5.png" alt="Menu Makanan 6" loading="lazy">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://i.ibb.co/FqXW82DQ/6.png" alt="Menu Makanan 7" loading="lazy">
-                        </div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/DD0PnmYT/7.png" alt="Menu 1" loading="lazy"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/9mw135TC/8.png" alt="Menu 2" loading="lazy"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/7JsKyyZm/2.png" alt="Menu 3" loading="lazy"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/mCn6SZrS/3.png" alt="Menu 4" loading="lazy"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/XfMg4Nby/4.png" alt="Menu 5" loading="lazy"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/ZjZnPb2/5.png" alt="Menu 6" loading="lazy"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/FqXW82DQ/6.png" alt="Menu 7" loading="lazy"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/DD0PnmYT/7.png" alt="Menu 1" loading="lazy"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/9mw135TC/8.png" alt="Menu 2" loading="lazy"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/7JsKyyZm/2.png" alt="Menu 3" loading="lazy"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/mCn6SZrS/3.png" alt="Menu 4" loading="lazy"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/XfMg4Nby/4.png" alt="Menu 5" loading="lazy"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/ZjZnPb2/5.png" alt="Menu 6" loading="lazy"></div>
+                        <div class="gallery-item"><img src="https://i.ibb.co/FqXW82DQ/6.png" alt="Menu 7" loading="lazy"></div>
                     </div>
                 </div>
                 
@@ -925,10 +814,7 @@
             <div class="menu-grid">
                 <div class="menu-item">
                     <div class="menu-header">
-                        <h3>
-                            <span class="menu-emoji">🍗🍳🥔</span>
-                            <span>PAYALUR</span>
-                        </h3>
+                        <h3><span class="menu-emoji">🍗🍳🥔</span><span>PAYALUR</span></h3>
                         <span class="price-tag">¥35</span>
                     </div>
                     <ul>
@@ -938,16 +824,12 @@
                         <li>Bakwan Sayur dan Sambal</li>
                     </ul>
                     <button class="order-btn" onclick="addToCart('PAYALUR', 35, '🍗🍳🥔', 'Nasi Putih + Ayam Goreng + Telur Balado + Kentang Balado + Bakwan + Sambal')">
-                        <span>➕</span>
-                        <span>TAMBAH KE PESANAN</span>
+                        <span>➕</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
                 <div class="menu-item">
                     <div class="menu-header">
-                        <h3>
-                            <span class="menu-emoji">🍗🥔</span>
-                            <span>PAYALIT</span>
-                        </h3>
+                        <h3><span class="menu-emoji">🍗🥔</span><span>PAYALIT</span></h3>
                         <span class="price-tag">¥30</span>
                     </div>
                     <ul>
@@ -956,16 +838,12 @@
                         <li>Bakwan Sayur dan Sambal</li>
                     </ul>
                     <button class="order-btn" onclick="addToCart('PAYALIT', 30, '🍗🥔', 'Nasi Putih + Ayam Goreng + Kentang Balado + Bakwan + Sambal')">
-                        <span>➕</span>
-                        <span>TAMBAH KE PESANAN</span>
+                        <span>➕</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
                 <div class="menu-item">
                     <div class="menu-header">
-                        <h3>
-                            <span class="menu-emoji">🍗</span>
-                            <span>PAYAMAT</span>
-                        </h3>
+                        <h3><span class="menu-emoji">🍗</span><span>PAYAMAT</span></h3>
                         <span class="price-tag">¥25</span>
                     </div>
                     <ul>
@@ -973,16 +851,12 @@
                         <li>Bakwan Sayur dan Sambal</li>
                     </ul>
                     <button class="order-btn" onclick="addToCart('PAYAMAT', 25, '🍗', 'Nasi Putih + Ayam Goreng + Bakwan + Sambal')">
-                        <span>➕</span>
-                        <span>TAMBAH KE PESANAN</span>
+                        <span>➕</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
                 <div class="menu-item">
                     <div class="menu-header">
-                        <h3>
-                            <span class="menu-emoji">🍳🥔</span>
-                            <span>PALUTANG</span>
-                        </h3>
+                        <h3><span class="menu-emoji">🍳🥔</span><span>PALUTANG</span></h3>
                         <span class="price-tag">¥25</span>
                     </div>
                     <ul>
@@ -991,16 +865,12 @@
                         <li>Bakwan Sayur 2pcs</li>
                     </ul>
                     <button class="order-btn" onclick="addToCart('PALUTANG', 25, '🍳🥔', 'Nasi Putih + Telur Balado + Kentang Balado + Bakwan 2pcs')">
-                        <span>➕</span>
-                        <span>TAMBAH KE PESANAN</span>
+                        <span>➕</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
                 <div class="menu-item">
                     <div class="menu-header">
-                        <h3>
-                            <span class="menu-emoji">🍳</span>
-                            <span>PALUR</span>
-                        </h3>
+                        <h3><span class="menu-emoji">🍳</span><span>PALUR</span></h3>
                         <span class="price-tag">¥20</span>
                     </div>
                     <ul>
@@ -1008,8 +878,7 @@
                         <li>Bakwan Sayur 2pcs</li>
                     </ul>
                     <button class="order-btn" onclick="addToCart('PALUR', 20, '🍳', 'Nasi Putih + Telur Balado + Bakwan 2pcs')">
-                        <span>➕</span>
-                        <span>TAMBAH KE PESANAN</span>
+                        <span>➕</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
             </div>
@@ -1020,10 +889,7 @@
             <div class="menu-grid">
                 <div class="menu-item">
                     <div class="menu-header">
-                        <h3>
-                            <span class="menu-emoji">🍱</span>
-                            <span>PRAMES A</span>
-                        </h3>
+                        <h3><span class="menu-emoji">🍱</span><span>PRAMES A</span></h3>
                         <span class="price-tag">¥25</span>
                     </div>
                     <ul>
@@ -1035,16 +901,12 @@
                         <li>Kremesan</li>
                     </ul>
                     <button class="order-btn" onclick="addToCart('PRAMES A', 25, '🍱', 'Nasi + Ayam Goreng + Tahu + Timun + Sambal + Kremesan')">
-                        <span>➕</span>
-                        <span>TAMBAH KE PESANAN</span>
+                        <span>➕</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
                 <div class="menu-item">
                     <div class="menu-header">
-                        <h3>
-                            <span class="menu-emoji">🍱</span>
-                            <span>PRAMES B</span>
-                        </h3>
+                        <h3><span class="menu-emoji">🍱</span><span>PRAMES B</span></h3>
                         <span class="price-tag">¥33</span>
                     </div>
                     <ul>
@@ -1057,16 +919,12 @@
                         <li>Kremesan</li>
                     </ul>
                     <button class="order-btn" onclick="addToCart('PRAMES B', 33, '🍱', 'Nasi + Ayam + Telur Balado + Tahu + Timun + Sambal + Kremesan')">
-                        <span>➕</span>
-                        <span>TAMBAH KE PESANAN</span>
+                        <span>➕</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
                 <div class="menu-item">
                     <div class="menu-header">
-                        <h3>
-                            <span class="menu-emoji">🍱</span>
-                            <span>PRAMES C</span>
-                        </h3>
+                        <h3><span class="menu-emoji">🍱</span><span>PRAMES C</span></h3>
                         <span class="price-tag">¥30</span>
                     </div>
                     <ul>
@@ -1079,16 +937,12 @@
                         <li>Kremesan</li>
                     </ul>
                     <button class="order-btn" onclick="addToCart('PRAMES C', 30, '🍱', 'Nasi + Ayam + Kentang Balado + Tahu + Timun + Sambal + Kremesan')">
-                        <span>➕</span>
-                        <span>TAMBAH KE PESANAN</span>
+                        <span>➕</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
                 <div class="menu-item">
                     <div class="menu-header">
-                        <h3>
-                            <span class="menu-emoji">🥔</span>
-                            <span>PRAMES KARBO</span>
-                        </h3>
+                        <h3><span class="menu-emoji">🥔</span><span>PRAMES KARBO</span></h3>
                         <span class="price-tag">¥20</span>
                     </div>
                     <ul>
@@ -1099,16 +953,12 @@
                         <li>Kremesan</li>
                     </ul>
                     <button class="order-btn" onclick="addToCart('PRAMES KARBO', 20, '🥔', 'Nasi + Kentang Balado + Bakwan 2pcs + Sambal + Kremesan')">
-                        <span>➕</span>
-                        <span>TAMBAH KE PESANAN</span>
+                        <span>➕</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
                 <div class="menu-item">
                     <div class="menu-header">
-                        <h3>
-                            <span class="menu-emoji">🥬</span>
-                            <span>PRAMES VEGGIE</span>
-                        </h3>
+                        <h3><span class="menu-emoji">🥬</span><span>PRAMES VEGGIE</span></h3>
                         <span class="price-tag">¥15</span>
                     </div>
                     <ul>
@@ -1119,8 +969,7 @@
                         <li>Kremesan</li>
                     </ul>
                     <button class="order-btn" onclick="addToCart('PRAMES VEGGIE', 15, '🥬', 'Nasi + Tahu + Timun + Sambal + Kremesan')">
-                        <span>➕</span>
-                        <span>TAMBAH KE PESANAN</span>
+                        <span>➕</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
             </div>
@@ -1169,10 +1018,7 @@
             <div class="menu-grid">
                 <div class="menu-item">
                     <div class="menu-header">
-                        <h3>
-                            <span class="menu-emoji">🍌🍫</span>
-                            <span>Sancodut</span>
-                        </h3>
+                        <h3><span class="menu-emoji">🍌🍫</span><span>Sancodut</span></h3>
                         <span class="price-tag">¥15</span>
                     </div>
                     <ul>
@@ -1183,8 +1029,7 @@
                         <li>Ceres</li>
                     </ul>
                     <button class="order-btn" onclick="addToCart('Sancodut (Pisang Cokelat Gendut)', 15, '🍌🍫', 'Isi 3pcs + Susu + Keju + Ceres')">
-                        <span>➕</span>
-                        <span>TAMBAH KE PESANAN</span>
+                        <span>➕</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
             </div>
@@ -1196,26 +1041,22 @@
             <p>🍱 Menerima pesanan catering! Untuk acara kantor, ulang tahun, semua bisa! Pilih sendiri menu favoritmu, dari lauk sampai sambal, semuanya bisa disesuaikan!</p>
             <div class="contact-buttons">
                 <a href="https://t.me/CitaRasaIndo" class="contact-btn" target="_blank" rel="noopener">
-                    <span>✉️</span>
-                    <span>CHAT ADMIN</span>
+                    <span>✉️</span><span>CHAT ADMIN</span>
                 </a>
                 <a href="https://t.me/CriFood" class="contact-btn" target="_blank" rel="noopener">
-                    <span>📢</span>
-                    <span>JOIN CHANNEL</span>
+                    <span>📢</span><span>JOIN CHANNEL</span>
                 </a>
             </div>
         </footer>
     </div>
 
-    <!-- Floating Cart Button -->
-    <div class="floating-cart" id="floatingCart" onclick="openCart()">
+    <button class="floating-cart" id="floatingCart" onclick="openCart()">
         <span>🛒</span>
         <span>LIHAT PESANAN</span>
         <span class="cart-badge" id="cartBadge">0</span>
         <span id="cartTotal">¥0</span>
-    </div>
+    </button>
 
-    <!-- Cart Modal -->
     <div class="cart-modal" id="cartModal">
         <div class="cart-content">
             <div class="cart-header">
@@ -1236,58 +1077,51 @@
             </div>
             <button class="send-order-btn" id="sendOrderBtn" onclick="sendToTelegram()" style="display:none">
                 <span>📱</span>
-                <span>KIRIM PESANAN KE ADMIN</span>
+                <span>KIRIM PESANAN VIA TELEGRAM</span>
             </button>
         </div>
     </div>
 
+    <div class="notification" id="notification">
+        <span>✓</span>
+        <span>Ditambahkan ke pesanan!</span>
+    </div>
+
     <script>
-        // Cart System
         let cart = [];
         
-        // Load cart from localStorage
         function loadCart() {
-            const savedCart = localStorage.getItem('citaRasaCart');
-            if (savedCart) {
-                cart = JSON.parse(savedCart);
+            const saved = localStorage.getItem('citaRasaCart');
+            if (saved) {
+                cart = JSON.parse(saved);
                 updateCartDisplay();
             }
         }
         
-        // Save cart to localStorage
         function saveCart() {
             localStorage.setItem('citaRasaCart', JSON.stringify(cart));
         }
         
-        // Add item to cart
         function addToCart(name, price, emoji, description) {
-            const existingItem = cart.find(item => item.name === name);
+            const existing = cart.find(item => item.name === name);
             
-            if (existingItem) {
-                existingItem.quantity += 1;
+            if (existing) {
+                existing.quantity += 1;
             } else {
-                cart.push({
-                    name: name,
-                    price: price,
-                    emoji: emoji,
-                    description: description,
-                    quantity: 1
-                });
+                cart.push({name, price, emoji, description, quantity: 1});
             }
             
             saveCart();
             updateCartDisplay();
-            showCartNotification();
+            showNotification();
         }
         
-        // Remove item from cart
         function removeFromCart(name) {
             cart = cart.filter(item => item.name !== name);
             saveCart();
             updateCartDisplay();
         }
         
-        // Update quantity
         function updateQuantity(name, change) {
             const item = cart.find(item => item.name === name);
             if (item) {
@@ -1301,7 +1135,6 @@
             }
         }
         
-        // Update cart display
         function updateCartDisplay() {
             const floatingCart = document.getElementById('floatingCart');
             const cartBadge = document.getElementById('cartBadge');
@@ -1319,19 +1152,18 @@
                 cartBadge.textContent = totalItems;
                 cartTotal.textContent = `¥${totalPrice}`;
                 
-                // Update modal
                 cartItems.innerHTML = cart.map(item => `
                     <div class="cart-item">
                         <div class="cart-item-header">
                             <span class="cart-item-name">${item.emoji} ${item.name}</span>
                             <span class="cart-item-price">¥${item.price * item.quantity}</span>
                         </div>
-                        ${item.description ? `<div style="font-size:0.85em;color:#666;margin-bottom:8px">${item.description}</div>` : ''}
+                        ${item.description ? `<div class="cart-item-desc">${item.description}</div>` : ''}
                         <div class="cart-item-qty">
-                            <button class="qty-btn" onclick="updateQuantity('${item.name}', -1)">−</button>
+                            <button class="qty-btn" onclick="updateQuantity('${item.name.replace(/'/g, "\\'")}', -1)">−</button>
                             <span class="qty-display">${item.quantity}</span>
-                            <button class="qty-btn" onclick="updateQuantity('${item.name}', 1)">+</button>
-                            <button class="qty-btn" onclick="removeFromCart('${item.name}')" style="margin-left:auto;background:#ffebee">🗑️</button>
+                            <button class="qty-btn" onclick="updateQuantity('${item.name.replace(/'/g, "\\'")}', 1)">+</button>
+                            <button class="qty-btn" onclick="removeFromCart('${item.name.replace(/'/g, "\\'")}' )" style="margin-left:auto;background:#ffebee">🗑️</button>
                         </div>
                     </div>
                 `).join('');
@@ -1341,100 +1173,63 @@
                 sendOrderBtn.style.display = 'flex';
             } else {
                 floatingCart.classList.remove('active');
-                cartItems.innerHTML = `
-                    <div class="empty-cart">
-                        <div class="empty-cart-icon">🍽️</div>
-                        <p>Belum ada pesanan</p>
-                    </div>
-                `;
+                cartItems.innerHTML = '<div class="empty-cart"><div class="empty-cart-icon">🍽️</div><p>Belum ada pesanan</p></div>';
                 cartTotalSection.style.display = 'none';
                 sendOrderBtn.style.display = 'none';
             }
         }
         
-        // Show notification
-        function showCartNotification() {
-            const floatingCart = document.getElementById('floatingCart');
-            floatingCart.style.animation = 'none';
-            setTimeout(() => {
-                floatingCart.style.animation = 'float 3s ease-in-out infinite';
-            }, 10);
+        function showNotification() {
+            const notif = document.getElementById('notification');
+            notif.classList.add('show');
+            setTimeout(() => notif.classList.remove('show'), 2000);
         }
         
-        // Open cart modal
         function openCart() {
             document.getElementById('cartModal').classList.add('active');
         }
         
-        // Close cart modal
         function closeCart() {
             document.getElementById('cartModal').classList.remove('active');
         }
         
-        // Send order to Telegram
         function sendToTelegram() {
             if (cart.length === 0) return;
             
             const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             
-            let message = '🍽️ *PESANAN BARU DARI WEBSITE*\n\n';
-            message += '━━━━━━━━━━━━━━━━━\n\n';
+            let message = '🍽️ PESANAN BARU%0A%0A';
+            message += '━━━━━━━━━━━━━━━━━%0A%0A';
             
             cart.forEach((item, index) => {
-                message += `${index + 1}. *${item.name}*\n`;
-                message += `   ${item.emoji} ${item.quantity}x ¥${item.price} = *¥${item.price * item.quantity}*\n`;
+                message += `${index + 1}. ${item.name}%0A`;
+                message += `   ${item.emoji} ${item.quantity}x ¥${item.price} = ¥${item.price * item.quantity}%0A`;
                 if (item.description) {
-                    message += `   _(${item.description})_\n`;
+                    message += `   (${item.description})%0A`;
                 }
-                message += '\n';
+                message += '%0A';
             });
             
-            message += '━━━━━━━━━━━━━━━━━\n';
-            message += `💰 *TOTAL: ¥${totalPrice}*\n\n`;
-            message += '📝 _Silakan konfirmasi pesanan dan info pengiriman ya!_';
+            message += '━━━━━━━━━━━━━━━━━%0A';
+            message += `💰 TOTAL: ¥${totalPrice}%0A%0A`;
+            message += '📝 Mohon konfirmasi pesanan dan alamat pengiriman. Terima kasih!';
             
-            // Encode message for URL
-            const encodedMessage = encodeURIComponent(message);
+            // Open Telegram with pre-filled message
+            window.open(`https://t.me/CitaRasaIndo?text=${message}`, '_blank');
             
-            // Check if running in Telegram WebApp
-            if (window.Telegram && window.Telegram.WebApp) {
-                // Use Telegram WebApp API
-                window.Telegram.WebApp.sendData(message);
-                window.Telegram.WebApp.close();
-            } else {
-                // Fallback: Open Telegram link
-                const telegramUrl = `https://t.me/CitaRasaIndo?text=${encodedMessage}`;
-                window.open(telegramUrl, '_blank');
-            }
-            
-            // Clear cart after sending
-            cart = [];
-            saveCart();
-            updateCartDisplay();
-            closeCart();
+            // Clear cart
+            setTimeout(() => {
+                cart = [];
+                saveCart();
+                updateCartDisplay();
+                closeCart();
+            }, 1000);
         }
         
-        // Close modal when clicking outside
         document.getElementById('cartModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeCart();
-            }
+            if (e.target === this) closeCart();
         });
         
-        // Initialize Telegram WebApp
-        if (window.Telegram && window.Telegram.WebApp) {
-            const tg = window.Telegram.WebApp;
-            tg.ready();
-            tg.expand();
-            
-            // Set theme colors
-            if (tg.themeParams) {
-                document.documentElement.style.setProperty('--tg-theme-bg-color', tg.themeParams.bg_color || '#FFF8E1');
-                document.documentElement.style.setProperty('--tg-theme-button-color', tg.themeParams.button_color || '#D32F2F');
-            }
-        }
-        
-        // Load cart on page load
         window.addEventListener('DOMContentLoaded', loadCart);
     </script>
 </body>
