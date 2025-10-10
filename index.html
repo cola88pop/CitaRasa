@@ -355,10 +355,6 @@
             box-shadow:var(--shadow-xs);
         }
         
-        .order-btn.in-cart{
-            background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);
-        }
-        
         /* A La Carte Grid */
         .alacarte-grid{
             display:grid;
@@ -710,6 +706,124 @@
             margin-bottom:16px;
         }
         
+        /* Delivery Form Modal - NEW */
+        .delivery-modal{
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,.7);
+            z-index:3000;
+            display:none;
+            align-items:center;
+            justify-content:center;
+            padding:20px;
+            animation:fadeIn .3s;
+        }
+        
+        .delivery-modal.active{
+            display:flex;
+        }
+        
+        .delivery-content{
+            background:var(--white);
+            width:100%;
+            max-width:450px;
+            border-radius:20px;
+            padding:28px 24px;
+            animation:slideUp .3s;
+        }
+        
+        .delivery-header{
+            text-align:center;
+            margin-bottom:24px;
+        }
+        
+        .delivery-header h2{
+            font-size:1.6em;
+            color:var(--primary);
+            font-weight:800;
+            margin-bottom:8px;
+        }
+        
+        .delivery-header p{
+            color:#666;
+            font-size:0.95em;
+        }
+        
+        .delivery-form{
+            display:flex;
+            flex-direction:column;
+            gap:20px;
+        }
+        
+        .form-group{
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+        }
+        
+        .form-group label{
+            font-weight:700;
+            color:var(--primary);
+            font-size:1em;
+            display:flex;
+            align-items:center;
+            gap:8px;
+        }
+        
+        .form-group input{
+            padding:14px 16px;
+            border:2px solid #FFE0B2;
+            border-radius:12px;
+            font-size:1em;
+            font-family:inherit;
+            transition:all .3s;
+            background:linear-gradient(135deg,#FFFBF5 0%,#FFF8F0 100%);
+        }
+        
+        .form-group input:focus{
+            outline:none;
+            border-color:var(--secondary);
+            box-shadow:0 0 0 3px rgba(255,167,38,.1);
+        }
+        
+        .form-buttons{
+            display:flex;
+            gap:12px;
+            margin-top:8px;
+        }
+        
+        .form-btn{
+            flex:1;
+            padding:14px;
+            border:none;
+            border-radius:12px;
+            font-size:1.05em;
+            font-weight:700;
+            cursor:pointer;
+            transition:all .3s;
+            min-height:52px;
+        }
+        
+        .form-btn.cancel{
+            background:#f5f5f5;
+            color:#666;
+        }
+        
+        .form-btn.cancel:active{
+            transform:scale(.96);
+            background:#e0e0e0;
+        }
+        
+        .form-btn.submit{
+            background:linear-gradient(135deg,#0088cc 0%,#006699 100%);
+            color:var(--white);
+            box-shadow:var(--shadow-md);
+        }
+        
+        .form-btn.submit:active{
+            transform:scale(.96);
+        }
+        
         /* Success Notification */
         .notification{
             position:fixed;
@@ -823,7 +937,7 @@
                         <li>Kentang Balado</li>
                         <li>Bakwan Sayur dan Sambal</li>
                     </ul>
-                    <button class="order-btn" onclick="addToCart('PAYALUR', 35, '🍗🍳🥔', 'Nasi Putih + Ayam Goreng + Telur Balado + Kentang Balado + Bakwan + Sambal')">
+                    <button class="order-btn" onclick="addToCart('PAYALUR', 35, '🍗🍳🥔', ['Nasi Putih', 'Ayam Goreng', 'Telur Balado', 'Kentang Balado', 'Bakwan', 'Sambal'])">
                         <span>➕</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
@@ -837,7 +951,7 @@
                         <li>Kentang Balado</li>
                         <li>Bakwan Sayur dan Sambal</li>
                     </ul>
-                    <button class="order-btn" onclick="addToCart('PAYALIT', 30, '🍗🥔', 'Nasi Putih + Ayam Goreng + Kentang Balado + Bakwan + Sambal')">
+                    <button class="order-btn" onclick="addToCart('PAYALIT', 30, '🍗🥔', ['Nasi Putih', 'Ayam Goreng', 'Kentang Balado', 'Bakwan', 'Sambal'])">
                         <span>➕</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
@@ -850,7 +964,7 @@
                         <li>Nasi Putih dan Ayam Goreng</li>
                         <li>Bakwan Sayur dan Sambal</li>
                     </ul>
-                    <button class="order-btn" onclick="addToCart('PAYAMAT', 25, '🍗', 'Nasi Putih + Ayam Goreng + Bakwan + Sambal')">
+                    <button class="order-btn" onclick="addToCart('PAYAMAT', 25, '🍗', ['Nasi Putih', 'Ayam Goreng', 'Bakwan', 'Sambal'])">
                         <span>➕</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
@@ -864,7 +978,7 @@
                         <li>Kentang Balado</li>
                         <li>Bakwan Sayur 2pcs</li>
                     </ul>
-                    <button class="order-btn" onclick="addToCart('PALUTANG', 25, '🍳🥔', 'Nasi Putih + Telur Balado + Kentang Balado + Bakwan 2pcs')">
+                    <button class="order-btn" onclick="addToCart('PALUTANG', 25, '🍳🥔', ['Nasi Putih', 'Telur Balado', 'Kentang Balado', 'Bakwan 2pcs'])">
                         <span>➕</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
@@ -877,7 +991,7 @@
                         <li>Nasi Putih dan Telur Balado</li>
                         <li>Bakwan Sayur 2pcs</li>
                     </ul>
-                    <button class="order-btn" onclick="addToCart('PALUR', 20, '🍳', 'Nasi Putih + Telur Balado + Bakwan 2pcs')">
+                    <button class="order-btn" onclick="addToCart('PALUR', 20, '🍳', ['Nasi Putih', 'Telur Balado', 'Bakwan 2pcs'])">
                         <span>➕</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
@@ -900,7 +1014,7 @@
                         <li>Sambal</li>
                         <li>Kremesan</li>
                     </ul>
-                    <button class="order-btn" onclick="addToCart('PRAMES A', 25, '🍱', 'Nasi + Ayam Goreng + Tahu + Timun + Sambal + Kremesan')">
+                    <button class="order-btn" onclick="addToCart('PRAMES A', 25, '🍱', ['Nasi Putih', 'Ayam Goreng', 'Tahu', 'Timun', 'Sambal', 'Kremesan'])">
                         <span>➕</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
@@ -918,7 +1032,7 @@
                         <li>Sambal</li>
                         <li>Kremesan</li>
                     </ul>
-                    <button class="order-btn" onclick="addToCart('PRAMES B', 33, '🍱', 'Nasi + Ayam + Telur Balado + Tahu + Timun + Sambal + Kremesan')">
+                    <button class="order-btn" onclick="addToCart('PRAMES B', 33, '🍱', ['Nasi Putih', 'Ayam Goreng', 'Telur Balado', 'Tahu', 'Timun', 'Sambal', 'Kremesan'])">
                         <span>➕</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
@@ -936,7 +1050,7 @@
                         <li>Sambal</li>
                         <li>Kremesan</li>
                     </ul>
-                    <button class="order-btn" onclick="addToCart('PRAMES C', 30, '🍱', 'Nasi + Ayam + Kentang Balado + Tahu + Timun + Sambal + Kremesan')">
+                    <button class="order-btn" onclick="addToCart('PRAMES C', 30, '🍱', ['Nasi Putih', 'Ayam Goreng', 'Kentang Balado', 'Tahu', 'Timun', 'Sambal', 'Kremesan'])">
                         <span>➕</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
@@ -952,7 +1066,7 @@
                         <li>Sambal</li>
                         <li>Kremesan</li>
                     </ul>
-                    <button class="order-btn" onclick="addToCart('PRAMES KARBO', 20, '🥔', 'Nasi + Kentang Balado + Bakwan 2pcs + Sambal + Kremesan')">
+                    <button class="order-btn" onclick="addToCart('PRAMES KARBO', 20, '🥔', ['Nasi Putih', 'Kentang Balado', 'Bakwan 2pcs', 'Sambal', 'Kremesan'])">
                         <span>➕</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
@@ -968,7 +1082,7 @@
                         <li>Sambal</li>
                         <li>Kremesan</li>
                     </ul>
-                    <button class="order-btn" onclick="addToCart('PRAMES VEGGIE', 15, '🥬', 'Nasi + Tahu + Timun + Sambal + Kremesan')">
+                    <button class="order-btn" onclick="addToCart('PRAMES VEGGIE', 15, '🥬', ['Nasi Putih', 'Tahu', 'Timun', 'Sambal', 'Kremesan'])">
                         <span>➕</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
@@ -978,35 +1092,35 @@
         <div class="menu-section">
             <h2>MENU ALA CARTE</h2>
             <div class="alacarte-grid">
-                <div class="alacarte-item" onclick="addToCart('Ayam Goreng', 15, '🍗', '')">
+                <div class="alacarte-item" onclick="addToCart('Ayam Goreng', 15, '🍗', ['Ayam Goreng'])">
                     <div class="item-name">🍗 Ayam Goreng</div>
                     <div class="item-price">¥15</div>
                 </div>
-                <div class="alacarte-item" onclick="addToCart('Telur Dadar', 8, '🍳', '')">
+                <div class="alacarte-item" onclick="addToCart('Telur Dadar', 8, '🍳', ['Telur Dadar'])">
                     <div class="item-name">🍳 Telur Dadar</div>
                     <div class="item-price">¥8</div>
                 </div>
-                <div class="alacarte-item" onclick="addToCart('Kentang Balado', 10, '🥔', '')">
+                <div class="alacarte-item" onclick="addToCart('Kentang Balado', 10, '🥔', ['Kentang Balado'])">
                     <div class="item-name">🥔 Kentang Balado</div>
                     <div class="item-price">¥10</div>
                 </div>
-                <div class="alacarte-item" onclick="addToCart('Telur Balado', 10, '🥚', '')">
+                <div class="alacarte-item" onclick="addToCart('Telur Balado', 10, '🥚', ['Telur Balado'])">
                     <div class="item-name">🥚 Telur Balado</div>
                     <div class="item-price">¥10</div>
                 </div>
-                <div class="alacarte-item" onclick="addToCart('Telur Ceplok', 7, '🍳', '')">
+                <div class="alacarte-item" onclick="addToCart('Telur Ceplok', 7, '🍳', ['Telur Ceplok'])">
                     <div class="item-name">🍳 Telur Ceplok</div>
                     <div class="item-price">¥7</div>
                 </div>
-                <div class="alacarte-item" onclick="addToCart('Bakwan 3pcs', 5, '🥬', '')">
+                <div class="alacarte-item" onclick="addToCart('Bakwan 3pcs', 5, '🥬', ['Bakwan 3pcs'])">
                     <div class="item-name">🥬 Bakwan 3pcs</div>
                     <div class="item-price">¥5</div>
                 </div>
-                <div class="alacarte-item" onclick="addToCart('Extra Kremes', 5, '✨', '')">
+                <div class="alacarte-item" onclick="addToCart('Extra Kremes', 5, '✨', ['Extra Kremes'])">
                     <div class="item-name">✨ Extra Kremes</div>
                     <div class="item-price">¥5</div>
                 </div>
-                <div class="alacarte-item" onclick="addToCart('Extra Sambel', 3, '🌶️', '')">
+                <div class="alacarte-item" onclick="addToCart('Extra Sambel', 3, '🌶️', ['Extra Sambel'])">
                     <div class="item-name">🌶️ Extra Sambel</div>
                     <div class="item-price">¥3</div>
                 </div>
@@ -1028,7 +1142,7 @@
                         <li>Keju</li>
                         <li>Ceres</li>
                     </ul>
-                    <button class="order-btn" onclick="addToCart('Sancodut (Pisang Cokelat Gendut)', 15, '🍌🍫', 'Isi 3pcs + Susu + Keju + Ceres')">
+                    <button class="order-btn" onclick="addToCart('Sancodut (Pisang Cokelat Gendut)', 15, '🍌🍫', ['Isi 3pcs', 'Susu Coklat/Putih', 'Keju', 'Ceres'])">
                         <span>➕</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
@@ -1075,10 +1189,40 @@
                     <span id="cartTotalPrice">¥0</span>
                 </div>
             </div>
-            <button class="send-order-btn" id="sendOrderBtn" onclick="sendToTelegram()" style="display:none">
+            <button class="send-order-btn" id="sendOrderBtn" onclick="showDeliveryForm()" style="display:none">
                 <span>📱</span>
                 <span>KIRIM PESANAN VIA TELEGRAM</span>
             </button>
+        </div>
+    </div>
+
+    <!-- Delivery Form Modal - NEW -->
+    <div class="delivery-modal" id="deliveryModal">
+        <div class="delivery-content">
+            <div class="delivery-header">
+                <h2>📍 Info Pengiriman</h2>
+                <p>Isi data berikut sebelum mengirim pesanan</p>
+            </div>
+            <div class="delivery-form">
+                <div class="form-group">
+                    <label for="deliveryLocation">
+                        <span>📍</span>
+                        <span>Lokasi Pengantaran</span>
+                    </label>
+                    <input type="text" id="deliveryLocation" placeholder="Contoh: Gedung 9, Lantai 3" required>
+                </div>
+                <div class="form-group">
+                    <label for="deliveryTime">
+                        <span>🕐</span>
+                        <span>Jam Pengantaran</span>
+                    </label>
+                    <input type="text" id="deliveryTime" placeholder="Contoh: 7PM atau 19:00" required>
+                </div>
+                <div class="form-buttons">
+                    <button class="form-btn cancel" onclick="closeDeliveryForm()">Batal</button>
+                    <button class="form-btn submit" onclick="sendToTelegram()">Kirim Pesanan</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1102,13 +1246,13 @@
             localStorage.setItem('citaRasaCart', JSON.stringify(cart));
         }
         
-        function addToCart(name, price, emoji, description) {
+        function addToCart(name, price, emoji, items) {
             const existing = cart.find(item => item.name === name);
             
             if (existing) {
                 existing.quantity += 1;
             } else {
-                cart.push({name, price, emoji, description, quantity: 1});
+                cart.push({name, price, emoji, items, quantity: 1});
             }
             
             saveCart();
@@ -1152,13 +1296,15 @@
                 cartBadge.textContent = totalItems;
                 cartTotal.textContent = `¥${totalPrice}`;
                 
-                cartItems.innerHTML = cart.map(item => `
+                cartItems.innerHTML = cart.map(item => {
+                    const itemsList = Array.isArray(item.items) ? item.items.join(', ') : item.items;
+                    return `
                     <div class="cart-item">
                         <div class="cart-item-header">
                             <span class="cart-item-name">${item.emoji} ${item.name}</span>
                             <span class="cart-item-price">¥${item.price * item.quantity}</span>
                         </div>
-                        ${item.description ? `<div class="cart-item-desc">${item.description}</div>` : ''}
+                        ${itemsList ? `<div class="cart-item-desc">${itemsList}</div>` : ''}
                         <div class="cart-item-qty">
                             <button class="qty-btn" onclick="updateQuantity('${item.name.replace(/'/g, "\\'")}', -1)">−</button>
                             <span class="qty-display">${item.quantity}</span>
@@ -1166,7 +1312,7 @@
                             <button class="qty-btn" onclick="removeFromCart('${item.name.replace(/'/g, "\\'")}' )" style="margin-left:auto;background:#ffebee">🗑️</button>
                         </div>
                     </div>
-                `).join('');
+                `}).join('');
                 
                 cartTotalSection.style.display = 'block';
                 cartTotalPrice.textContent = `¥${totalPrice}`;
@@ -1193,41 +1339,68 @@
             document.getElementById('cartModal').classList.remove('active');
         }
         
+        function showDeliveryForm() {
+            document.getElementById('deliveryModal').classList.add('active');
+        }
+        
+        function closeDeliveryForm() {
+            document.getElementById('deliveryModal').classList.remove('active');
+        }
+        
         function sendToTelegram() {
             if (cart.length === 0) return;
             
+            const location = document.getElementById('deliveryLocation').value.trim();
+            const time = document.getElementById('deliveryTime').value.trim();
+            
+            if (!location || !time) {
+                alert('Mohon isi lokasi dan jam pengantaran!');
+                return;
+            }
+            
             const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             
-            let message = '🍽️ PESANAN BARU%0A%0A';
-            message += '━━━━━━━━━━━━━━━━━%0A%0A';
+            let message = '🍽️ PESANAN 🍽️%0A%0A';
             
             cart.forEach((item, index) => {
-                message += `${index + 1}. ${item.name}%0A`;
-                message += `   ${item.emoji} ${item.quantity}x ¥${item.price} = ¥${item.price * item.quantity}%0A`;
-                if (item.description) {
-                    message += `   (${item.description})%0A`;
+                message += `${index + 1}. ${item.name} ${item.quantity}x ¥${item.price} = ¥${item.price * item.quantity}%0A`;
+                
+                if (Array.isArray(item.items) && item.items.length > 0) {
+                    item.items.forEach(ingredient => {
+                        message += `${ingredient}%0A`;
+                    });
                 }
                 message += '%0A';
             });
             
             message += '━━━━━━━━━━━━━━━━━%0A';
-            message += `💰 TOTAL: ¥${totalPrice}%0A%0A`;
-            message += '📝 Mohon konfirmasi pesanan dan alamat pengiriman. Terima kasih!';
+            message += `💰 *TOTAL: ¥${totalPrice}*%0A%0A`;
+            message += `LOKASI ANTAR: ${location}%0A`;
+            message += `JAM ANTAR: ${time}%0A`;
+            message += '━━━━━━━━━━━━━━━━━%0A%0A';
+            message += '📝 Mohon konfirmasi, terima kasih!';
             
             // Open Telegram with pre-filled message
             window.open(`https://t.me/CitaRasaIndo?text=${message}`, '_blank');
             
-            // Clear cart
+            // Clear form and cart
             setTimeout(() => {
+                document.getElementById('deliveryLocation').value = '';
+                document.getElementById('deliveryTime').value = '';
+                closeDeliveryForm();
                 cart = [];
                 saveCart();
                 updateCartDisplay();
                 closeCart();
-            }, 1000);
+            }, 500);
         }
         
         document.getElementById('cartModal').addEventListener('click', function(e) {
             if (e.target === this) closeCart();
+        });
+        
+        document.getElementById('deliveryModal').addEventListener('click', function(e) {
+            if (e.target === this) closeDeliveryForm();
         });
         
         window.addEventListener('DOMContentLoaded', loadCart);
