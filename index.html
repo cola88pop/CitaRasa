@@ -4,968 +4,251 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
     <meta name="description" content="Cita Rasa Indonesia - Authentic Indonesian Food. Makan Kenyang, Hati Senang, Pikiran Tenang!">
-    <title>Cita Rasa Indo - Order Now</title>
+    <meta name="theme-color" content="#D32F2F">
+    <title>Cita Rasa Indo - Order Now (Ultimate)</title>
     <link rel="preconnect" href="https://i.ibb.co">
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
+        :root{--primary:#D32F2F;--primary-dark:#C62828;--secondary:#FFA726;--secondary-light:#FFB74D;--accent:#FF7043;--success:#4CAF50;--bg-gradient:linear-gradient(135deg,#FFF8E1 0%,#FFECB3 50%,#FFE0B2 100%);--text-dark:#1B4965;--white:#fff;--shadow-sm:0 2px 8px rgba(0,0,0,.08);--shadow-md:0 4px 16px rgba(0,0,0,.12);--shadow-lg:0 8px 24px rgba(0,0,0,.15);--shadow-xl:0 12px 32px rgba(0,0,0,.18)}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;background:var(--bg-gradient);background-attachment:fixed;color:#333;line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;padding-bottom:120px;transition:all .3s}
+        body.dark-mode{--bg-gradient:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 50%,#1a1a1a 100%);--white:#2d2d2d;--text-dark:#e0e0e0;color:#e0e0e0;background:var(--bg-gradient)}
+        .container{max-width:1200px;margin:0 auto;padding:12px}
         
-        :root{
-            --primary:#D32F2F;
-            --primary-dark:#C62828;
-            --secondary:#FFA726;
-            --secondary-light:#FFB74D;
-            --accent:#FF7043;
-            --success:#4CAF50;
-            --bg-gradient:linear-gradient(135deg,#FFF8E1 0%,#FFECB3 50%,#FFE0B2 100%);
-            --text-dark:#1B4965;
-            --white:#fff;
-            --shadow-sm:0 2px 8px rgba(0,0,0,.08);
-            --shadow-md:0 4px 16px rgba(0,0,0,.12);
-            --shadow-lg:0 8px 24px rgba(0,0,0,.15);
-            --shadow-xl:0 12px 32px rgba(0,0,0,.18);
-        }
+        /* Top Controls Bar - NEW */
+        .top-controls{background:var(--white);border-radius:16px;padding:12px;margin-bottom:12px;box-shadow:var(--shadow-md);display:flex;gap:8px;align-items:center;flex-wrap:wrap;position:sticky;top:12px;z-index:100;backdrop-filter:blur(10px)}
+        .dark-mode-toggle{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--white);border:none;padding:10px 16px;border-radius:50px;font-size:.9em;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .3s;box-shadow:var(--shadow-sm)}
+        .dark-mode-toggle:active{transform:scale(.95)}
+        .favorites-toggle{background:linear-gradient(135deg,var(--secondary),var(--accent));color:var(--white);border:none;padding:10px 16px;border-radius:50px;font-size:.9em;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .3s;box-shadow:var(--shadow-sm);position:relative}
+        .favorites-toggle:active{transform:scale(.95)}
+        .fav-badge{position:absolute;top:-6px;right:-6px;background:#f44336;color:white;width:20px;height:20px;border-radius:50%;font-size:.7em;display:flex;align-items:center;justify-content:center;font-weight:800;border:2px solid var(--white)}
+        .history-toggle{background:linear-gradient(135deg,#2196F3,#1976D2);color:var(--white);border:none;padding:10px 16px;border-radius:50px;font-size:.9em;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .3s;box-shadow:var(--shadow-sm)}
+        .history-toggle:active{transform:scale(.95)}
         
-        body{
-            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
-            background:linear-gradient(135deg,#FFF8E1 0%,#FFECB3 50%,#FFE0B2 100%);
-            background-attachment:fixed;
-            color:#333;
-            line-height:1.6;
-            min-height:100vh;
-            -webkit-font-smoothing:antialiased;
-            -moz-osx-font-smoothing:grayscale;
-            padding-bottom:120px;
-        }
+        /* Search Bar - NEW */
+        .search-container{background:var(--white);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:var(--shadow-md);position:sticky;top:72px;z-index:99;backdrop-filter:blur(10px)}
+        .search-wrapper{position:relative}
+        .search-input{width:100%;padding:14px 48px 14px 48px;border:2px solid #FFE0B2;border-radius:50px;font-size:1em;font-family:inherit;transition:all .3s;background:linear-gradient(135deg,#FFFBF5 0%,#FFF8F0 100%)}
+        .search-input:focus{outline:none;border-color:var(--secondary);box-shadow:0 0 0 3px rgba(255,167,38,.1)}
+        .search-icon{position:absolute;left:18px;top:50%;transform:translateY(-50%);font-size:1.2em;color:var(--primary)}
+        .clear-search{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:var(--primary);color:white;border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1em;display:none;align-items:center;justify-content:center;transition:all .3s}
+        .clear-search.active{display:flex}
+        .clear-search:active{transform:translateY(-50%) scale(.9)}
         
-        .container{
-            max-width:1200px;
-            margin:0 auto;
-            padding:12px;
-        }
+        /* Filter Chips - NEW */
+        .filter-chips{display:flex;gap:8px;margin-top:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px;scrollbar-width:none}
+        .filter-chips::-webkit-scrollbar{display:none}
+        .filter-chip{flex-shrink:0;padding:8px 16px;border:2px solid #FFE0B2;border-radius:50px;background:linear-gradient(135deg,#FFFBF5 0%,#FFF8F0 100%);color:var(--primary);font-size:.85em;font-weight:700;cursor:pointer;transition:all .3s;white-space:nowrap}
+        .filter-chip.active{background:linear-gradient(135deg,var(--secondary),var(--accent));color:white;border-color:var(--secondary)}
+        .filter-chip:active{transform:scale(.95)}
         
         /* Header Styling */
-        header{
-            background:var(--white);
-            border-radius:16px;
-            margin-bottom:16px;
-            box-shadow:var(--shadow-lg);
-            overflow:hidden;
-            position:relative;
-        }
-        
-        header::before{
-            content:'';
-            position:absolute;
-            top:0;
-            left:0;
-            right:0;
-            height:4px;
-            background:linear-gradient(90deg,var(--primary) 0%,var(--secondary) 50%,var(--accent) 100%);
-        }
-        
-        .header-content{
-            padding:20px 16px 16px;
-            text-align:center;
-        }
-        
-        .logo-container{
-            margin-bottom:12px;
-            position:relative;
-            display:inline-block;
-        }
-        
-        .logo-wrapper{
-            position:relative;
-            display:inline-block;
-        }
-        
-        .logo-wrapper::before{
-            content:'';
-            position:absolute;
-            inset:-6px;
-            background:linear-gradient(135deg,var(--secondary),var(--accent));
-            border-radius:50%;
-            opacity:.2;
-            animation:pulse-ring 2s ease-in-out infinite;
-        }
-        
-        @keyframes pulse-ring{
-            0%,100%{transform:scale(1);opacity:.2}
-            50%{transform:scale(1.1);opacity:.1}
-        }
-        
-        .logo-container img{
-            width:100px;
-            height:100px;
-            border-radius:50%;
-            border:3px solid var(--white);
-            box-shadow:0 0 0 2px var(--secondary),var(--shadow-md);
-            object-fit:cover;
-            position:relative;
-            z-index:1;
-        }
-        
-        h1{
-            font-size:1.5em;
-            font-weight:800;
-            background:linear-gradient(135deg,var(--primary) 0%,var(--accent) 100%);
-            -webkit-background-clip:text;
-            -webkit-text-fill-color:transparent;
-            background-clip:text;
-            margin-bottom:6px;
-            letter-spacing:-0.5px;
-            line-height:1.2;
-        }
-        
-        .subtitle{
-            font-size:0.95em;
-            color:var(--text-dark);
-            font-weight:600;
-            margin-bottom:12px;
-            opacity:.9;
-        }
+        header{background:var(--white);border-radius:16px;margin-bottom:16px;box-shadow:var(--shadow-lg);overflow:hidden;position:relative}
+        header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--primary) 0%,var(--secondary) 50%,var(--accent) 100%)}
+        .header-content{padding:20px 16px 16px;text-align:center}
+        .logo-container{margin-bottom:12px;position:relative;display:inline-block}
+        .logo-wrapper{position:relative;display:inline-block}
+        .logo-wrapper::before{content:'';position:absolute;inset:-6px;background:linear-gradient(135deg,var(--secondary),var(--accent));border-radius:50%;opacity:.2;animation:pulse-ring 2s ease-in-out infinite}
+        @keyframes pulse-ring{0%,100%{transform:scale(1);opacity:.2}50%{transform:scale(1.1);opacity:.1}}
+        .logo-container img{width:100px;height:100px;border-radius:50%;border:3px solid var(--white);box-shadow:0 0 0 2px var(--secondary),var(--shadow-md);object-fit:cover;position:relative;z-index:1}
+        h1{font-size:1.5em;font-weight:800;background:linear-gradient(135deg,var(--primary) 0%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px;letter-spacing:-0.5px;line-height:1.2}
+        .subtitle{font-size:0.95em;color:var(--text-dark);font-weight:600;margin-bottom:12px;opacity:.9}
         
         /* Gallery Carousel */
-        .gallery-carousel{
-            margin:12px 0;
-            position:relative;
-            overflow:hidden;
-            border-radius:12px;
-            padding:8px 0;
-        }
-        
-        .gallery-track{
-            display:flex;
-            gap:10px;
-            animation:scroll-infinite 30s linear infinite;
-            width:max-content;
-        }
-        
-        .gallery-track:hover{
-            animation-play-state:paused;
-        }
-        
-        @keyframes scroll-infinite{
-            0%{transform:translateX(0)}
-            100%{transform:translateX(-50%)}
-        }
-        
-        .gallery-item{
-            flex:0 0 auto;
-            width:90px;
-            height:90px;
-            position:relative;
-            border-radius:10px;
-            overflow:hidden;
-            box-shadow:var(--shadow-md);
-            border:2px solid var(--white);
-            transition:all .3s cubic-bezier(.4,0,.2,1);
-        }
-        
-        .gallery-item img{
-            width:100%;
-            height:100%;
-            object-fit:cover;
-            display:block;
-        }
-        
-        .gallery-item:active{
-            transform:scale(1.05);
-        }
-        
-        .cta-badge{
-            display:inline-flex;
-            align-items:center;
-            gap:6px;
-            background:linear-gradient(135deg,var(--secondary) 0%,var(--accent) 100%);
-            color:var(--white);
-            padding:10px 16px;
-            border-radius:50px;
-            font-weight:700;
-            font-size:.85em;
-            box-shadow:var(--shadow-md);
-            animation:float 3s ease-in-out infinite;
-            line-height:1.3;
-            margin-top:6px;
-        }
-        
-        @keyframes float{
-            0%,100%{transform:translateY(0)}
-            50%{transform:translateY(-5px)}
-        }
+        .gallery-carousel{margin:12px 0;position:relative;overflow:hidden;border-radius:12px;padding:8px 0}
+        .gallery-track{display:flex;gap:10px;animation:scroll-infinite 30s linear infinite;width:max-content}
+        .gallery-track:hover{animation-play-state:paused}
+        @keyframes scroll-infinite{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+        .gallery-item{flex:0 0 auto;width:90px;height:90px;position:relative;border-radius:10px;overflow:hidden;box-shadow:var(--shadow-md);border:2px solid var(--white);transition:all .3s cubic-bezier(.4,0,.2,1)}
+        .gallery-item img{width:100%;height:100%;object-fit:cover;display:block}
+        .gallery-item:active{transform:scale(1.05)}
+        .cta-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--secondary) 0%,var(--accent) 100%);color:var(--white);padding:10px 16px;border-radius:50px;font-weight:700;font-size:.85em;box-shadow:var(--shadow-md);animation:float 3s ease-in-out infinite;line-height:1.3;margin-top:6px}
+        @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
         
         /* Menu Section */
-        .menu-section{
-            background:var(--white);
-            border-radius:16px;
-            padding:16px 12px;
-            margin-bottom:16px;
-            box-shadow:var(--shadow-lg);
-            position:relative;
-            overflow:hidden;
-        }
+        .menu-section{background:var(--white);border-radius:16px;padding:16px 12px;margin-bottom:16px;box-shadow:var(--shadow-lg);position:relative;overflow:hidden;transition:all .3s}
+        .menu-section.hidden{display:none}
+        .menu-section::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--secondary),var(--accent))}
+        .menu-section h2{font-size:1.4em;font-weight:800;color:var(--primary);margin-bottom:16px;text-align:center;position:relative;padding-bottom:10px;letter-spacing:-0.5px}
+        .menu-section h2::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:60px;height:3px;background:linear-gradient(90deg,var(--secondary),var(--accent));border-radius:2px}
         
-        .menu-section::before{
-            content:'';
-            position:absolute;
-            top:0;
-            left:0;
-            right:0;
-            height:3px;
-            background:linear-gradient(90deg,var(--secondary),var(--accent));
-        }
+        /* Section Image */
+        .section-image{width:100%;max-width:300px;aspect-ratio:1/1;margin:16px auto 20px;border-radius:16px;overflow:hidden;box-shadow:var(--shadow-lg);border:3px solid var(--white);display:block}
+        .section-image img{width:100%;height:100%;object-fit:cover;display:block}
         
-        .menu-section h2{
-            font-size:1.4em;
-            font-weight:800;
-            color:var(--primary);
-            margin-bottom:16px;
-            text-align:center;
-            position:relative;
-            padding-bottom:10px;
-            letter-spacing:-0.5px;
-        }
-        
-        .menu-section h2::after{
-            content:'';
-            position:absolute;
-            bottom:0;
-            left:50%;
-            transform:translateX(-50%);
-            width:60px;
-            height:3px;
-            background:linear-gradient(90deg,var(--secondary),var(--accent));
-            border-radius:2px;
-        }
-        
-        /* Section Image - NEW */
-        .section-image{
-            width:100%;
-            max-width:300px;
-            aspect-ratio:1/1;
-            margin:16px auto 20px;
-            border-radius:16px;
-            overflow:hidden;
-            box-shadow:var(--shadow-lg);
-            border:3px solid var(--white);
-            display:block;
-        }
-        
-        .section-image img{
-            width:100%;
-            height:100%;
-            object-fit:cover;
-            display:block;
-        }
-        
-        /* Section Slider - NEW for ALA CARTE */
-        .section-slider{
-            margin:16px 0 20px;
-            position:relative;
-            overflow:hidden;
-            border-radius:12px;
-            padding:8px 0;
-        }
-        
-        .section-slider-track{
-            display:flex;
-            gap:12px;
-            animation:scroll-section 25s linear infinite;
-            width:max-content;
-        }
-        
-        .section-slider-track:hover{
-            animation-play-state:paused;
-        }
-        
-        @keyframes scroll-section{
-            0%{transform:translateX(0)}
-            100%{transform:translateX(-50%)}
-        }
-        
-        .section-slider-item{
-            flex:0 0 auto;
-            width:200px;
-            height:200px;
-            position:relative;
-            border-radius:14px;
-            overflow:hidden;
-            box-shadow:var(--shadow-md);
-            border:3px solid var(--white);
-            transition:all .3s cubic-bezier(.4,0,.2,1);
-        }
-        
-        .section-slider-item img{
-            width:100%;
-            height:100%;
-            object-fit:cover;
-            display:block;
-        }
-        
-        .section-slider-item:active{
-            transform:scale(1.05);
-            z-index:2;
-            box-shadow:var(--shadow-lg);
-        }
+        /* Section Slider */
+        .section-slider{margin:16px 0 20px;position:relative;overflow:hidden;border-radius:12px;padding:8px 0}
+        .section-slider-track{display:flex;gap:12px;animation:scroll-section 25s linear infinite;width:max-content}
+        .section-slider-track:hover{animation-play-state:paused}
+        @keyframes scroll-section{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+        .section-slider-item{flex:0 0 auto;width:200px;height:200px;position:relative;border-radius:14px;overflow:hidden;box-shadow:var(--shadow-md);border:3px solid var(--white);transition:all .3s cubic-bezier(.4,0,.2,1)}
+        .section-slider-item img{width:100%;height:100%;object-fit:cover;display:block}
+        .section-slider-item:active{transform:scale(1.05);z-index:2;box-shadow:var(--shadow-lg)}
         
         /* Menu Grid */
-        .menu-grid{
-            display:grid;
-            grid-template-columns:1fr;
-            gap:12px;
-            margin-top:16px;
-        }
+        .menu-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:16px}
+        .menu-item{background:linear-gradient(135deg,#FFFBF5 0%,#FFF8F0 100%);border-radius:14px;padding:16px;border:2px solid #FFE0B2;transition:all .3s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
+        .menu-item.hidden{display:none}
+        .menu-item:active{transform:scale(.98);border-color:var(--secondary)}
         
-        .menu-item{
-            background:linear-gradient(135deg,#FFFBF5 0%,#FFF8F0 100%);
-            border-radius:14px;
-            padding:16px;
-            border:2px solid #FFE0B2;
-            transition:all .3s cubic-bezier(.4,0,.2,1);
-            position:relative;
-            overflow:hidden;
-        }
+        /* Popular Badge - NEW */
+        .popular-badge{position:absolute;top:12px;right:12px;background:linear-gradient(135deg,#FF6B6B,#FF5252);color:white;padding:6px 12px;border-radius:50px;font-size:.75em;font-weight:800;box-shadow:var(--shadow-md);z-index:10;display:flex;align-items:center;gap:4px;animation:pulse-badge 2s ease-in-out infinite}
+        @keyframes pulse-badge{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
         
-        .menu-item:active{
-            transform:scale(.98);
-            border-color:var(--secondary);
-        }
+        /* Favorite Button - NEW */
+        .fav-btn{position:absolute;top:12px;left:12px;width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,.95);color:#ccc;font-size:1.3em;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;box-shadow:var(--shadow-sm);z-index:10}
+        .fav-btn.active{color:#FF6B6B;transform:scale(1.1)}
+        .fav-btn:active{transform:scale(.9)}
         
-        .menu-header{
-            display:flex;
-            justify-content:space-between;
-            align-items:flex-start;
-            gap:10px;
-            margin-bottom:12px;
-            flex-wrap:wrap;
-        }
-        
-        .menu-item h3{
-            font-size:1.1em;
-            color:var(--primary);
-            font-weight:700;
-            display:flex;
-            align-items:center;
-            gap:6px;
-            flex:1;
-            min-width:140px;
-        }
-        
-        .menu-emoji{
-            font-size:1.2em;
-        }
-        
-        .price-tag{
-            background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);
-            color:var(--white);
-            padding:6px 14px;
-            border-radius:50px;
-            font-size:1em;
-            font-weight:800;
-            box-shadow:var(--shadow-sm);
-            white-space:nowrap;
-            letter-spacing:0.5px;
-        }
-        
-        .menu-item ul{
-            list-style:none;
-            margin-bottom:12px;
-        }
-        
-        .menu-item ul li{
-            padding:6px 0 6px 24px;
-            position:relative;
-            color:#2C3E50;
-            font-weight:500;
-            font-size:.9em;
-            line-height:1.4;
-        }
-        
-        .menu-item ul li:before{
-            content:"✓";
-            position:absolute;
-            left:0;
-            color:var(--secondary);
-            font-weight:700;
-            font-size:1em;
-            width:18px;
-            height:18px;
-            background:rgba(255,167,38,.1);
-            border-radius:50%;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            line-height:1;
-        }
+        .menu-header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+        .menu-item h3{font-size:1.1em;color:var(--primary);font-weight:700;display:flex;align-items:center;gap:6px;flex:1;min-width:140px}
+        .menu-emoji{font-size:1.2em}
+        .price-tag{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);color:var(--white);padding:6px 14px;border-radius:50px;font-size:1em;font-weight:800;box-shadow:var(--shadow-sm);white-space:nowrap;letter-spacing:0.5px}
+        .menu-item ul{list-style:none;margin-bottom:12px}
+        .menu-item ul li{padding:6px 0 6px 24px;position:relative;color:#2C3E50;font-weight:500;font-size:.9em;line-height:1.4}
+        .dark-mode .menu-item ul li{color:#e0e0e0}
+        .menu-item ul li:before{content:"✓";position:absolute;left:0;color:var(--secondary);font-weight:700;font-size:1em;width:18px;height:18px;background:rgba(255,167,38,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;line-height:1}
         
         /* Order Button */
-        .order-btn{
-            width:100%;
-            background:linear-gradient(135deg,var(--success) 0%,#45a049 100%);
-            color:var(--white);
-            border:none;
-            padding:14px 20px;
-            border-radius:12px;
-            font-size:1em;
-            font-weight:700;
-            cursor:pointer;
-            transition:all .3s cubic-bezier(.4,0,.2,1);
-            box-shadow:var(--shadow-sm);
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            gap:8px;
-            min-height:50px;
-            position:relative;
-            z-index:1;
-        }
-        
-        .order-btn:active{
-            transform:scale(.96);
-            box-shadow:var(--shadow-xs);
-        }
+        .order-btn{width:100%;background:linear-gradient(135deg,var(--success) 0%,#45a049 100%);color:var(--white);border:none;padding:14px 20px;border-radius:12px;font-size:1em;font-weight:700;cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;gap:8px;min-height:50px;position:relative;z-index:1}
+        .order-btn:active{transform:scale(.96);box-shadow:var(--shadow-xs)}
         
         /* A La Carte Grid */
-        .alacarte-grid{
-            display:grid;
-            grid-template-columns:repeat(2,1fr);
-            gap:10px;
-            margin-top:16px;
-        }
-        
-        .alacarte-item{
-            background:linear-gradient(135deg,#FFFBF5 0%,#FFF3E0 100%);
-            border-radius:12px;
-            padding:12px 10px;
-            text-align:center;
-            border:2px solid #FFE0B2;
-            transition:all .3s cubic-bezier(.4,0,.2,1);
-            min-height:90px;
-            display:flex;
-            flex-direction:column;
-            justify-content:space-between;
-            align-items:center;
-            gap:8px;
-            position:relative;
-            overflow:hidden;
-            cursor:pointer;
-        }
-        
-        .alacarte-item:active{
-            transform:scale(.95);
-            border-color:var(--secondary);
-        }
-        
-        .item-name{
-            font-size:.85em;
-            font-weight:600;
-            color:#2C3E50;
-            line-height:1.3;
-            z-index:1;
-        }
-        
-        .item-price{
-            font-size:1.1em;
-            font-weight:800;
-            color:var(--primary);
-            z-index:1;
-        }
+        .alacarte-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:16px}
+        .alacarte-item{background:linear-gradient(135deg,#FFFBF5 0%,#FFF3E0 100%);border-radius:12px;padding:12px 10px;text-align:center;border:2px solid #FFE0B2;transition:all .3s cubic-bezier(.4,0,.2,1);min-height:90px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;gap:8px;position:relative;overflow:hidden;cursor:pointer}
+        .alacarte-item.hidden{display:none}
+        .alacarte-item:active{transform:scale(.95);border-color:var(--secondary)}
+        .item-name{font-size:.85em;font-weight:600;color:#2C3E50;line-height:1.3;z-index:1}
+        .dark-mode .item-name{color:#e0e0e0}
+        .item-price{font-size:1.1em;font-weight:800;color:var(--primary);z-index:1}
         
         /* Footer */
-        footer{
-            background:var(--white);
-            border-radius:16px;
-            padding:20px 16px;
-            text-align:center;
-            box-shadow:var(--shadow-lg);
-            margin-bottom:16px;
-            position:relative;
-            overflow:hidden;
-        }
-        
-        footer::before{
-            content:'';
-            position:absolute;
-            top:0;
-            left:0;
-            right:0;
-            height:3px;
-            background:linear-gradient(90deg,var(--secondary),var(--accent));
-        }
-        
-        footer h3{
-            font-size:1.3em;
-            font-weight:800;
-            color:var(--primary);
-            margin-bottom:10px;
-        }
-        
-        footer p{
-            color:var(--text-dark);
-            font-weight:500;
-            font-size:.95em;
-            line-height:1.5;
-            margin-bottom:16px;
-        }
-        
-        .contact-buttons{
-            display:flex;
-            flex-direction:column;
-            gap:10px;
-            align-items:center;
-        }
-        
-        .contact-btn{
-            display:inline-flex;
-            align-items:center;
-            justify-content:center;
-            gap:8px;
-            background:linear-gradient(135deg,var(--secondary) 0%,var(--accent) 100%);
-            color:var(--white);
-            padding:14px 24px;
-            border-radius:50px;
-            text-decoration:none;
-            font-size:1em;
-            font-weight:700;
-            transition:all .3s cubic-bezier(.4,0,.2,1);
-            box-shadow:var(--shadow-md);
-            width:100%;
-            max-width:320px;
-            min-height:50px;
-        }
-        
-        .contact-btn:active{
-            transform:scale(.95);
-            box-shadow:var(--shadow-sm);
-        }
+        footer{background:var(--white);border-radius:16px;padding:20px 16px;text-align:center;box-shadow:var(--shadow-lg);margin-bottom:16px;position:relative;overflow:hidden}
+        footer::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--secondary),var(--accent))}
+        footer h3{font-size:1.3em;font-weight:800;color:var(--primary);margin-bottom:10px}
+        footer p{color:var(--text-dark);font-weight:500;font-size:.95em;line-height:1.5;margin-bottom:16px}
+        .contact-buttons{display:flex;flex-direction:column;gap:10px;align-items:center}
+        .contact-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,var(--secondary) 0%,var(--accent) 100%);color:var(--white);padding:14px 24px;border-radius:50px;text-decoration:none;font-size:1em;font-weight:700;transition:all .3s cubic-bezier(.4,0,.2,1);box-shadow:var(--shadow-md);width:100%;max-width:320px;min-height:50px}
+        .contact-btn:active{transform:scale(.95);box-shadow:var(--shadow-sm)}
         
         /* Floating Cart */
-        .floating-cart{
-            position:fixed;
-            bottom:20px;
-            left:50%;
-            transform:translateX(-50%);
-            background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);
-            color:var(--white);
-            padding:16px 32px;
-            border-radius:50px;
-            box-shadow:var(--shadow-xl);
-            font-weight:700;
-            font-size:1.1em;
-            cursor:pointer;
-            transition:all .3s cubic-bezier(.4,0,.2,1);
-            z-index:1000;
-            display:none;
-            align-items:center;
-            gap:12px;
-            min-width:280px;
-            justify-content:center;
-            border:none;
-        }
-        
-        .floating-cart.active{
-            display:flex;
-        }
-        
-        .floating-cart:active{
-            transform:translateX(-50%) scale(.95);
-        }
-        
-        .cart-badge{
-            background:var(--white);
-            color:var(--primary);
-            width:28px;
-            height:28px;
-            border-radius:50%;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            font-weight:800;
-            font-size:.9em;
-        }
+        .floating-cart{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);color:var(--white);padding:16px 32px;border-radius:50px;box-shadow:var(--shadow-xl);font-weight:700;font-size:1.1em;cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);z-index:1000;display:none;align-items:center;gap:12px;min-width:280px;justify-content:center;border:none}
+        .floating-cart.active{display:flex}
+        .floating-cart:active{transform:translateX(-50%) scale(.95)}
+        .cart-badge{background:var(--white);color:var(--primary);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.9em}
         
         /* Cart Modal */
-        .cart-modal{
-            position:fixed;
-            inset:0;
-            background:rgba(0,0,0,.7);
-            z-index:2000;
-            display:none;
-            align-items:flex-end;
-            justify-content:center;
-            animation:fadeIn .3s;
-        }
+        .cart-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:2000;display:none;align-items:flex-end;justify-content:center;animation:fadeIn .3s}
+        .cart-modal.active{display:flex}
+        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+        .cart-content{background:var(--white);width:100%;max-width:600px;max-height:85vh;border-radius:20px 20px 0 0;animation:slideUp .3s;display:flex;flex-direction:column;overflow:hidden}
+        @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+        .cart-header{display:flex;justify-content:space-between;align-items:center;padding:24px 20px 16px;border-bottom:2px solid #FFE0B2;flex-shrink:0}
+        .cart-header h2{font-size:1.5em;color:var(--primary);font-weight:800}
+        .close-cart{width:36px;height:36px;border-radius:50%;border:none;background:rgba(211,47,47,.1);color:var(--primary);font-size:1.5em;cursor:pointer;display:flex;align-items:center;justify-content:center}
+        .cart-items{flex:1;overflow-y:auto;padding:20px;-webkit-overflow-scrolling:touch}
+        .cart-item{background:linear-gradient(135deg,#FFFBF5 0%,#FFF8F0 100%);border-radius:12px;padding:14px;margin-bottom:12px;border:2px solid #FFE0B2}
+        .cart-item-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+        .cart-item-name{font-weight:700;color:var(--primary);font-size:1em;flex:1}
+        .cart-item-price{font-weight:800;color:var(--primary);font-size:1.1em}
+        .cart-item-desc{font-size:0.85em;color:#666;margin-bottom:8px;line-height:1.4}
+        .cart-item-qty{display:flex;align-items:center;gap:10px;margin-top:8px}
+        .qty-btn{width:36px;height:36px;border-radius:50%;border:2px solid var(--primary);background:var(--white);color:var(--primary);font-size:1.2em;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center}
+        .qty-btn:active{transform:scale(.9);background:var(--primary);color:var(--white)}
+        .qty-display{font-size:1.2em;font-weight:700;color:var(--primary);min-width:40px;text-align:center}
+        .cart-footer{padding:16px 20px 20px;border-top:2px solid #FFE0B2;flex-shrink:0}
         
-        .cart-modal.active{
-            display:flex;
-        }
+        /* Suggested Items - NEW */
+        .suggested-items{margin-bottom:16px;padding:16px;background:linear-gradient(135deg,#FFF3E0 0%,#FFE0B2 100%);border-radius:12px;border:2px dashed var(--secondary)}
+        .suggested-items h3{font-size:1em;color:var(--primary);font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+        .suggested-grid{display:grid;grid-template-columns:1fr;gap:8px}
+        .suggested-item{background:white;padding:10px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;border:2px solid #FFE0B2;cursor:pointer;transition:all .3s}
+        .suggested-item:active{transform:scale(.98);border-color:var(--secondary)}
+        .suggested-item-info{flex:1}
+        .suggested-item-name{font-weight:700;color:var(--primary);font-size:.9em}
+        .suggested-item-price{font-size:.85em;color:#666;font-weight:600}
+        .add-suggested-btn{background:linear-gradient(135deg,var(--success),#45a049);color:white;border:none;padding:8px 16px;border-radius:50px;font-size:.85em;font-weight:700;cursor:pointer}
         
-        @keyframes fadeIn{
-            from{opacity:0}
-            to{opacity:1}
-        }
-        
-        .cart-content{
-            background:var(--white);
-            width:100%;
-            max-width:600px;
-            max-height:85vh;
-            border-radius:20px 20px 0 0;
-            animation:slideUp .3s;
-            display:flex;
-            flex-direction:column;
-            overflow:hidden;
-        }
-        
-        @keyframes slideUp{
-            from{transform:translateY(100%)}
-            to{transform:translateY(0)}
-        }
-        
-        .cart-header{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            padding:24px 20px 16px;
-            border-bottom:2px solid #FFE0B2;
-            flex-shrink:0;
-        }
-        
-        .cart-header h2{
-            font-size:1.5em;
-            color:var(--primary);
-            font-weight:800;
-        }
-        
-        .close-cart{
-            width:36px;
-            height:36px;
-            border-radius:50%;
-            border:none;
-            background:rgba(211,47,47,.1);
-            color:var(--primary);
-            font-size:1.5em;
-            cursor:pointer;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-        }
-        
-        .cart-items{
-            flex:1;
-            overflow-y:auto;
-            padding:20px;
-            -webkit-overflow-scrolling:touch;
-        }
-        
-        .cart-item{
-            background:linear-gradient(135deg,#FFFBF5 0%,#FFF8F0 100%);
-            border-radius:12px;
-            padding:14px;
-            margin-bottom:12px;
-            border:2px solid #FFE0B2;
-        }
-        
-        .cart-item-header{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            margin-bottom:8px;
-        }
-        
-        .cart-item-name{
-            font-weight:700;
-            color:var(--primary);
-            font-size:1em;
-            flex:1;
-        }
-        
-        .cart-item-price{
-            font-weight:800;
-            color:var(--primary);
-            font-size:1.1em;
-        }
-        
-        .cart-item-desc{
-            font-size:0.85em;
-            color:#666;
-            margin-bottom:8px;
-            line-height:1.4;
-        }
-        
-        .cart-item-qty{
-            display:flex;
-            align-items:center;
-            gap:10px;
-            margin-top:8px;
-        }
-        
-        .qty-btn{
-            width:36px;
-            height:36px;
-            border-radius:50%;
-            border:2px solid var(--primary);
-            background:var(--white);
-            color:var(--primary);
-            font-size:1.2em;
-            font-weight:700;
-            cursor:pointer;
-            transition:all .2s;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-        }
-        
-        .qty-btn:active{
-            transform:scale(.9);
-            background:var(--primary);
-            color:var(--white);
-        }
-        
-        .qty-display{
-            font-size:1.2em;
-            font-weight:700;
-            color:var(--primary);
-            min-width:40px;
-            text-align:center;
-        }
-        
-        .cart-footer{
-            padding:16px 20px 20px;
-            border-top:2px solid #FFE0B2;
-            flex-shrink:0;
-        }
-        
-        .cart-total{
-            background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);
-            color:var(--white);
-            padding:16px;
-            border-radius:12px;
-            margin-bottom:12px;
-        }
-        
-        .cart-total-row{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            font-size:1.2em;
-            font-weight:800;
-        }
-        
-        .send-order-btn{
-            width:100%;
-            background:linear-gradient(135deg,#0088cc 0%,#006699 100%);
-            color:var(--white);
-            border:none;
-            padding:16px;
-            border-radius:12px;
-            font-size:1.1em;
-            font-weight:700;
-            cursor:pointer;
-            transition:all .3s;
-            box-shadow:var(--shadow-md);
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            gap:10px;
-            min-height:56px;
-        }
-        
-        .send-order-btn:active{
-            transform:scale(.96);
-        }
-        
-        .empty-cart{
-            text-align:center;
-            padding:40px 20px;
-            color:#999;
-        }
-        
-        .empty-cart-icon{
-            font-size:4em;
-            margin-bottom:16px;
-        }
+        .cart-total{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);color:var(--white);padding:16px;border-radius:12px;margin-bottom:12px}
+        .cart-total-row{display:flex;justify-content:space-between;align-items:center;font-size:1.2em;font-weight:800}
+        .send-order-btn{width:100%;background:linear-gradient(135deg,#0088cc 0%,#006699 100%);color:var(--white);border:none;padding:16px;border-radius:12px;font-size:1.1em;font-weight:700;cursor:pointer;transition:all .3s;box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:center;gap:10px;min-height:56px}
+        .send-order-btn:active{transform:scale(.96)}
+        .empty-cart{text-align:center;padding:40px 20px;color:#999}
+        .empty-cart-icon{font-size:4em;margin-bottom:16px}
         
         /* Delivery Form Modal */
-        .delivery-modal{
-            position:fixed;
-            inset:0;
-            background:rgba(0,0,0,.7);
-            z-index:3000;
-            display:none;
-            align-items:center;
-            justify-content:center;
-            padding:20px;
-            animation:fadeIn .3s;
-        }
-        
-        .delivery-modal.active{
-            display:flex;
-        }
-        
-        .delivery-content{
-            background:var(--white);
-            width:100%;
-            max-width:480px;
-            max-height:90vh;
-            border-radius:20px;
-            padding:28px 24px;
-            animation:slideUp .3s;
-            overflow-y:auto;
-        }
-        
-        .delivery-header{
-            text-align:center;
-            margin-bottom:24px;
-        }
-        
-        .delivery-header h2{
-            font-size:1.6em;
-            color:var(--primary);
-            font-weight:800;
-            margin-bottom:8px;
-        }
-        
-        .delivery-header p{
-            color:#666;
-            font-size:0.95em;
-        }
-        
-        .delivery-form{
-            display:flex;
-            flex-direction:column;
-            gap:20px;
-        }
-        
-        .form-group{
-            display:flex;
-            flex-direction:column;
-            gap:8px;
-        }
-        
-        .form-group label{
-            font-weight:700;
-            color:var(--primary);
-            font-size:1em;
-            display:flex;
-            align-items:center;
-            gap:8px;
-        }
+        .delivery-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:3000;display:none;align-items:center;justify-content:center;padding:20px;animation:fadeIn .3s}
+        .delivery-modal.active{display:flex}
+        .delivery-content{background:var(--white);width:100%;max-width:480px;max-height:90vh;border-radius:20px;padding:28px 24px;animation:slideUp .3s;overflow-y:auto}
+        .delivery-header{text-align:center;margin-bottom:24px}
+        .delivery-header h2{font-size:1.6em;color:var(--primary);font-weight:800;margin-bottom:8px}
+        .delivery-header p{color:#666;font-size:0.95em}
+        .delivery-form{display:flex;flex-direction:column;gap:20px}
+        .form-group{display:flex;flex-direction:column;gap:8px}
+        .form-group label{font-weight:700;color:var(--primary);font-size:1em;display:flex;align-items:center;gap:8px}
         
         /* Quick Location Buttons */
-        .quick-locations{
-            display:flex;
-            gap:8px;
-            flex-wrap:wrap;
-            margin-bottom:8px;
-        }
+        .quick-locations{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+        .quick-loc-btn{flex:1;min-width:100px;padding:10px 16px;border:2px solid #FFE0B2;border-radius:10px;background:linear-gradient(135deg,#FFFBF5 0%,#FFF8F0 100%);color:var(--primary);font-size:0.9em;font-weight:700;cursor:pointer;transition:all .3s;text-align:center}
+        .quick-loc-btn:active{transform:scale(.95);background:var(--secondary);color:var(--white);border-color:var(--secondary)}
+        .quick-loc-btn.selected{background:var(--secondary);color:var(--white);border-color:var(--secondary)}
         
-        .quick-loc-btn{
-            flex:1;
-            min-width:100px;
-            padding:10px 16px;
-            border:2px solid #FFE0B2;
-            border-radius:10px;
-            background:linear-gradient(135deg,#FFFBF5 0%,#FFF8F0 100%);
-            color:var(--primary);
-            font-size:0.9em;
-            font-weight:700;
-            cursor:pointer;
-            transition:all .3s;
-            text-align:center;
-        }
+        /* Quick Time Buttons - NEW */
+        .quick-times{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px}
+        .quick-time-btn{padding:10px 12px;border:2px solid #FFE0B2;border-radius:10px;background:linear-gradient(135deg,#FFFBF5 0%,#FFF8F0 100%);color:var(--primary);font-size:0.9em;font-weight:700;cursor:pointer;transition:all .3s;text-align:center}
+        .quick-time-btn:active{transform:scale(.95);background:var(--secondary);color:var(--white);border-color:var(--secondary)}
+        .quick-time-btn.selected{background:var(--secondary);color:var(--white);border-color:var(--secondary)}
+        .quick-time-btn.now{background:linear-gradient(135deg,#FF6B6B,#FF5252);color:white;border-color:#FF5252;font-weight:800;animation:pulse-now 2s ease-in-out infinite}
+        @keyframes pulse-now{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+        .quick-time-btn.now.selected{animation:none}
         
-        .quick-loc-btn:active{
-            transform:scale(.95);
-            background:var(--secondary);
-            color:var(--white);
-            border-color:var(--secondary);
-        }
+        .form-group input{padding:14px 16px;border:2px solid #FFE0B2;border-radius:12px;font-size:1em;font-family:inherit;transition:all .3s;background:linear-gradient(135deg,#FFFBF5 0%,#FFF8F0 100%)}
+        .form-group input:focus{outline:none;border-color:var(--secondary);box-shadow:0 0 0 3px rgba(255,167,38,.1)}
+        .form-buttons{display:flex;gap:12px;margin-top:8px}
+        .form-btn{flex:1;padding:14px;border:none;border-radius:12px;font-size:1.05em;font-weight:700;cursor:pointer;transition:all .3s;min-height:52px}
+        .form-btn.cancel{background:#f5f5f5;color:#666}
+        .form-btn.cancel:active{transform:scale(.96);background:#e0e0e0}
+        .form-btn.submit{background:linear-gradient(135deg,#0088cc 0%,#006699 100%);color:var(--white);box-shadow:var(--shadow-md)}
+        .form-btn.submit:active{transform:scale(.96)}
         
-        .quick-loc-btn.selected{
-            background:var(--secondary);
-            color:var(--white);
-            border-color:var(--secondary);
-        }
+        /* Favorites Modal - NEW */
+        .favorites-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:2500;display:none;align-items:flex-end;justify-content:center;animation:fadeIn .3s}
+        .favorites-modal.active{display:flex}
+        .favorites-content{background:var(--white);width:100%;max-width:600px;max-height:85vh;border-radius:20px 20px 0 0;animation:slideUp .3s;display:flex;flex-direction:column;overflow:hidden}
+        .favorites-header{display:flex;justify-content:space-between;align-items:center;padding:24px 20px 16px;border-bottom:2px solid #FFE0B2;flex-shrink:0}
+        .favorites-header h2{font-size:1.5em;color:var(--primary);font-weight:800}
+        .favorites-items{flex:1;overflow-y:auto;padding:20px;-webkit-overflow-scrolling:touch}
+        .favorite-item{background:linear-gradient(135deg,#FFFBF5 0%,#FFF8F0 100%);border-radius:12px;padding:14px;margin-bottom:12px;border:2px solid #FFE0B2;display:flex;justify-content:space-between;align-items:center}
+        .favorite-item-info{flex:1}
+        .favorite-item-name{font-weight:700;color:var(--primary);font-size:1em;margin-bottom:4px}
+        .favorite-item-price{font-size:.9em;color:#666;font-weight:600}
+        .favorite-actions{display:flex;gap:8px}
+        .fav-action-btn{padding:8px 16px;border:none;border-radius:8px;font-weight:700;font-size:.9em;cursor:pointer;transition:all .3s}
+        .add-fav-btn{background:linear-gradient(135deg,var(--success),#45a049);color:white}
+        .remove-fav-btn{background:#ffebee;color:#f44336}
+        .fav-action-btn:active{transform:scale(.95)}
         
-        .form-group input{
-            padding:14px 16px;
-            border:2px solid #FFE0B2;
-            border-radius:12px;
-            font-size:1em;
-            font-family:inherit;
-            transition:all .3s;
-            background:linear-gradient(135deg,#FFFBF5 0%,#FFF8F0 100%);
-        }
-        
-        .form-group input:focus{
-            outline:none;
-            border-color:var(--secondary);
-            box-shadow:0 0 0 3px rgba(255,167,38,.1);
-        }
-        
-        .form-buttons{
-            display:flex;
-            gap:12px;
-            margin-top:8px;
-        }
-        
-        .form-btn{
-            flex:1;
-            padding:14px;
-            border:none;
-            border-radius:12px;
-            font-size:1.05em;
-            font-weight:700;
-            cursor:pointer;
-            transition:all .3s;
-            min-height:52px;
-        }
-        
-        .form-btn.cancel{
-            background:#f5f5f5;
-            color:#666;
-        }
-        
-        .form-btn.cancel:active{
-            transform:scale(.96);
-            background:#e0e0e0;
-        }
-        
-        .form-btn.submit{
-            background:linear-gradient(135deg,#0088cc 0%,#006699 100%);
-            color:var(--white);
-            box-shadow:var(--shadow-md);
-        }
-        
-        .form-btn.submit:active{
-            transform:scale(.96);
-        }
+        /* History Modal - NEW */
+        .history-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:2500;display:none;align-items:flex-end;justify-content:center;animation:fadeIn .3s}
+        .history-modal.active{display:flex}
+        .history-content{background:var(--white);width:100%;max-width:600px;max-height:85vh;border-radius:20px 20px 0 0;animation:slideUp .3s;display:flex;flex-direction:column;overflow:hidden}
+        .history-header{display:flex;justify-content:space-between;align-items:center;padding:24px 20px 16px;border-bottom:2px solid #FFE0B2;flex-shrink:0}
+        .history-header h2{font-size:1.5em;color:var(--primary);font-weight:800}
+        .history-items{flex:1;overflow-y:auto;padding:20px;-webkit-overflow-scrolling:touch}
+        .history-item{background:linear-gradient(135deg,#FFFBF5 0%,#FFF8F0 100%);border-radius:12px;padding:14px;margin-bottom:12px;border:2px solid #FFE0B2}
+        .history-item-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+        .history-date{font-size:.85em;color:#666;font-weight:600}
+        .history-item-list{font-size:.9em;color:#2C3E50;margin-bottom:8px;line-height:1.6}
+        .reorder-btn{width:100%;background:linear-gradient(135deg,var(--secondary),var(--accent));color:white;border:none;padding:10px;border-radius:8px;font-weight:700;cursor:pointer;transition:all .3s}
+        .reorder-btn:active{transform:scale(.98)}
         
         /* Success Notification */
-        .notification{
-            position:fixed;
-            top:20px;
-            left:50%;
-            transform:translateX(-50%) translateY(-100px);
-            background:var(--success);
-            color:var(--white);
-            padding:16px 24px;
-            border-radius:12px;
-            box-shadow:var(--shadow-xl);
-            font-weight:700;
-            z-index:4000;
-            display:flex;
-            align-items:center;
-            gap:10px;
-            opacity:0;
-            transition:all .3s cubic-bezier(.4,0,.2,1);
-        }
+        .notification{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-100px);background:var(--success);color:var(--white);padding:16px 24px;border-radius:12px;box-shadow:var(--shadow-xl);font-weight:700;z-index:4000;display:flex;align-items:center;gap:10px;opacity:0;transition:all .3s cubic-bezier(.4,0,.2,1)}
+        .notification.show{transform:translateX(-50%) translateY(0);opacity:1}
         
-        .notification.show{
-            transform:translateX(-50%) translateY(0);
-            opacity:1;
-        }
+        /* Empty States - NEW */
+        .empty-state{text-align:center;padding:40px 20px;color:#999}
+        .empty-state-icon{font-size:4em;margin-bottom:16px;opacity:.5}
+        .empty-state p{font-size:1em;color:#999}
         
         /* Tablet & Desktop */
         @media (min-width:600px){
@@ -983,8 +266,8 @@
             .contact-btn{width:auto;min-width:240px}
             .quick-loc-btn{min-width:120px}
             .section-slider-item{width:240px;height:240px}
+            .quick-times{grid-template-columns:repeat(4,1fr)}
         }
-        
         @media (min-width:900px){
             body{padding-bottom:24px}
             .container{padding:28px}
@@ -997,17 +280,49 @@
             .menu-grid{grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
             .alacarte-grid{grid-template-columns:repeat(4,1fr);gap:14px}
             .section-slider-item{width:280px;height:280px}
+            .quick-times{grid-template-columns:repeat(5,1fr)}
         }
-        
         html{scroll-behavior:smooth}
-        
-        @media (prefers-reduced-motion:reduce){
-            *{animation:none!important;transition:none!important}
-        }
+        @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Top Controls Bar - NEW -->
+        <div class="top-controls">
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()">
+                <span id="darkModeIcon">🌙</span>
+                <span id="darkModeText">Dark Mode</span>
+            </button>
+            <button class="favorites-toggle" onclick="openFavorites()">
+                <span>⭐</span>
+                <span>Favorit</span>
+                <span class="fav-badge" id="favBadge" style="display:none">0</span>
+            </button>
+            <button class="history-toggle" onclick="openHistory()">
+                <span>📜</span>
+                <span>Riwayat</span>
+            </button>
+        </div>
+        
+        <!-- Search Bar - NEW -->
+        <div class="search-container">
+            <div class="search-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" id="searchInput" placeholder="Cari menu favorit kamu..." oninput="searchMenu()">
+                <button class="clear-search" id="clearSearch" onclick="clearSearch()">×</button>
+            </div>
+            <div class="filter-chips">
+                <div class="filter-chip active" data-filter="all" onclick="filterMenu('all')">Semua</div>
+                <div class="filter-chip" data-filter="paket" onclick="filterMenu('paket')">Paket Spesial</div>
+                <div class="filter-chip" data-filter="prames" onclick="filterMenu('prames')">Prames</div>
+                <div class="filter-chip" data-filter="alacarte" onclick="filterMenu('alacarte')">Ala Carte</div>
+                <div class="filter-chip" data-filter="seasonal" onclick="filterMenu('seasonal')">Seasonal</div>
+                <div class="filter-chip" data-filter="under20" onclick="filterMenu('under20')">< ¥20</div>
+                <div class="filter-chip" data-filter="under30" onclick="filterMenu('under30')">< ¥30</div>
+            </div>
+        </div>
+        
         <header>
             <div class="header-content">
                 <div class="logo-container">
@@ -1044,10 +359,12 @@
             </div>
         </header>
 
-        <div class="menu-section">
+        <div class="menu-section" data-category="paket">
             <h2>MENU PAKET SPESIAL</h2>
             <div class="menu-grid">
-                <div class="menu-item">
+                <div class="menu-item" data-name="PAYALUR" data-price="35" data-category="paket">
+                    <span class="popular-badge">🔥 POPULER</span>
+                    <button class="fav-btn" onclick="toggleFavorite('PAYALUR', 35, '🍗🍳🥔', ['Nasi Putih', 'Ayam Goreng', 'Telur Balado', 'Kentang Balado', 'Bakwan', 'Sambal'])">♡</button>
                     <div class="menu-header">
                         <h3><span class="menu-emoji">🍗🍳🥔</span><span>PAYALUR</span></h3>
                         <span class="price-tag">¥35</span>
@@ -1062,7 +379,8 @@
                         <span>✚</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item" data-name="PAYALIT" data-price="30" data-category="paket">
+                    <button class="fav-btn" onclick="toggleFavorite('PAYALIT', 30, '🍗🥔', ['Nasi Putih', 'Ayam Goreng', 'Kentang Balado', 'Bakwan', 'Sambal'])">♡</button>
                     <div class="menu-header">
                         <h3><span class="menu-emoji">🍗🥔</span><span>PAYALIT</span></h3>
                         <span class="price-tag">¥30</span>
@@ -1076,7 +394,9 @@
                         <span>✚</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item" data-name="PAYAMAT" data-price="25" data-category="paket">
+                    <span class="popular-badge">🔥 POPULER</span>
+                    <button class="fav-btn" onclick="toggleFavorite('PAYAMAT', 25, '🍗', ['Nasi Putih', 'Ayam Goreng', 'Bakwan', 'Sambal'])">♡</button>
                     <div class="menu-header">
                         <h3><span class="menu-emoji">🍗</span><span>PAYAMAT</span></h3>
                         <span class="price-tag">¥25</span>
@@ -1089,7 +409,8 @@
                         <span>✚</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item" data-name="PALUTANG" data-price="25" data-category="paket">
+                    <button class="fav-btn" onclick="toggleFavorite('PALUTANG', 25, '🍳🥔', ['Nasi Putih', 'Telur Balado', 'Kentang Balado', 'Bakwan 2pcs'])">♡</button>
                     <div class="menu-header">
                         <h3><span class="menu-emoji">🍳🥔</span><span>PALUTANG</span></h3>
                         <span class="price-tag">¥25</span>
@@ -1103,7 +424,8 @@
                         <span>✚</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item" data-name="PALUR" data-price="20" data-category="paket">
+                    <button class="fav-btn" onclick="toggleFavorite('PALUR', 20, '🍳', ['Nasi Putih', 'Telur Balado', 'Bakwan 2pcs'])">♡</button>
                     <div class="menu-header">
                         <h3><span class="menu-emoji">🍳</span><span>PALUR</span></h3>
                         <span class="price-tag">¥20</span>
@@ -1119,16 +441,15 @@
             </div>
         </div>
 
-        <div class="menu-section">
+        <div class="menu-section" data-category="prames">
             <h2>MENU PRAMES</h2>
-            
-            <!-- PRAMES Section Image - NEW -->
             <div class="section-image">
                 <img src="https://i.ibb.co/DD0PnmYT/7.png" alt="Menu Prames" loading="lazy">
             </div>
-            
             <div class="menu-grid">
-                <div class="menu-item">
+                <div class="menu-item" data-name="PRAMES A" data-price="25" data-category="prames">
+                    <span class="popular-badge">🔥 POPULER</span>
+                    <button class="fav-btn" onclick="toggleFavorite('PRAMES A', 25, '🍱', ['Nasi Putih', 'Ayam Goreng', 'Tahu', 'Timun', 'Sambal', 'Kremesan'])">♡</button>
                     <div class="menu-header">
                         <h3><span class="menu-emoji">🍱</span><span>PRAMES A</span></h3>
                         <span class="price-tag">¥25</span>
@@ -1145,7 +466,8 @@
                         <span>✚</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item" data-name="PRAMES B" data-price="33" data-category="prames">
+                    <button class="fav-btn" onclick="toggleFavorite('PRAMES B', 33, '🍱', ['Nasi Putih', 'Ayam Goreng', 'Telur Balado', 'Tahu', 'Timun', 'Sambal', 'Kremesan'])">♡</button>
                     <div class="menu-header">
                         <h3><span class="menu-emoji">🍱</span><span>PRAMES B</span></h3>
                         <span class="price-tag">¥33</span>
@@ -1163,7 +485,8 @@
                         <span>✚</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item" data-name="PRAMES C" data-price="30" data-category="prames">
+                    <button class="fav-btn" onclick="toggleFavorite('PRAMES C', 30, '🍱', ['Nasi Putih', 'Ayam Goreng', 'Kentang Balado', 'Tahu', 'Timun', 'Sambal', 'Kremesan'])">♡</button>
                     <div class="menu-header">
                         <h3><span class="menu-emoji">🍱</span><span>PRAMES C</span></h3>
                         <span class="price-tag">¥30</span>
@@ -1181,7 +504,8 @@
                         <span>✚</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item" data-name="PRAMES KARBO" data-price="20" data-category="prames">
+                    <button class="fav-btn" onclick="toggleFavorite('PRAMES KARBO', 20, '🥔', ['Nasi Putih', 'Kentang Balado', 'Bakwan 2pcs', 'Sambal', 'Kremesan'])">♡</button>
                     <div class="menu-header">
                         <h3><span class="menu-emoji">🥔</span><span>PRAMES KARBO</span></h3>
                         <span class="price-tag">¥20</span>
@@ -1197,7 +521,8 @@
                         <span>✚</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item" data-name="PRAMES VEGGIE" data-price="15" data-category="prames">
+                    <button class="fav-btn" onclick="toggleFavorite('PRAMES VEGGIE', 15, '🥬', ['Nasi Putih', 'Tahu', 'Timun', 'Sambal', 'Kremesan'])">♡</button>
                     <div class="menu-header">
                         <h3><span class="menu-emoji">🥬</span><span>PRAMES VEGGIE</span></h3>
                         <span class="price-tag">¥15</span>
@@ -1216,84 +541,70 @@
             </div>
         </div>
 
-        <div class="menu-section">
+        <div class="menu-section" data-category="alacarte">
             <h2>MENU ALA CARTE</h2>
-            
-            <!-- ALA CARTE Section Slider - NEW -->
             <div class="section-slider">
                 <div class="section-slider-track">
-                    <div class="section-slider-item">
-                        <img src="https://i.ibb.co/7JsKyyZm/2.png" alt="Ala Carte 1" loading="lazy">
-                    </div>
-                    <div class="section-slider-item">
-                        <img src="https://i.ibb.co/XfMg4Nby/4.png" alt="Ala Carte 2" loading="lazy">
-                    </div>
-                    <div class="section-slider-item">
-                        <img src="https://i.ibb.co/FqXW82DQ/6.png" alt="Ala Carte 3" loading="lazy">
-                    </div>
-                    <!-- Duplicate for infinite scroll -->
-                    <div class="section-slider-item">
-                        <img src="https://i.ibb.co/7JsKyyZm/2.png" alt="Ala Carte 1" loading="lazy">
-                    </div>
-                    <div class="section-slider-item">
-                        <img src="https://i.ibb.co/XfMg4Nby/4.png" alt="Ala Carte 2" loading="lazy">
-                    </div>
-                    <div class="section-slider-item">
-                        <img src="https://i.ibb.co/FqXW82DQ/6.png" alt="Ala Carte 3" loading="lazy">
-                    </div>
+                    <div class="section-slider-item"><img src="https://i.ibb.co/7JsKyyZm/2.png" alt="Ala Carte 1" loading="lazy"></div>
+                    <div class="section-slider-item"><img src="https://i.ibb.co/XfMg4Nby/4.png" alt="Ala Carte 2" loading="lazy"></div>
+                    <div class="section-slider-item"><img src="https://i.ibb.co/FqXW82DQ/6.png" alt="Ala Carte 3" loading="lazy"></div>
+                    <div class="section-slider-item"><img src="https://i.ibb.co/7JsKyyZm/2.png" alt="Ala Carte 1" loading="lazy"></div>
+                    <div class="section-slider-item"><img src="https://i.ibb.co/XfMg4Nby/4.png" alt="Ala Carte 2" loading="lazy"></div>
+                    <div class="section-slider-item"><img src="https://i.ibb.co/FqXW82DQ/6.png" alt="Ala Carte 3" loading="lazy"></div>
                 </div>
             </div>
-            
             <div class="alacarte-grid">
-                <div class="alacarte-item" onclick="addToCart('Ayam Goreng', 15, '✚', ['Ayam Goreng'])">
-                    <div class="item-name">✚ Ayam Goreng</div>
+                <div class="alacarte-item" data-name="Ayam Goreng" data-price="15" data-category="alacarte" onclick="addToCart('Ayam Goreng', 15, '🍗', ['Ayam Goreng'])">
+                    <div class="item-name">🍗 Ayam Goreng</div>
                     <div class="item-price">¥15</div>
                 </div>
-                <div class="alacarte-item" onclick="addToCart('Telur Dadar', 8, '✚', ['Telur Dadar'])">
-                    <div class="item-name">✚ Telur Dadar</div>
+                <div class="alacarte-item" data-name="Telur Dadar" data-price="8" data-category="alacarte" onclick="addToCart('Telur Dadar', 8, '🍳', ['Telur Dadar'])">
+                    <div class="item-name">🍳 Telur Dadar</div>
                     <div class="item-price">¥8</div>
                 </div>
-                <div class="alacarte-item" onclick="addToCart('Kentang Balado', 10, '✚', ['Kentang Balado'])">
-                    <div class="item-name">✚ Kentang Balado</div>
+                <div class="alacarte-item" data-name="Kentang Balado" data-price="10" data-category="alacarte" onclick="addToCart('Kentang Balado', 10, '🥔', ['Kentang Balado'])">
+                    <div class="item-name">🥔 Kentang Balado</div>
                     <div class="item-price">¥10</div>
                 </div>
-                <div class="alacarte-item" onclick="addToCart('Telur Balado', 10, '✚', ['Telur Balado'])">
-                    <div class="item-name">✚ Telur Balado</div>
+                <div class="alacarte-item" data-name="Telur Balado" data-price="10" data-category="alacarte" onclick="addToCart('Telur Balado', 10, '🍳', ['Telur Balado'])">
+                    <div class="item-name">🍳 Telur Balado</div>
                     <div class="item-price">¥10</div>
                 </div>
-                <div class="alacarte-item" onclick="addToCart('Telur Ceplok', 7, '✚', ['Telur Ceplok'])">
-                    <div class="item-name">✚ Telur Ceplok</div>
+                <div class="alacarte-item" data-name="Telur Ceplok" data-price="7" data-category="alacarte" onclick="addToCart('Telur Ceplok', 7, '🍳', ['Telur Ceplok'])">
+                    <div class="item-name">🍳 Telur Ceplok</div>
                     <div class="item-price">¥7</div>
                 </div>
-                <div class="alacarte-item" onclick="addToCart('Bakwan 3pcs', 5, '✚', ['Bakwan 3pcs'])">
-                    <div class="item-name">✚ Bakwan 3pcs</div>
+                <div class="alacarte-item" data-name="Bakwan 3pcs" data-price="5" data-category="alacarte" onclick="addToCart('Bakwan 3pcs', 5, '🥟', ['Bakwan 3pcs'])">
+                    <div class="item-name">🥟 Bakwan 3pcs</div>
                     <div class="item-price">¥5</div>
                 </div>
-                <div class="alacarte-item" onclick="addToCart('Extra Kremes', 5, '✚', ['Extra Kremes'])">
-                    <div class="item-name">✚ Extra Kremes</div>
+                <div class="alacarte-item" data-name="Extra Kremes" data-price="5" data-category="alacarte" onclick="addToCart('Extra Kremes', 5, '✨', ['Extra Kremes'])">
+                    <div class="item-name">✨ Extra Kremes</div>
                     <div class="item-price">¥5</div>
                 </div>
-                <div class="alacarte-item" onclick="addToCart('Extra Sambel', 3, '✚', ['Extra Sambel'])">
-                    <div class="item-name">✚ Extra Sambel</div>
+                <div class="alacarte-item" data-name="Extra Sambel" data-price="3" data-category="alacarte" onclick="addToCart('Extra Sambel', 3, '🌶️', ['Extra Sambel'])">
+                    <div class="item-name">🌶️ Extra Sambel</div>
                     <div class="item-price">¥3</div>
                 </div>
-                <div class="alacarte-item" onclick="addToCart('Eskopsus 100ml', 10, '✚', ['Eskopsus 100ml'])">
-                    <div class="item-name">✚ Eskopsus 100ml</div>
-                    <div class="item-price">¥10</div>
+                <div class="alacarte-item" data-name="Eskopsus 100ml" data-price="12" data-category="alacarte" onclick="addToCart('Eskopsus 100ml', 12, '☕', ['Eskopsus 100ml'])">
+                    <div class="item-name">☕ Eskopsus 100ml</div>
+                    <div class="item-price">¥12</div>
                 </div>
-                <div class="alacarte-item" onclick="addToCart('Eskopsus 200ml', 20, '✚', ['Eskopsus 200ml'])">
-                    <div class="item-name">✚ Eskopsus 200ml</div>
+                <div class="alacarte-item" data-name="Eskopsus 200ml" data-price="20" data-category="alacarte" onclick="addToCart('Eskopsus 200ml', 20, '☕', ['Eskopsus 200ml'])">
+                    <div class="item-name">☕ Eskopsus 200ml</div>
                     <div class="item-price">¥20</div>
                 </div>
             </div>
         </div>
 
-        <div class="menu-section">
+        <div class="menu-section" data-category="seasonal">
             <h2>MENU SEASONAL</h2>
             <div class="menu-grid">
-                <div class="menu-item">
+                <div class="menu-item" data-name="Sangcodut" data-price="15" data-category="seasonal">
+                    <span class="popular-badge">🔥 POPULER</span>
+                    <button class="fav-btn" onclick="toggleFavorite('Sangcodut', 15, '🍌🍫', ['Isi 3pcs', 'Susu Coklat/Putih', 'Keju', 'Ceres'])">♡</button>
                     <div class="menu-header">
-                        <h3><span class="menu-emoji">🍌🍫</span><span>Sancodut</span></h3>
+                        <h3><span class="menu-emoji">🍌🍫</span><span>Sangcodut</span></h3>
                         <span class="price-tag">¥15</span>
                     </div>
                     <ul>
@@ -1303,7 +614,7 @@
                         <li>Keju</li>
                         <li>Ceres</li>
                     </ul>
-                    <button class="order-btn" onclick="addToCart('Sancodut (Pisang Cokelat Gendut)', 15, '🍌🍫', ['Isi 3pcs', 'Susu Coklat/Putih', 'Keju', 'Ceres'])">
+                    <button class="order-btn" onclick="addToCart('Sangcodut (Pisang Cokelat Gendut)', 15, '🍌🍫', ['Isi 3pcs', 'Susu Coklat/Putih', 'Keju', 'Ceres'])">
                         <span>✚</span><span>TAMBAH KE PESANAN</span>
                     </button>
                 </div>
@@ -1332,6 +643,7 @@
         <span id="cartTotal">¥0</span>
     </button>
 
+    <!-- Cart Modal -->
     <div class="cart-modal" id="cartModal">
         <div class="cart-content">
             <div class="cart-header">
@@ -1345,6 +657,12 @@
                 </div>
             </div>
             <div class="cart-footer" id="cartFooter" style="display:none">
+                <!-- Suggested Items Section - NEW -->
+                <div class="suggested-items" id="suggestedItems" style="display:none">
+                    <h3>💡 Tambahkan ini?</h3>
+                    <div class="suggested-grid" id="suggestedGrid"></div>
+                </div>
+                
                 <div class="cart-total">
                     <div class="cart-total-row">
                         <span>TOTAL:</span>
@@ -1359,6 +677,7 @@
         </div>
     </div>
 
+    <!-- Delivery Form Modal -->
     <div class="delivery-modal" id="deliveryModal">
         <div class="delivery-content">
             <div class="delivery-header">
@@ -1383,7 +702,14 @@
                         <span>🕐</span>
                         <span>Jam Pengantaran</span>
                     </label>
-                    <input type="text" id="deliveryTime" placeholder="Contoh: 7PM atau 19:00" required>
+                    <div class="quick-times">
+                        <button class="quick-time-btn now" onclick="selectTime('NOW')">🔥 NOW</button>
+                        <button class="quick-time-btn" onclick="selectTime('12:00 PM')">12:00 PM</button>
+                        <button class="quick-time-btn" onclick="selectTime('1:00 PM')">1:00 PM</button>
+                        <button class="quick-time-btn" onclick="selectTime('6:00 PM')">6:00 PM</button>
+                        <button class="quick-time-btn" onclick="selectTime('7:00 PM')">7:00 PM</button>
+                    </div>
+                    <input type="text" id="deliveryTime" placeholder="Atau ketik jam manual..." required>
                 </div>
                 <div class="form-buttons">
                     <button class="form-btn cancel" onclick="closeDeliveryForm()">Batal</button>
@@ -1393,20 +719,76 @@
         </div>
     </div>
 
+    <!-- Favorites Modal - NEW -->
+    <div class="favorites-modal" id="favoritesModal">
+        <div class="favorites-content">
+            <div class="favorites-header">
+                <h2>⭐ Menu Favorit</h2>
+                <button class="close-cart" onclick="closeFavorites()">×</button>
+            </div>
+            <div class="favorites-items" id="favoritesItems">
+                <div class="empty-state">
+                    <div class="empty-state-icon">⭐</div>
+                    <p>Belum ada menu favorit</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- History Modal - NEW -->
+    <div class="history-modal" id="historyModal">
+        <div class="history-content">
+            <div class="history-header">
+                <h2>📜 Riwayat Pesanan</h2>
+                <button class="close-cart" onclick="closeHistory()">×</button>
+            </div>
+            <div class="history-items" id="historyItems">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📜</div>
+                    <p>Belum ada riwayat pesanan</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="notification" id="notification">
         <span>✓</span>
-        <span>Ditambahkan ke pesanan!</span>
+        <span id="notificationText">Ditambahkan ke pesanan!</span>
     </div>
 
     <script>
         let cart = [];
+        let favorites = [];
+        let orderHistory = [];
         let selectedQuickLocation = '';
+        let selectedQuickTime = '';
+        let currentFilter = 'all';
+        let searchQuery = '';
         
-        function loadCart() {
-            const saved = localStorage.getItem('citaRasaCart');
-            if (saved) {
-                cart = JSON.parse(saved);
+        // Load data from localStorage
+        function loadData() {
+            const savedCart = localStorage.getItem('citaRasaCart');
+            const savedFavorites = localStorage.getItem('citaRasaFavorites');
+            const savedHistory = localStorage.getItem('citaRasaHistory');
+            const savedDarkMode = localStorage.getItem('citaRasaDarkMode');
+            
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
                 updateCartDisplay();
+            }
+            
+            if (savedFavorites) {
+                favorites = JSON.parse(savedFavorites);
+                updateFavoritesUI();
+            }
+            
+            if (savedHistory) {
+                orderHistory = JSON.parse(savedHistory);
+            }
+            
+            if (savedDarkMode === 'true') {
+                document.body.classList.add('dark-mode');
+                updateDarkModeButton();
             }
         }
         
@@ -1414,6 +796,252 @@
             localStorage.setItem('citaRasaCart', JSON.stringify(cart));
         }
         
+        function saveFavorites() {
+            localStorage.setItem('citaRasaFavorites', JSON.stringify(favorites));
+        }
+        
+        function saveHistory() {
+            localStorage.setItem('citaRasaHistory', JSON.stringify(orderHistory));
+        }
+        
+        // Dark Mode Toggle - NEW
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('citaRasaDarkMode', isDark);
+            updateDarkModeButton();
+        }
+        
+        function updateDarkModeButton() {
+            const isDark = document.body.classList.contains('dark-mode');
+            const icon = document.getElementById('darkModeIcon');
+            const text = document.getElementById('darkModeText');
+            if (isDark) {
+                icon.textContent = '☀️';
+                text.textContent = 'Light Mode';
+            } else {
+                icon.textContent = '🌙';
+                text.textContent = 'Dark Mode';
+            }
+        }
+        
+        // Search Function - NEW
+        function searchMenu() {
+            const input = document.getElementById('searchInput');
+            searchQuery = input.value.toLowerCase();
+            const clearBtn = document.getElementById('clearSearch');
+            
+            if (searchQuery) {
+                clearBtn.classList.add('active');
+            } else {
+                clearBtn.classList.remove('active');
+            }
+            
+            applyFilters();
+        }
+        
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            searchQuery = '';
+            document.getElementById('clearSearch').classList.remove('active');
+            applyFilters();
+        }
+        
+        // Filter Function - NEW
+        function filterMenu(filter) {
+            currentFilter = filter;
+            
+            // Update chip styling
+            document.querySelectorAll('.filter-chip').forEach(chip => {
+                chip.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            applyFilters();
+        }
+        
+        function applyFilters() {
+            const menuItems = document.querySelectorAll('.menu-item');
+            const alacarte = document.querySelectorAll('.alacarte-item');
+            const sections = document.querySelectorAll('.menu-section');
+            
+            // Reset all visibility
+            sections.forEach(section => section.classList.remove('hidden'));
+            menuItems.forEach(item => item.classList.remove('hidden'));
+            alacarte.forEach(item => item.classList.remove('hidden'));
+            
+            // Apply search filter
+            if (searchQuery) {
+                menuItems.forEach(item => {
+                    const name = item.dataset.name.toLowerCase();
+                    if (!name.includes(searchQuery)) {
+                        item.classList.add('hidden');
+                    }
+                });
+                
+                alacarte.forEach(item => {
+                    const name = item.dataset.name.toLowerCase();
+                    if (!name.includes(searchQuery)) {
+                        item.classList.add('hidden');
+                    }
+                });
+            }
+            
+            // Apply category/price filter
+            if (currentFilter !== 'all') {
+                if (currentFilter === 'under20') {
+                    menuItems.forEach(item => {
+                        const price = parseInt(item.dataset.price);
+                        if (price >= 20) item.classList.add('hidden');
+                    });
+                    alacarte.forEach(item => {
+                        const price = parseInt(item.dataset.price);
+                        if (price >= 20) item.classList.add('hidden');
+                    });
+                } else if (currentFilter === 'under30') {
+                    menuItems.forEach(item => {
+                        const price = parseInt(item.dataset.price);
+                        if (price >= 30) item.classList.add('hidden');
+                    });
+                    alacarte.forEach(item => {
+                        const price = parseInt(item.dataset.price);
+                        if (price >= 30) item.classList.add('hidden');
+                    });
+                } else {
+                    // Category filter
+                    sections.forEach(section => {
+                        if (section.dataset.category !== currentFilter) {
+                            section.classList.add('hidden');
+                        }
+                    });
+                }
+            }
+        }
+        
+        // Favorites System - NEW
+        function toggleFavorite(name, price, emoji, items) {
+            event.stopPropagation();
+            const btn = event.target;
+            const existingIndex = favorites.findIndex(f => f.name === name);
+            
+            if (existingIndex >= 0) {
+                favorites.splice(existingIndex, 1);
+                btn.classList.remove('active');
+                btn.textContent = '♡';
+                showNotification('Dihapus dari favorit!', '💔');
+            } else {
+                favorites.push({name, price, emoji, items});
+                btn.classList.add('active');
+                btn.textContent = '♥';
+                showNotification('Ditambahkan ke favorit!', '⭐');
+            }
+            
+            saveFavorites();
+            updateFavoritesUI();
+        }
+        
+        function updateFavoritesUI() {
+            // Update all favorite buttons
+            document.querySelectorAll('.fav-btn').forEach(btn => {
+                const menuItem = btn.closest('[data-name]');
+                if (menuItem) {
+                    const name = menuItem.dataset.name;
+                    const isFav = favorites.some(f => f.name === name);
+                    if (isFav) {
+                        btn.classList.add('active');
+                        btn.textContent = '♥';
+                    } else {
+                        btn.classList.remove('active');
+                        btn.textContent = '♡';
+                    }
+                }
+            });
+            
+            // Update badge
+            const badge = document.getElementById('favBadge');
+            if (favorites.length > 0) {
+                badge.style.display = 'flex';
+                badge.textContent = favorites.length;
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+        
+        function openFavorites() {
+            const modal = document.getElementById('favoritesModal');
+            const container = document.getElementById('favoritesItems');
+            
+            if (favorites.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⭐</div><p>Belum ada menu favorit</p></div>';
+            } else {
+                container.innerHTML = favorites.map(fav => `
+                    <div class="favorite-item">
+                        <div class="favorite-item-info">
+                            <div class="favorite-item-name">${fav.emoji} ${fav.name}</div>
+                            <div class="favorite-item-price">¥${fav.price}</div>
+                        </div>
+                        <div class="favorite-actions">
+                            <button class="fav-action-btn add-fav-btn" onclick='addToCart("${fav.name.replace(/'/g, "\\\'")}", ${fav.price}, "${fav.emoji}", ${JSON.stringify(fav.items)})'>Tambah</button>
+                            <button class="fav-action-btn remove-fav-btn" onclick='removeFavorite("${fav.name.replace(/'/g, "\\\'")})")'>Hapus</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            modal.classList.add('active');
+        }
+        
+        function closeFavorites() {
+            document.getElementById('favoritesModal').classList.remove('active');
+        }
+        
+        function removeFavorite(name) {
+            favorites = favorites.filter(f => f.name !== name);
+            saveFavorites();
+            updateFavoritesUI();
+            openFavorites();
+            showNotification('Dihapus dari favorit!', '💔');
+        }
+        
+        // Order History - NEW
+        function openHistory() {
+            const modal = document.getElementById('historyModal');
+            const container = document.getElementById('historyItems');
+            
+            if (orderHistory.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📜</div><p>Belum ada riwayat pesanan</p></div>';
+            } else {
+                container.innerHTML = orderHistory.slice(0, 3).reverse().map((order, index) => `
+                    <div class="history-item">
+                        <div class="history-item-header">
+                            <h3 style="color:var(--primary);font-size:1em;font-weight:800">Pesanan #${orderHistory.length - index}</h3>
+                            <span class="history-date">${order.date}</span>
+                        </div>
+                        <div class="history-item-list">
+                            ${order.items.map(item => `${item.emoji} ${item.name} x${item.quantity}`).join('<br>')}
+                        </div>
+                        <div style="margin-top:8px;font-weight:800;color:var(--primary)">Total: ¥${order.total}</div>
+                        <button class="reorder-btn" onclick='reorderHistory(${JSON.stringify(order.items)})'>🔄 Pesan Lagi</button>
+                    </div>
+                `).join('');
+            }
+            
+            modal.classList.add('active');
+        }
+        
+        function closeHistory() {
+            document.getElementById('historyModal').classList.remove('active');
+        }
+        
+        function reorderHistory(items) {
+            cart = items.map(item => ({...item}));
+            saveCart();
+            updateCartDisplay();
+            closeHistory();
+            showNotification('Pesanan berhasil dimuat ulang!', '🔄');
+        }
+        
+        // Cart Functions
         function addToCart(name, price, emoji, items) {
             const existing = cart.find(item => item.name === name);
             
@@ -1425,7 +1053,7 @@
             
             saveCart();
             updateCartDisplay();
-            showNotification();
+            showNotification('Ditambahkan ke pesanan!', '✓');
         }
         
         function removeFromCart(name) {
@@ -1483,6 +1111,9 @@
                 
                 cartFooter.style.display = 'block';
                 cartTotalPrice.textContent = `¥${totalPrice}`;
+                
+                // Show suggested items - NEW
+                showSuggestedItems();
             } else {
                 floatingCart.classList.remove('active');
                 cartItems.innerHTML = '<div class="empty-cart"><div class="empty-cart-icon">🍽️</div><p>Belum ada pesanan</p></div>';
@@ -1490,8 +1121,50 @@
             }
         }
         
-        function showNotification() {
+        // Suggested Items Logic - NEW
+        function showSuggestedItems() {
+            const suggestedContainer = document.getElementById('suggestedItems');
+            const suggestedGrid = document.getElementById('suggestedGrid');
+            
+            const suggestions = [];
+            const hasMainDish = cart.some(item => item.name.includes('PAYALUR') || item.name.includes('PRAMES') || item.name.includes('Ayam'));
+            const hasDrink = cart.some(item => item.name.includes('Eskopsus'));
+            const hasExtra = cart.some(item => item.name.includes('Extra'));
+            
+            if (!hasDrink) {
+                suggestions.push({name: 'Eskopsus 100ml', price: 10, emoji: '☕', items: ['Eskopsus 100ml']});
+            }
+            
+            if (!hasExtra && hasMainDish) {
+                suggestions.push({name: 'Extra Sambel', price: 3, emoji: '🌶️', items: ['Extra Sambel']});
+                suggestions.push({name: 'Extra Kremes', price: 5, emoji: '✨', items: ['Extra Kremes']});
+            }
+            
+            if (!hasMainDish) {
+                suggestions.push({name: 'Sangcodut', price: 15, emoji: '🍌🍫', items: ['Pisang Cokelat']});
+            }
+            
+            if (suggestions.length > 0) {
+                suggestedGrid.innerHTML = suggestions.map(item => `
+                    <div class="suggested-item">
+                        <div class="suggested-item-info">
+                            <div class="suggested-item-name">${item.emoji} ${item.name}</div>
+                            <div class="suggested-item-price">¥${item.price}</div>
+                        </div>
+                        <button class="add-suggested-btn" onclick='addToCart("${item.name.replace(/'/g, "\\\'")}", ${item.price}, "${item.emoji}", ${JSON.stringify(item.items)})'>+ Tambah</button>
+                    </div>
+                `).join('');
+                suggestedContainer.style.display = 'block';
+            } else {
+                suggestedContainer.style.display = 'none';
+            }
+        }
+        
+        function showNotification(text, icon) {
             const notif = document.getElementById('notification');
+            const notifText = document.getElementById('notificationText');
+            notif.querySelector('span:first-child').textContent = icon || '✓';
+            notifText.textContent = text;
             notif.classList.add('show');
             setTimeout(() => notif.classList.remove('show'), 2000);
         }
@@ -1510,19 +1183,23 @@
         
         function closeDeliveryForm() {
             document.getElementById('deliveryModal').classList.remove('active');
-            document.querySelectorAll('.quick-loc-btn').forEach(btn => {
-                btn.classList.remove('selected');
-            });
+            document.querySelectorAll('.quick-loc-btn').forEach(btn => btn.classList.remove('selected'));
+            document.querySelectorAll('.quick-time-btn').forEach(btn => btn.classList.remove('selected'));
             selectedQuickLocation = '';
+            selectedQuickTime = '';
         }
         
         function selectLocation(location) {
             selectedQuickLocation = location;
             document.getElementById('deliveryLocation').value = location;
-            
-            document.querySelectorAll('.quick-loc-btn').forEach(btn => {
-                btn.classList.remove('selected');
-            });
+            document.querySelectorAll('.quick-loc-btn').forEach(btn => btn.classList.remove('selected'));
+            event.target.classList.add('selected');
+        }
+        
+        function selectTime(time) {
+            selectedQuickTime = time;
+            document.getElementById('deliveryTime').value = time;
+            document.querySelectorAll('.quick-time-btn').forEach(btn => btn.classList.remove('selected'));
             event.target.classList.add('selected');
         }
         
@@ -1532,32 +1209,47 @@
             const location = document.getElementById('deliveryLocation').value.trim();
             const time = document.getElementById('deliveryTime').value.trim();
             
-                        if (!location || !time) {
+            if (!location || !time) {
                 alert('Mohon isi lokasi dan jam pengantaran!');
                 return;
             }
             
             const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             
-            let message = '🍽️ PESANAN 🍽️%0A%0A';
+            let message = '🍽️ *PESANAN BARU* 🍽️%0A%0A';
             
             cart.forEach((item, index) => {
                 message += `${index + 1}. ${item.name} ${item.quantity}x ¥${item.price} = ¥${item.price * item.quantity}%0A`;
-                
                 if (Array.isArray(item.items) && item.items.length > 0) {
                     item.items.forEach(ingredient => {
-                        message += `${ingredient}%0A`;
+                        message += `   • ${ingredient}%0A`;
                     });
                 }
                 message += '%0A';
             });
             
             message += '━━━━━━━━━━━━━━━━━%0A';
-            message += `💰 **TOTAL: ¥${totalPrice}**%0A%0A`;
-            message += `LOKASI: ${location}%0A`;
-            message += `JAM: ${time}%0A`;
+            message += `💰 *TOTAL: ¥${totalPrice}*%0A%0A`;
+            message += `📍 *LOKASI:* ${location}%0A`;
+            message += `🕐 *JAM:* ${time}%0A`;
             message += '━━━━━━━━━━━━━━━━━%0A%0A';
             message += '📝 Mohon konfirmasi, terima kasih!';
+            
+            // Save to history
+            orderHistory.push({
+                date: new Date().toLocaleDateString('id-ID'),
+                items: cart.map(item => ({...item})),
+                total: totalPrice,
+                location: location,
+                time: time
+            });
+            
+            // Keep only last 5 orders
+            if (orderHistory.length > 5) {
+                orderHistory = orderHistory.slice(-5);
+            }
+            
+            saveHistory();
             
             window.open(`https://t.me/CitaRasaIndo?text=${message}`, '_blank');
             
@@ -1569,9 +1261,11 @@
                 saveCart();
                 updateCartDisplay();
                 closeCart();
+                showNotification('Pesanan terkirim! Cek Telegram ya', '🎉');
             }, 500);
         }
         
+        // Modal close on backdrop click
         document.getElementById('cartModal').addEventListener('click', function(e) {
             if (e.target === this) closeCart();
         });
@@ -1580,7 +1274,16 @@
             if (e.target === this) closeDeliveryForm();
         });
         
-        window.addEventListener('DOMContentLoaded', loadCart);
+        document.getElementById('favoritesModal').addEventListener('click', function(e) {
+            if (e.target === this) closeFavorites();
+        });
+        
+        document.getElementById('historyModal').addEventListener('click', function(e) {
+            if (e.target === this) closeHistory();
+        });
+        
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', loadData);
     </script>
 </body>
 </html>
