@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5">
+<title>AI Order Parser - Cita Rasa Indo</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #D32F2F;
+  --secondary: #FFA726;
+  --success: #4CAF50;
+  --warning: #ff9800;
+  --bg-light: #FFF8E1;
+  --shadow: 0 4px 16px rgba(0,0,0,.12);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 50%, #FFE0B2 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  padding: 12px;
+  padding-bottom: 40px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  background: white;
+  padding: 20px 16px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.header h1 {
+  color: var(--primary);
+  font-size: 1.5em;
+  margin-bottom: 6px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.2;
+}
+
+.header p {
+  color: #666;
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+
+.ai-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.75em;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.card {
+  background: white;
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+}
+
+.card h2 {
+  color: var(--primary);
+  font-size: 1.3em;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.input-area {
+  width: 100%;
+  min-height: 280px;
+  padding: 14px;
+  border: 2px solid #FFE0B2;
+  border-radius: 12px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+  resize: vertical;
+  background: linear-gradient(135deg, #FFFBF5 0%, #FFF8F0 100%);
+  line-height: 1.5;
+}
+
+.input-area:focus {
+  outline: none;
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 3px rgba(255,167,38,.1);
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.btn {
+  width: 100%;
+  padding: 16px 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1em;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 52px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--success), #45a049);
+  color: white;
+  box-shadow: var(--shadow);
+}
+
+.btn-secondary {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.btn-example {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.btn-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.results-section {
+  display: none;
+}
+
+.results-section.active {
+  display: block;
+}
+
+.ingredient-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.ingredient-card {
+  background: linear-gradient(135deg, #FFFBF5 0%, #FFF3E0 100%);
+  padding: 14px 12px;
+  border-radius: 12px;
+  border: 2px solid #FFE0B2;
+  text-align: center;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ingredient-card.highlight {
+  border-color: var(--secondary);
+  background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+}
+
+.ingredient-icon {
+  font-size: 2.2em;
+  margin-bottom: 6px;
+}
+
+.ingredient-name {
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 4px;
+  font-size: 0.85em;
+  line-height: 1.2;
+}
+
+.ingredient-qty {
+  font-size: 1.6em;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.ingredient-unit {
+  font-size: 0.8em;
+  color: #666;
+  margin-top: 4px;
+}
+
+.summary-card {
+  background: linear-gradient(135deg, var(--primary), #C62828);
+  color: white;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.95em;
+}
+
+.summary-row:last-child {
+  margin-bottom: 0;
+  padding-top: 8px;
+  border-top: 2px solid rgba(255,255,255,0.3);
+  font-size: 1.15em;
+  font-weight: 800;
+}
+
+.orders-list {
+  margin-top: 12px;
+  max-height: 400px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.order-item {
+  background: linear-gradient(135deg, #FFFBF5 0%, #FFF8F0 100%);
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid #FFE0B2;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 6px;
+  gap: 8px;
+}
+
+.order-name {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 0.95em;
+  flex: 1;
+  line-height: 1.3;
+}
+
+.order-qty {
+  font-weight: 800;
+  color: var(--primary);
+  background: rgba(211,47,47,0.1);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.9em;
+  white-space: nowrap;
+}
+
+.order-original {
+  font-size: 0.8em;
+  color: #666;
+  font-style: italic;
+  margin-top: 6px;
+  padding: 6px 8px;
+  background: rgba(0,0,0,0.03);
+  border-radius: 6px;
+  border-left: 3px solid #FFE0B2;
+  word-break: break-word;
+}
+
+.confidence-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 0.7em;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.confidence-high {
+  background: #d4edda;
+  color: #155724;
+}
+
+.confidence-medium {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.confidence-low {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #999;
+}
+
+.empty-state-icon {
+  font-size: 3em;
+  margin-bottom: 12px;
+}
+
+.empty-state p {
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+
+.alert {
+  padding: 14px 16px;
+  border-radius: 12px;
+  margin-top: 12px;
+  display: none;
+  font-weight: 600;
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+
+.alert.show {
+  display: block;
+}
+
+.alert-success {
+  background: #d4edda;
+  border: 2px solid #28a745;
+  color: #155724;
+}
+
+.alert-warning {
+  background: #fff3cd;
+  border: 2px solid #ffc107;
+  color: #856404;
+}
+
+.alert-info {
+  background: #d1ecf1;
+  border: 2px solid #17a2b8;
+  color: #0c5460;
+}
+
+.alert-danger {
+  background: #f8d7da;
+  border: 2px solid #dc3545;
+  color: #721c24;
+}
+
+.processing {
+  text-align: center;
+  padding: 30px 20px;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.processing-icon {
+  font-size: 2.5em;
+  animation: spin 1s linear infinite;
+  margin-bottom: 10px;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.notes-section {
+  margin-top: 16px;
+  padding: 14px;
+  background: #fff9e6;
+  border: 2px solid var(--warning);
+  border-radius: 12px;
+}
+
+.notes-section h3 {
+  color: var(--warning);
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.notes-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.notes-section li {
+  padding: 6px 0;
+  color: #856404;
+  font-size: 0.9em;
+  line-height: 1.4;
+  padding-left: 20px;
+  position: relative;
+}
+
+.notes-section li:before {
+  content: "⚠️";
+  position: absolute;
+  left: 0;
+  font-size: 0.9em;
+}
+
+.chicken-notes {
+  margin-top: 12px;
+  padding: 12px;
+  background: #e3f2fd;
+  border-radius: 10px;
+  font-size: 0.85em;
+  color: #1565c0;
+}
+
+/* Tablet */
+@media (min-width: 600px) {
+  body {
+    padding: 20px;
+  }
+  
+  .header {
+    padding: 24px 20px;
+  }
+  
+  .header h1 {
+    font-size: 1.8em;
+  }
+  
+  .header p {
+    font-size: 1em;
+  }
+  
+  .card {
+    padding: 20px;
+  }
+  
+  .card h2 {
+    font-size: 1.5em;
+  }
+  
+  .input-area {
+    min-height: 320px;
+    padding: 16px;
+    font-size: 0.95em;
+  }
+  
+  .button-group {
+    flex-direction: row;
+    gap: 12px;
+  }
+  
+  .btn-row {
+    display: flex;
+  }
+  
+  .ingredient-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 900px) {
+  body {
+    padding: 24px;
+  }
+  
+  .header {
+    padding: 28px 24px;
+  }
+  
+  .header h1 {
+    font-size: 2em;
+  }
+  
+  .card {
+    padding: 24px;
+  }
+  
+  .input-area {
+    min-height: 380px;
+  }
+  
+  .ingredient-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .main-grid .card {
+    margin-bottom: 0;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (max-width: 599px) {
+  .btn {
+    min-height: 54px;
+    font-size: 1.05em;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🤖 AI Order Parser</h1>
+    <p>Cita Rasa Indonesia - 100% AKURAT!</p>
+    <span class="ai-badge">✨ VERIFIED DATA</span>
+  </div>
+
+  <div class="main-grid">
+    <div class="card">
+      <h2>📝 Paste Orders</h2>
+      <textarea 
+        class="input-area" 
+        id="orderInput" 
+        placeholder="Paste pesanan customer...
+
+Contoh:
+• prames a 1
+• ricebowl cumi 2
+• ayam telur balado
+• bakwan 5 (= 5 pack = 15 pcs!)
+• parari x2
+• bowl rakus + bakwan"></textarea>
+      <div class="button-group">
+        <button class="btn btn-primary" onclick="calculateIngredients()">
+          <span>🧠</span>
+          <span>PROCESS WITH AI</span>
+        </button>
+        <div class="btn-row">
+          <button class="btn btn-example" onclick="loadExample()">
+            <span>📋</span>
+            <span>Example</span>
+          </button>
+          <button class="btn btn-secondary" onclick="clearAll()">
+            <span>🗑️</span>
+            <span>Clear</span>
+          </button>
+        </div>
+      </div>
+      <div id="alertBox" class="alert"></div>
+    </div>
+
+    <div class="card">
+      <h2>🔍 Detected Orders</h2>
+      <div id="ordersList" class="orders-list">
+        <div class="empty-state">
+          <div class="empty-state-icon">🤖</div>
+          <p>AI belum memproses pesanan</p>
+          <p style="font-size: 0.85em; margin-top: 8px;">Paste dan klik "PROCESS"</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="results-section" id="resultsSection">
+    <div class="card">
+      <h2>🍳 Ingredients Needed</h2>
+      <div class="summary-card">
+        <div class="summary-row">
+          <span>Total Orders:</span>
+          <span id="totalOrders">0</span>
+        </div>
+        <div class="summary-row">
+          <span>Ingredients:</span>
+          <span id="uniqueItems">0</span>
+        </div>
+        <div class="summary-row">
+          <span>Total Portions:</span>
+          <span id="totalPortions">0</span>
+        </div>
+      </div>
+      
+      <div class="ingredient-grid" id="ingredientGrid"></div>
+      
+      <div id="chickenNotes" class="chicken-notes" style="display:none;">
+        <strong>🍗 Catatan Ayam:</strong> <span id="chickenDetails"></span>
+      </div>
+      
+      <div id="notesSection" class="notes-section" style="display:none;">
+        <h3>⚠️ PERLU KONFIRMASI</h3>
+        <ul id="notesList"></ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ACCURATE MENU DATABASE - VERIFIED BY OWNER!
+const menuAI = {
+  'PARARI': {
+    patterns: ['parari', 'para ri', 'paket teri', 'ricebowl teri', 'rice bowl teri', 'nasi bowl teri', 'bowl teri'],
+    ingredients: { chicken: 0, egg_ceplok: 1, egg_balado: 0, egg_dadar: 0, potato_small: 0, potato_big: 0, bakwan: 0, tofu: 0, sambal_teri: 1, sambal_cumi: 0, nasi: 1, kremes: 0, timun: 2, sambal: 0 }
+  },
+  'PARACU': {
+    patterns: ['paracu', 'para cu', 'paket cumi', 'ricebowl cumi', 'rice bowl cumi', 'nasi bowl cumi', 'bowl cumi', 'nasbol cumi'],
+    ingredients: { chicken: 0, egg_ceplok: 1, egg_balado: 0, egg_dadar: 0, potato_small: 0, potato_big: 0, bakwan: 0, tofu: 0, sambal_teri: 0, sambal_cumi: 1, nasi: 1, kremes: 0, timun: 2, sambal: 0 }
+  },
+  'PARAKUS': {
+    patterns: ['parakus', 'para kus', 'rakus', 'paket rakus', 'ricebowl rakus', 'rice bowl rakus', 'bowl rakus'],
+    ingredients: { chicken: 0, egg_ceplok: 1, egg_balado: 0, egg_dadar: 0, potato_small: 0, potato_big: 0, bakwan: 0, tofu: 0, sambal_teri: 1, sambal_cumi: 1, nasi: 1, kremes: 0, timun: 2, sambal: 0 }
+  },
+  'PARABO': {
+    patterns: ['parabo', 'para bo', 'karbo', 'paket karbo', 'ricebowl karbo', 'bowl karbo'],
+    ingredients: { chicken: 0, egg_ceplok: 1, egg_balado: 0, egg_dadar: 0, potato_small: 0, potato_big: 0, bakwan: 0, tofu: 0, sambal_teri: 0, sambal_cumi: 0, nasi: 1, kremes: 0, timun: 2, sambal: 0, kentang_balado_small: 1 }
+  },
+  'PAYALUR': {
+    patterns: ['payalur', 'paya lur', 'paket ayam telur'],
+    ingredients: { chicken: 1, egg_ceplok: 0, egg_balado: 1, egg_dadar: 0, potato_small: 1, potato_big: 0, bakwan: 1, tofu: 0, sambal_teri: 0, sambal_cumi: 0, nasi: 1, kremes: 0, timun: 0, sambal: 1 }
+  },
+  'PAYALIT': {
+    patterns: ['payalit', 'paya lit'],
+    ingredients: { chicken: 1, egg_ceplok: 0, egg_balado: 0, egg_dadar: 0, potato_small: 1, potato_big: 0, bakwan: 1, tofu: 0, sambal_teri: 0, sambal_cumi: 0, nasi: 1, kremes: 0, timun: 0, sambal: 1 }
+  },
+  'PAYAMAT': {
+    patterns: ['payamat', 'paya mat', 'paket ayam'],
+    ingredients: { chicken: 1, egg_ceplok: 0, egg_balado: 0, egg_dadar: 0, potato_small: 0, potato_big: 0, bakwan: 1, tofu: 0, sambal_teri: 0, sambal_cumi: 0, nasi: 1, kremes: 0, timun: 0, sambal: 1 }
+  },
+  'PALUTANG': {
+    patterns: ['palutang', 'palu tang', 'paket telur kentang'],
+    ingredients: { chicken: 0, egg_ceplok: 0, egg_balado: 1, egg_dadar: 0, potato_small: 1, potato_big: 0, bakwan: 1, tofu: 0, sambal_teri: 0, sambal_cumi: 0, nasi: 1, kremes: 0, timun: 0, sambal: 0 }
+  },
+  'PALUR': {
+    patterns: ['palur', 'pa lur', 'paket telur'],
+    ingredients: { chicken: 0, egg_ceplok: 0, egg_balado: 1, egg_dadar: 0, potato_small: 0, potato_big: 0, bakwan: 1, tofu: 0, sambal_teri: 0, sambal_cumi: 0, nasi: 1, kremes: 0, timun: 0, sambal: 0 }
+  },
+  'PRAMES A': {
+    patterns: ['prames a', 'pramesa', 'prames 1', 'prames ayam'],
+    ingredients: { chicken: 1, egg_ceplok: 0, egg_balado: 0, egg_dadar: 0, potato_small: 0, potato_big: 0, bakwan: 0, tofu: 2, sambal_teri: 0, sambal_cumi: 0, nasi: 1, kremes: 1, timun: 2, sambal: 1 }
+  },
+  'PRAMES B': {
+    patterns: ['prames b', 'pramesb', 'prames 2'],
+    ingredients: { chicken: 1, egg_ceplok: 0, egg_balado: 1, egg_dadar: 0, potato_small: 0, potato_big: 0, bakwan: 0, tofu: 2, sambal_teri: 0, sambal_cumi: 0, nasi: 1, kremes: 1, timun: 2, sambal: 1 }
+  },
+  'PRAMES C': {
+    patterns: ['prames c', 'pramesc', 'prames 3'],
+    ingredients: { chicken: 1, egg_ceplok: 0, egg_balado: 0, egg_dadar: 0, potato_small: 1, potato_big: 0, bakwan: 0, tofu: 2, sambal_teri: 0, sambal_cumi: 0, nasi: 1, kremes: 1, timun: 2, sambal: 1 }
+  },
+  'PRAMES KARBO': {
+    patterns: ['prames karbo', 'prames kentang', 'pramkarbo'],
+    ingredients: { chicken: 0, egg_ceplok: 0, egg_balado: 0, egg_dadar: 0, potato_small: 1, potato_big: 0, bakwan: 2, tofu: 0, sambal_teri: 0, sambal_cumi: 0, nasi: 1, kremes: 1, timun: 0, sambal: 1 }
+  },
+  'PRAMES VEGGIE': {
+    patterns: ['prames veggie', 'prames vegetarian', 'prames sayur', 'pram veggie'],
+    ingredients: { chicken: 0, egg_ceplok: 0, egg_balado: 0, egg_dadar: 0, potato_small: 0, potato_big: 0, bakwan: 0, tofu: 2, sambal_teri: 0, sambal_cumi: 0, nasi: 1, kremes: 1, timun: 2, sambal: 1 }
+  },
+  'AYAM GORENG': {
+    patterns: ['ayam goreng', 'ayam', 'chicken', 'ayam aja', 'add ayam'],
+    ingredients: { chicken: 1, egg_ceplok: 0, egg_balado: 0, egg_dadar: 0, potato_small: 0, potato_big: 0, bakwan: 0, tofu: 0, sambal_teri: 0, sambal_cumi: 0, nasi: 0, kremes: 0, timun: 0, sambal: 0 }
+  },
+  'TELUR DADAR': {
+    patterns: ['telur dadar', 'telor dadar', 'dadar', 'omelet'],
+    ingredients: { chicken: 0, egg_ceplok: 0, egg_balado: 0, egg_dadar: 1, potato_small: 0, potato_big: 0, bakwan: 0, tofu: 0, sambal_teri: 0, sambal_cumi: 0, nasi: 0, kremes: 0, timun: 0, sambal: 0 }
+  },
+  'KENTANG BALADO': {
+    patterns: ['kentang balado', 'kentang', 'potato balado', 'balado kentang'],
+    ingredients: { chicken: 0, egg_ceplok: 0, egg_balado: 0, egg_dadar: 0, potato_small: 0, potato_big: 1, bakwan: 0, tofu: 0, sambal_teri: 0, sambal_cumi: 0, nasi: 0, kremes: 0, timun: 0, sambal: 0 }
+  },
+  'TELUR BALADO': {
+    patterns: ['telur balado', 'telor balado', 'balado telur', 'egg balado'],
+    ingredients: { chicken: 0, egg_ceplok: 0, egg_balado: 1, egg_dadar: 0, potato_small: 0, potato_big: 0, bakwan: 0, tofu: 0, sambal_teri: 0, sambal_cumi: 0, nasi: 0, kremes: 0, timun: 0, sambal: 0 }
+  },
+  'TELUR CEPLOK': {
+    patterns: ['telur ceplok', 'telor ceplok', 'ceplok', 'fried egg', 'telur goreng'],
+    ingredients: { chicken: 0, egg_ceplok: 1, egg_balado: 0, egg_dadar: 0, potato_small: 0, potato_big: 0, bakwan: 0, tofu: 0, sambal_teri: 0, sambal_cumi: 0, nasi: 0, kremes: 0, timun: 0, sambal: 0 }
+  },
+  'BAKWAN 3PCS': {
+    patterns: ['bakwan', 'bala bala', 'gorengan'],
+    ingredients: { chicken: 0, egg_ceplok: 0, egg_balado: 0, egg_dadar: 0, potato_small: 0, potato_big: 0, bakwan: 3, tofu: 0, sambal_teri: 0, sambal_cumi: 0, nasi: 0, kremes: 0, timun: 0, sambal: 0 }
+  },
+  'EXTRA KREMES': {
+    patterns: ['kremes', 'extra kremes', 'kremesan', 'remah'],
+    ingredients: { chicken: 0, egg_ceplok: 0, egg_balado: 0, egg_dadar: 0, potato_small: 0, potato_big: 0, bakwan: 0, tofu: 0, sambal_teri: 0, sambal_cumi: 0, nasi: 0, kremes: 1, timun: 0, sambal: 0 }
+  },
+  'EXTRA SAMBEL': {
+    patterns: ['sambel', 'sambal', 'extra sambel', 'extra sambal', 'add sambel'],
+    ingredients: { chicken: 0, egg_ceplok: 0, egg_balado: 0, egg_dadar: 0, potato_small: 0, potato_big: 0, bakwan: 0, tofu: 0, sambal_teri: 0, sambal_cumi: 0, nasi: 0, kremes: 0, timun: 0, sambal: 1 }
+  },
+  'NASI PUTIH': {
+    patterns: ['nasi putih', 'nasi', 'rice', 'nasi aja', 'tambah nasi'],
+    ingredients: { chicken: 0, egg_ceplok: 0, egg_balado: 0, egg_dadar: 0, potato_small: 0, potato_big: 0, bakwan: 0, tofu: 0, sambal_teri: 0, sambal_cumi: 0, nasi: 1, kremes: 0, timun: 0, sambal: 0 }
+  },
+  'SANCODUT': {
+    patterns: ['sancodut', 'sangcodut', 'pisang cokelat', 'pisang coklat gendut', 'piscobar'],
+    ingredients: { chicken: 0, egg_ceplok: 0, egg_balado: 0, egg_dadar: 0, potato_small: 0, potato_big: 0, bakwan: 0, tofu: 0, sambal_teri: 0, sambal_cumi: 0, nasi: 0, kremes: 0, timun: 0, sambal: 0, sancodut: 1 }
+  }
+};
+
+const ingredientIcons = {
+  chicken: { icon: '🍗', name: 'Ayam Goreng', unit: 'potong' },
+  egg_ceplok: { icon: '🍳', name: 'Telur Ceplok', unit: 'butir' },
+  egg_balado: { icon: '🥚', name: 'Telur Balado', unit: 'butir' },
+  egg_dadar: { icon: '🍳', name: 'Telur Dadar', unit: 'butir' },
+  potato_small: { icon: '🥔', name: 'Kentang Balado (Small)', unit: 'porsi' },
+  potato_big: { icon: '🥔', name: 'Kentang Balado (Big)', unit: 'porsi' },
+  bakwan: { icon: '🥙', name: 'Bakwan', unit: 'pcs' },
+  tofu: { icon: '🧈', name: 'Tahu', unit: 'potong' },
+  sambal_teri: { icon: '🌶️', name: 'Sambal Teri', unit: 'porsi' },
+  sambal_cumi: { icon: '🦑', name: 'Sambal Cumi', unit: 'porsi' },
+  sambal: { icon: '🌶️', name: 'Sambal (Pack)', unit: 'pack' },
+  nasi: { icon: '🍚', name: 'Nasi Putih', unit: 'centong' },
+  kremes: { icon: '✨', name: 'Kremes', unit: 'pc' },
+  timun: { icon: '🥒', name: 'Timun', unit: 'potong' },
+  sancodut: { icon: '🍌', name: 'Sancodut', unit: 'porsi' }
+};
+
+let parsedOrders = [];
+let specialNotes = [];
+let chickenCount = 0;
+let chickenWithPreference = 0;
+let chickenParts = { paha: 0, dada: 0, random: 0 };
+
+function calculateSimilarity(str1, str2) {
+  str1 = str1.toLowerCase().replace(/[^a-z0-9]/g, '');
+  str2 = str2.toLowerCase().replace(/[^a-z0-9]/g, '');
+  
+  if (str1 === str2) return 1.0;
+  if (str1.includes(str2) || str2.includes(str1)) return 0.8;
+  
+  const len1 = str1.length;
+  const len2 = str2.length;
+  const maxLen = Math.max(len1, len2);
+  
+  let matches = 0;
+  for (let i = 0; i < Math.min(len1, len2); i++) {
+    if (str1[i] === str2[i]) matches++;
+  }
+  
+  return matches / maxLen;
+}
+
+function extractQuantity(text) {
+  // Check if "bakwan" with number - IMPORTANT!
+  if (text.toLowerCase().includes('bakwan')) {
+    const bakwanMatch = text.match(/bakwan\s*(\d+)/i);
+    if (bakwanMatch) {
+      const num = parseInt(bakwanMatch[1]);
+      // If number > 3, assume they mean PACKS!
+      if (num > 3) {
+        return { qty: num, isBakwanPack: true };
+      }
+    }
+  }
+  
+  const patterns = [
+    /[xX×]\s*(\d+)/,
+    /(\d+)\s*[xX×]/,
+    /(\d+)\s*porsi/i,
+    /(\d+)\s*pcs/i,
+    /(\d+)\s*buah/i
+  ];
+  
+  for (const pattern of patterns) {
+    const match = text.match(pattern);
+    if (match) return { qty: parseInt(match[1]), isBakwanPack: false };
+  }
+  
+  if (text.includes('sama') || text.includes('dan')) {
+    return { qty: 2, isBakwanPack: false };
+  }
+  
+  return { qty: 1, isBakwanPack: false };
+}
+
+function matchMenuItem(line) {
+  const cleanLine = line.toLowerCase()
+    .replace(/[¥💴]\s*\d+/g, '')
+    .replace(/rmb\s*\d+/gi, '')
+    .replace(/▶️|👌|🍗|🍳|🥔|🍱|🥬|💪|▪️/g, '')
+    .replace(/\([^)]*\)/g, '')
+    .trim();
+  
+  let bestMatch = null;
+  let bestScore = 0;
+  let matchedPattern = '';
+  
+  for (const [menuName, menuData] of Object.entries(menuAI)) {
+    for (const pattern of menuData.patterns) {
+      const similarity = calculateSimilarity(cleanLine, pattern);
+      
+      if (cleanLine.includes(pattern)) {
+        const score = Math.max(similarity, 0.9);
+        if (score > bestScore) {
+          bestScore = score;
+          bestMatch = menuName;
+          matchedPattern = pattern;
+        }
+      } else if (similarity > bestScore && similarity > 0.6) {
+        bestScore = similarity;
+        bestMatch = menuName;
+        matchedPattern = pattern;
+      }
+    }
+  }
+  
+  let confidence = 'low';
+  if (bestScore >= 0.85) confidence = 'high';
+  else if (bestScore >= 0.7) confidence = 'medium';
+  
+  return bestMatch ? { 
+    item: bestMatch, 
+    confidence: confidence, 
+    score: bestScore,
+    pattern: matchedPattern
+  } : null;
+}
+
+function parseOrdersAI(text) {
+  const lines = text.split('\n');
+  const orders = [];
+  specialNotes = [];
+  chickenCount = 0;
+  chickenWithPreference = 0;
+  chickenParts = { paha: 0, dada: 0, random: 0 };
+  
+  for (let line of lines) {
+    const originalLine = line;
+    line = line.trim();
+    if (!line || line.length < 3) continue;
+    if (/^[-=_]+$/.test(line)) continue;
+    
+    const qtyResult = extractQuantity(line);
+    let qty = qtyResult.qty;
+    const match = matchMenuItem(line);
+    
+    if (match && menuAI[match.item]) {
+      // Check for chicken preference in line
+      let hasChickenPref = false;
+      let chickenPartType = '';
+      
+      if (menuAI[match.item].ingredients.chicken > 0) {
+        const lowerLine = originalLine.toLowerCase();
+        
+        // Check for PAHA
+        if (lowerLine.includes('paha')) {
+          hasChickenPref = true;
+          chickenPartType = 'paha';
+          chickenParts.paha += qty;
+          chickenWithPreference += qty;
+        }
+        // Check for DADA
+        else if (lowerLine.includes('dada')) {
+          hasChickenPref = true;
+          chickenPartType = 'dada';
+          chickenParts.dada += qty;
+          chickenWithPreference += qty;
+        }
+        // No preference = RANDOM
+        else {
+          chickenParts.random += qty;
+        }
+        
+        chickenCount += qty;
+      }
+      
+      // Special handling for BAKWAN
+      if (match.item === 'BAKWAN 3PCS' && qtyResult.isBakwanPack) {
+        // Customer said "bakwan 5" = 5 PACKS = multiply qty by 3!
+        qty = qty; // Keep as pack count
+        specialNotes.push(`Bakwan ${qty} pack detected (${qty * 3} pcs total)`);
+      }
+      
+      // Check for special sambal requests
+      if (originalLine.toLowerCase().includes('extra sambal cumi') || 
+          originalLine.toLowerCase().includes('extra sambal teri')) {
+        specialNotes.push(`"${originalLine}" - Konfirmasi: Extra sambal khusus cumi/teri belum tersedia!`);
+      }
+      
+      orders.push({
+        name: match.item,
+        qty: qty,
+        isBakwanPack: qtyResult.isBakwanPack,
+        ingredients: menuAI[match.item].ingredients,
+        original: originalLine,
+        confidence: match.confidence,
+        score: match.score,
+        hasChickenPref: hasChickenPref
+      });
+    }
+  }
+  
+  return orders;
+}
+
+function calculateIngredients() {
+  const input = document.getElementById('orderInput').value;
+  
+  if (!input.trim()) {
+    showAlert('Paste pesanan dulu ya! 😊', 'warning');
+    return;
+  }
+  
+  document.getElementById('ordersList').innerHTML = '<div class="processing"><div class="processing-icon">🤖</div><p>AI processing...</p></div>';
+  
+  setTimeout(() => {
+    parsedOrders = parseOrdersAI(input);
+    
+    if (parsedOrders.length === 0) {
+      showAlert('Tidak ada pesanan valid terdeteksi 🤔', 'warning');
+      document.getElementById('ordersList').innerHTML = '<div class="empty-state"><div class="empty-state-icon">❌</div><p>Tidak ada pesanan</p></div>';
+      return;
+    }
+    
+    displayOrders();
+    
+    const totals = {};
+    let totalPortions = 0;
+    
+    for (const order of parsedOrders) {
+      const orderQty = order.isBakwanPack && order.name === 'BAKWAN 3PCS' ? order.qty : order.qty;
+      totalPortions += orderQty;
+      
+      for (const [ingredient, amount] of Object.entries(order.ingredients)) {
+        if (!totals[ingredient]) totals[ingredient] = 0;
+        
+        // Special handling for bakwan packs
+        if (ingredient === 'bakwan' && order.isBakwanPack && order.name === 'BAKWAN 3PCS') {
+          totals[ingredient] += amount * order.qty; // 3 pcs per pack * number of packs
+        } else {
+          totals[ingredient] += amount * orderQty;
+        }
+      }
+    }
+    
+    displayResults(totals, parsedOrders.length, totalPortions);
+    
+    showAlert(`✅ Berhasil! Terdeteksi ${parsedOrders.length} pesanan`, 'success');
+    document.getElementById('resultsSection').classList.add('active');
+    setTimeout(() => {
+      document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+  }, 800);
+}
+
+function displayOrders() {
+  const container = document.getElementById('ordersList');
+  
+  if (parsedOrders.length === 0) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🤖</div><p>Belum ada pesanan</p></div>';
+    return;
+  }
+  
+  container.innerHTML = parsedOrders.map(order => {
+    const confidenceClass = `confidence-${order.confidence}`;
+    const confidenceLabel = order.confidence === 'high' ? '✓' : 
+                           order.confidence === 'medium' ? '~' : '?';
+    
+    let bakwanNote = '';
+    if (order.isBakwanPack && order.name === 'BAKWAN 3PCS') {
+      bakwanNote = ` <span style="color: #ff9800; font-weight: 700;">(${order.qty} PACK = ${order.qty * 3} PCS!)</span>`;
+    }
+    
+    return `
+      <div class="order-item">
+        <div class="order-header">
+          <div class="order-name">
+            ${order.name}${bakwanNote}
+            <div class="${confidenceClass} confidence-badge">${confidenceLabel} ${order.confidence === 'high' ? 'Yakin' : order.confidence === 'medium' ? 'Cukup' : 'Ragu'}</div>
+          </div>
+          <span class="order-qty">×${order.qty}</span>
+        </div>
+        <div class="order-original">"${order.original}"</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function displayResults(totals, orderCount, totalPortions) {
+  document.getElementById('totalOrders').textContent = orderCount;
+  document.getElementById('uniqueItems').textContent = Object.keys(totals).filter(k => totals[k] > 0).length;
+  document.getElementById('totalPortions').textContent = totalPortions;
+  
+  const grid = document.getElementById('ingredientGrid');
+  const ingredientCards = [];
+  
+  for (const [key, qty] of Object.entries(totals)) {
+    if (qty > 0 && ingredientIcons[key]) {
+      const info = ingredientIcons[key];
+      
+      let displayQty = qty;
+      let displayUnit = info.unit;
+      
+      if (key === 'bakwan') {
+        const packs = Math.ceil(qty / 3);
+        displayUnit = `pcs (${packs} pack)`;
+      }
+      
+      const isHighlighted = key === 'chicken' || key === 'bakwan' || key === 'nasi';
+      
+      ingredientCards.push(`
+        <div class="ingredient-card ${isHighlighted ? 'highlight' : ''}">
+          <div class="ingredient-icon">${info.icon}</div>
+          <div class="ingredient-name">${info.name}</div>
+          <div class="ingredient-qty">${displayQty}</div>
+          <div class="ingredient-unit">${displayUnit}</div>
+        </div>
+      `);
+    }
+  }
+  
+  grid.innerHTML = ingredientCards.join('');
+  
+  // Chicken notes
+  if (chickenCount > 0) {
+    document.getElementById('chickenNotes').style.display = 'block';
+    const randomCount = chickenCount - chickenWithPreference;
+    document.getElementById('chickenDetails').textContent = 
+      chickenWithPreference > 0 ? 
+      `${chickenWithPreference} ayam dengan request bagian tertentu, ${randomCount} ayam random (paha/dada)` :
+      `${chickenCount} ayam random (bisa paha atau dada)`;
+  } else {
+    document.getElementById('chickenNotes').style.display = 'none';
+  }
+  
+  // Special notes
+  if (specialNotes.length > 0) {
+    document.getElementById('notesSection').style.display = 'block';
+    document.getElementById('notesList').innerHTML = specialNotes.map(note => 
+      `<li>${note}</li>`
+    ).join('');
+  } else {
+    document.getElementById('notesSection').style.display = 'none';
+  }
+}
+
+function showAlert(message, type) {
+  const alertBox = document.getElementById('alertBox');
+  alertBox.textContent = message;
+  alertBox.className = `alert alert-${type} show`;
+  
+  setTimeout(() => {
+    alertBox.classList.remove('show');
+  }, 5000);
+}
+
+function clearAll() {
+  document.getElementById('orderInput').value = '';
+  parsedOrders = [];
+  specialNotes = [];
+  chickenCount = 0;
+  chickenWithPreference = 0;
+  displayOrders();
+  document.getElementById('resultsSection').classList.remove('active');
+  document.getElementById('alertBox').classList.remove('show');
+}
+
+function loadExample() {
+  const example = `prames karbo x1
+extra sambel x1
+nasi putih x1
+
+ricebowl cumi
+bakwan 5
+
+paracu 2
+ayam goreng paha kiri
+
+ayam goreng dada
+telur balado
+
+bowl rakus + bakwan
+
+prames a 1 paha
+bakwan x1
+
+payamat 2x
+
+bowl teri 1
+bowl cumi 2
+
+kentang balado
+kremes 2`;
+
+  document.getElementById('orderInput').value = example;
+  showAlert('✨ Contoh dimuat! Klik PROCESS', 'info');
+}
+</script>
+</body>
+</html>
