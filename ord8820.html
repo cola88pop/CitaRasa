@@ -535,8 +535,8 @@ html {
 <body>
 <div class="container">
   <div class="header">
-    <h1>🤖 AI Order Parser</h1>
-    <p>Cita Rasa Indonesia - 100% AKURAT!</p>
+    <h1>AInya CRI</h1>
+    <p>PASTI 100% AKURAT!</p>
     <span class="ai-badge">✨ VERIFIED DATA</span>
   </div>
 
@@ -558,16 +558,16 @@ Contoh:
       <div class="button-group">
         <button class="btn btn-primary" onclick="calculateIngredients()">
           <span>🧠</span>
-          <span>PROCESS WITH AI</span>
+          <span>GAS CHECK!</span>
         </button>
         <div class="btn-row">
           <button class="btn btn-example" onclick="loadExample()">
             <span>📋</span>
-            <span>Example</span>
+            <span>CONTOH</span>
           </button>
           <button class="btn btn-secondary" onclick="clearAll()">
             <span>🗑️</span>
-            <span>Clear</span>
+            <span>CLEAR</span>
           </button>
         </div>
       </div>
@@ -651,11 +651,11 @@ const menuAI = {
   },
   'PALUTANG': {
     patterns: ['palutang', 'palu tang', 'paket telur kentang'],
-    ingredients: { chicken: 0, egg_ceplok: 0, egg_balado: 1, egg_dadar: 0, potato_small: 1, potato_big: 0, bakwan: 1, tofu: 0, sambal_teri: 0, sambal_cumi: 0, nasi: 1, kremes: 0, timun: 0, sambal: 0 }
+    ingredients: { chicken: 0, egg_ceplok: 0, egg_balado: 1, egg_dadar: 0, potato_small: 1, potato_big: 0, bakwan: 2, tofu: 0, sambal_teri: 0, sambal_cumi: 0, nasi: 1, kremes: 0, timun: 0, sambal: 0 }
   },
   'PALUR': {
     patterns: ['palur', 'pa lur', 'paket telur'],
-    ingredients: { chicken: 0, egg_ceplok: 0, egg_balado: 1, egg_dadar: 0, potato_small: 0, potato_big: 0, bakwan: 1, tofu: 0, sambal_teri: 0, sambal_cumi: 0, nasi: 1, kremes: 0, timun: 0, sambal: 0 }
+    ingredients: { chicken: 0, egg_ceplok: 0, egg_balado: 1, egg_dadar: 0, potato_small: 0, potato_big: 0, bakwan: 2, tofu: 0, sambal_teri: 0, sambal_cumi: 0, nasi: 1, kremes: 0, timun: 0, sambal: 0 }
   },
   'PRAMES A': {
     patterns: ['prames a', 'pramesa', 'prames 1', 'prames ayam'],
@@ -741,7 +741,6 @@ let parsedOrders = [];
 let specialNotes = [];
 let chickenCount = 0;
 let chickenWithPreference = 0;
-let chickenParts = { paha: 0, dada: 0, random: 0 };
 
 function calculateSimilarity(str1, str2) {
   str1 = str1.toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -844,7 +843,6 @@ function parseOrdersAI(text) {
   specialNotes = [];
   chickenCount = 0;
   chickenWithPreference = 0;
-  chickenParts = { paha: 0, dada: 0, random: 0 };
   
   for (let line of lines) {
     const originalLine = line;
@@ -859,30 +857,13 @@ function parseOrdersAI(text) {
     if (match && menuAI[match.item]) {
       // Check for chicken preference in line
       let hasChickenPref = false;
-      let chickenPartType = '';
-      
       if (menuAI[match.item].ingredients.chicken > 0) {
         const lowerLine = originalLine.toLowerCase();
-        
-        // Check for PAHA
-        if (lowerLine.includes('paha')) {
+        if (lowerLine.includes('paha') || lowerLine.includes('dada') || 
+            lowerLine.includes('kiri') || lowerLine.includes('kanan')) {
           hasChickenPref = true;
-          chickenPartType = 'paha';
-          chickenParts.paha += qty;
           chickenWithPreference += qty;
         }
-        // Check for DADA
-        else if (lowerLine.includes('dada')) {
-          hasChickenPref = true;
-          chickenPartType = 'dada';
-          chickenParts.dada += qty;
-          chickenWithPreference += qty;
-        }
-        // No preference = RANDOM
-        else {
-          chickenParts.random += qty;
-        }
-        
         chickenCount += qty;
       }
       
